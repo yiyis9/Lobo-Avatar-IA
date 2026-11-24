@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Lobo UPVT | Administración</title><link rel="stylesheet" href="/styles.css"><style>.text-button{border:0;background:transparent;color:#1E6F14;padding:8px 0;font-size:13px;font-weight:650;text-align:left}</style>
+</head>
+<body>
+  <section id="login" class="login-view">
+    <form id="login-form" class="login-form"><div class="brand-mark">UPVT</div><p class="eyebrow">ASISTENTE INSTITUCIONAL</p><h1>Lobo UPVT</h1><p class="muted">Panel administrativo</p>
+      <label>Correo institucional<input name="correo" type="email" required autocomplete="username"></label>
+      <label>Contraseña<input name="contrasena" type="password" required autocomplete="current-password"></label>
+      <button class="primary" type="submit">Iniciar sesión</button><p id="login-error" class="error" role="alert"></p><button type="button" id="show-register" class="text-button">Solicitar autorización</button>
+    </form>
+  </section>
+  <section id="register" class="login-view hidden"><form id="register-form" class="login-form"><button type="button" id="back-login" class="text-button">← Regresar</button><div class="brand-mark">UPVT</div><p class="eyebrow">ACCESO INSTITUCIONAL</p><h1>Registro</h1><label>Nombre completo<input name="nombre" required maxlength="100" autocomplete="name"></label><label>Correo institucional<input name="correo" type="email" required autocomplete="email"></label><label>Contraseña<input name="contrasena" type="password" minlength="10" required autocomplete="new-password"></label><label>Clave de autorización<input name="claveAutorizacion" type="password" required></label><button class="primary" type="submit">Solicitar autorización</button><p id="register-message" class="error" role="status"></p></form></section>
+  <div id="app" class="shell hidden">
+    <aside class="sidebar"><div class="brand"><span class="brand-mark">UPVT</span><span><b>Lobo UPVT</b><small>Administración</small></span></div>
+      <nav aria-label="Navegación principal"><button data-view="dashboard" class="nav-item active">Resumen general</button><button data-view="metrics" class="nav-item">Métricas</button><button data-view="answers" class="nav-item">Gestor de respuestas</button><button data-view="authorizations" class="nav-item">Autorizaciones <span id="pending-count" class="count">0</span></button><button data-view="users" class="nav-item">Control de usuarios</button><button data-view="settings" class="nav-item">Ajustes y conexión</button></nav>
+      <button id="logout" class="nav-item logout">Cerrar sesión</button>
+    </aside>
+    <main class="main"><header class="topbar"><div><p class="eyebrow">UNIVERSIDAD POLITÉCNICA DEL VALLE DE TOLUCA</p><h1 id="page-title">Resumen general</h1></div><div class="profile"><span class="online-dot"></span> Administrador</div></header>
+      <section id="dashboard" class="view"><div class="metrics-grid" id="summary-cards"></div><div class="section-heading"><h2>Preguntas más frecuentes</h2><span class="muted">Consultas registradas en el kiosco</span></div><div class="table-wrap"><table><thead><tr><th>Pregunta</th><th>Consultas</th></tr></thead><tbody id="popular-questions"></tbody></table></div></section>
+      <section id="metrics" class="view hidden"><div class="toolbar"><label>Periodo<select id="metrics-days"><option value="7">7 días</option><option value="30" selected>30 días</option><option value="90">90 días</option></select></label></div><div class="table-wrap"><table><thead><tr><th>Fecha</th><th>Consultas</th><th>Usuarios identificados</th></tr></thead><tbody id="metrics-rows"></tbody></table></div></section>
+      <section id="answers" class="view hidden"><div class="toolbar"><input id="answer-search" placeholder="Buscar pregunta o categoría" aria-label="Buscar respuestas"><button id="new-answer" class="primary">Agregar respuesta</button></div><div class="table-wrap"><table><thead><tr><th>Pregunta</th><th>Categoría</th><th>Animación</th><th>Estado</th><th>Acciones</th></tr></thead><tbody id="answer-rows"></tbody></table></div></section>
+      <section id="authorizations" class="view hidden"><div class="section-heading"><h2>Solicitudes pendientes</h2></div><div class="table-wrap"><table><thead><tr><th>Nombre</th><th>Correo institucional</th><th>Área</th><th>Fecha</th><th>Acción</th></tr></thead><tbody id="pending-rows"></tbody></table></div></section>
+      <section id="users" class="view hidden"><div class="toolbar"><input id="user-search" placeholder="Buscar por nombre o correo" aria-label="Buscar usuarios"></div><div class="table-wrap"><table><thead><tr><th>Nombre</th><th>Correo</th><th>Rol</th><th>Área</th><th>Estado</th><th>Acción</th></tr></thead><tbody id="user-rows"></tbody></table></div></section>
+      <section id="settings" class="view hidden"><div class="section-heading"><h2>Estado de conexión</h2></div><div id="health-status" class="status-line">Comprobando servicios…</div><p class="muted">El respaldo de MySQL y la sincronización dependen de las herramientas configuradas en el servidor.</p></section>
+    </main>
+  </div>
+  <dialog id="answer-dialog"><form id="answer-form" method="dialog"><div class="dialog-head"><h2 id="dialog-title">Nueva respuesta</h2><button type="button" class="icon-button" id="close-dialog" aria-label="Cerrar">×</button></div><input name="id" type="hidden"><label>Categoría<input name="categoria" required maxlength="50"></label><label>Pregunta<input name="pregunta" required maxlength="255"></label><label>Respuesta<textarea name="respuesta" required rows="4"></textarea></label><label>Palabras clave<input name="palabrasClave" maxlength="255"></label><div class="form-row"><label>Animación<input name="animacion" value="idle"></label><label>Emoción<input name="emocion" value="neutral"></label></div><label>Dirigido a<select name="dirigidoA"><option>todos</option><option>alumnos</option><option>profesores</option><option>directivos</option></select></label><div class="dialog-actions"><button type="button" id="cancel-dialog" class="secondary">Cancelar</button><button class="primary" type="submit">Guardar</button></div></form></dialog>
+  <div id="toast" role="status" aria-live="polite"></div><script src="/app.js"></script>
+</body></html>

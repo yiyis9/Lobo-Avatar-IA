@@ -1,0 +1,1210 @@
+{
+  "blend": "C:\\Users\\irisg\\Documents\\LoboUPVT\\_working\\rig_fix_20261122\\Lobo_nuevo_candidate.blend",
+  "method": "85% local arm-neighbor weights + 15% original Spine/Root weights",
+  "changed_count": 77,
+  "vertices": [
+    {
+      "vertex": 7906,
+      "nearest_bone": "Hand_R",
+      "dist": 0.12682,
+      "neighbors": 3,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.3402,
+        "Root": 0.06,
+        "Hand_R": 0.5998
+      }
+    },
+    {
+      "vertex": 8014,
+      "nearest_bone": "Hand_R",
+      "dist": 0.13128,
+      "neighbors": 3,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.4587,
+        "Root": 0.0809,
+        "Hand_R": 0.4604
+      }
+    },
+    {
+      "vertex": 8265,
+      "nearest_bone": "Hand_R",
+      "dist": 0.13758,
+      "neighbors": 1,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.5159,
+        "Root": 0.091,
+        "Hand_R": 0.3931
+      }
+    },
+    {
+      "vertex": 8294,
+      "nearest_bone": "Hand_R",
+      "dist": 0.1414,
+      "neighbors": 1,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.5159,
+        "Root": 0.091,
+        "Hand_R": 0.3931
+      }
+    },
+    {
+      "vertex": 8508,
+      "nearest_bone": "Hand_R",
+      "dist": 0.14265,
+      "neighbors": 1,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.5007,
+        "Root": 0.0884,
+        "Hand_R": 0.4109
+      }
+    },
+    {
+      "vertex": 8526,
+      "nearest_bone": "Hand_R",
+      "dist": 0.14195,
+      "neighbors": 1,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.4837,
+        "Root": 0.0854,
+        "Hand_R": 0.4309
+      }
+    },
+    {
+      "vertex": 8803,
+      "nearest_bone": "Hand_R",
+      "dist": 0.13813,
+      "neighbors": 1,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.4982,
+        "Root": 0.0879,
+        "Hand_R": 0.4139
+      }
+    },
+    {
+      "vertex": 9031,
+      "nearest_bone": "Hand_R",
+      "dist": 0.13611,
+      "neighbors": 1,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.501,
+        "Root": 0.0884,
+        "Hand_R": 0.4106
+      }
+    },
+    {
+      "vertex": 9191,
+      "nearest_bone": "Hand_R",
+      "dist": 0.13059,
+      "neighbors": 1,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.4875,
+        "Root": 0.086,
+        "Hand_R": 0.4265
+      }
+    },
+    {
+      "vertex": 9192,
+      "nearest_bone": "Hand_R",
+      "dist": 0.13074,
+      "neighbors": 1,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.4875,
+        "Root": 0.086,
+        "Hand_R": 0.4265
+      }
+    },
+    {
+      "vertex": 9488,
+      "nearest_bone": "Hand_R",
+      "dist": 0.12636,
+      "neighbors": 1,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.5167,
+        "Root": 0.0912,
+        "Hand_R": 0.3921
+      }
+    },
+    {
+      "vertex": 9493,
+      "nearest_bone": "Hand_R",
+      "dist": 0.12349,
+      "neighbors": 2,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.3763,
+        "Root": 0.0664,
+        "Forearm_R": 0.1079,
+        "Hand_R": 0.4493
+      }
+    },
+    {
+      "vertex": 9499,
+      "nearest_bone": "Hand_R",
+      "dist": 0.12466,
+      "neighbors": 2,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.2512,
+        "Root": 0.0443,
+        "Forearm_R": 0.1812,
+        "Hand_R": 0.5232
+      }
+    },
+    {
+      "vertex": 9530,
+      "nearest_bone": "Hand_R",
+      "dist": 0.12042,
+      "neighbors": 5,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.3565,
+        "Root": 0.0629,
+        "Hand_R": 0.4973,
+        "Forearm_R": 0.0834
+      }
+    },
+    {
+      "vertex": 9534,
+      "nearest_bone": "Hand_R",
+      "dist": 0.12504,
+      "neighbors": 2,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.3416,
+        "Root": 0.0603,
+        "Forearm_R": 0.1538,
+        "Hand_R": 0.4443
+      }
+    },
+    {
+      "vertex": 9535,
+      "nearest_bone": "Hand_R",
+      "dist": 0.12474,
+      "neighbors": 3,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.3316,
+        "Root": 0.0585,
+        "Forearm_R": 0.1669,
+        "Hand_R": 0.443
+      }
+    },
+    {
+      "vertex": 9621,
+      "nearest_bone": "Hand_R",
+      "dist": 0.12318,
+      "neighbors": 1,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.341,
+        "Root": 0.0602,
+        "Forearm_R": 0.154,
+        "Hand_R": 0.4448
+      }
+    },
+    {
+      "vertex": 9719,
+      "nearest_bone": "Hand_R",
+      "dist": 0.12173,
+      "neighbors": 4,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.33,
+        "Root": 0.0582,
+        "Forearm_R": 0.1234,
+        "Hand_R": 0.4883
+      }
+    },
+    {
+      "vertex": 9737,
+      "nearest_bone": "Hand_R",
+      "dist": 0.12164,
+      "neighbors": 2,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.4127,
+        "Root": 0.0728,
+        "Forearm_R": 0.1179,
+        "Hand_R": 0.3966
+      }
+    },
+    {
+      "vertex": 9822,
+      "nearest_bone": "Hand_R",
+      "dist": 0.11807,
+      "neighbors": 4,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.3202,
+        "Root": 0.0565,
+        "Forearm_R": 0.2146,
+        "Hand_R": 0.4087
+      }
+    },
+    {
+      "vertex": 9919,
+      "nearest_bone": "Hand_R",
+      "dist": 0.11846,
+      "neighbors": 4,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.3217,
+        "Root": 0.0568,
+        "Forearm_R": 0.4688,
+        "Hand_R": 0.1527
+      }
+    },
+    {
+      "vertex": 10005,
+      "nearest_bone": "Hand_R",
+      "dist": 0.11896,
+      "neighbors": 3,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.3256,
+        "Root": 0.0575,
+        "Forearm_R": 0.5646,
+        "Hand_R": 0.0524
+      }
+    },
+    {
+      "vertex": 10007,
+      "nearest_bone": "Hand_R",
+      "dist": 0.12054,
+      "neighbors": 2,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.3387,
+        "Root": 0.0598,
+        "Forearm_R": 0.5769,
+        "Hand_R": 0.0247
+      }
+    },
+    {
+      "vertex": 10008,
+      "nearest_bone": "Hand_R",
+      "dist": 0.12144,
+      "neighbors": 1,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.4154,
+        "Root": 0.0733,
+        "Forearm_R": 0.4904,
+        "Hand_R": 0.021
+      }
+    },
+    {
+      "vertex": 10017,
+      "nearest_bone": "Hand_R",
+      "dist": 0.12331,
+      "neighbors": 1,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.4806,
+        "Root": 0.0848,
+        "Forearm_R": 0.4168,
+        "Hand_R": 0.0178
+      }
+    },
+    {
+      "vertex": 10158,
+      "nearest_bone": "Hand_R",
+      "dist": 0.12279,
+      "neighbors": 5,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.355,
+        "Root": 0.0626,
+        "Forearm_R": 0.573,
+        "Hand_R": 0.0093
+      }
+    },
+    {
+      "vertex": 10160,
+      "nearest_bone": "Hand_R",
+      "dist": 0.12627,
+      "neighbors": 1,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.4293,
+        "Root": 0.0758,
+        "Forearm_R": 0.4871,
+        "Hand_R": 0.0079
+      }
+    },
+    {
+      "vertex": 10192,
+      "nearest_bone": "Hand_R",
+      "dist": 0.13017,
+      "neighbors": 1,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.4924,
+        "Root": 0.0869,
+        "Forearm_R": 0.414,
+        "Hand_R": 0.0067
+      }
+    },
+    {
+      "vertex": 10304,
+      "nearest_bone": "Forearm_R",
+      "dist": 0.13309,
+      "neighbors": 4,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.3856,
+        "Root": 0.0681,
+        "Forearm_R": 0.5423,
+        "Hand_R": 0.004
+      }
+    },
+    {
+      "vertex": 10310,
+      "nearest_bone": "Hand_R",
+      "dist": 0.13586,
+      "neighbors": 1,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.4553,
+        "Root": 0.0803,
+        "Forearm_R": 0.461,
+        "Hand_R": 0.0034
+      }
+    },
+    {
+      "vertex": 10368,
+      "nearest_bone": "Forearm_R",
+      "dist": 0.13943,
+      "neighbors": 1,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.5145,
+        "Root": 0.0908,
+        "Forearm_R": 0.3918,
+        "Hand_R": 0.0029
+      }
+    },
+    {
+      "vertex": 10544,
+      "nearest_bone": "Forearm_R",
+      "dist": 0.13538,
+      "neighbors": 4,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.4186,
+        "Root": 0.0739,
+        "Forearm_R": 0.5058,
+        "Hand_R": 0.0017
+      }
+    },
+    {
+      "vertex": 10696,
+      "nearest_bone": "Forearm_R",
+      "dist": 0.14035,
+      "neighbors": 1,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.4833,
+        "Root": 0.0853,
+        "Forearm_R": 0.43,
+        "Hand_R": 0.0014
+      }
+    },
+    {
+      "vertex": 10788,
+      "nearest_bone": "Forearm_R",
+      "dist": 0.1377,
+      "neighbors": 1,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.4833,
+        "Root": 0.0853,
+        "Forearm_R": 0.43,
+        "Hand_R": 0.0014
+      }
+    },
+    {
+      "vertex": 10967,
+      "nearest_bone": "Forearm_R",
+      "dist": 0.13524,
+      "neighbors": 3,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.4366,
+        "Root": 0.077,
+        "Forearm_R": 0.4858,
+        "Hand_R": 0.0006
+      }
+    },
+    {
+      "vertex": 11162,
+      "nearest_bone": "Forearm_R",
+      "dist": 0.13795,
+      "neighbors": 1,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.4986,
+        "Root": 0.088,
+        "Forearm_R": 0.4129,
+        "Hand_R": 0.0005
+      }
+    },
+    {
+      "vertex": 11331,
+      "nearest_bone": "Forearm_R",
+      "dist": 0.13548,
+      "neighbors": 3,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.4823,
+        "Root": 0.0851,
+        "Forearm_R": 0.4324,
+        "Hand_R": 0.0002
+      }
+    },
+    {
+      "vertex": 11686,
+      "nearest_bone": "Forearm_R",
+      "dist": 0.13675,
+      "neighbors": 1,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.5135,
+        "Root": 0.0906,
+        "Forearm_R": 0.3958,
+        "Hand_R": 0.0001
+      }
+    },
+    {
+      "vertex": 12390,
+      "nearest_bone": "Forearm_R",
+      "dist": 0.13049,
+      "neighbors": 1,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.5135,
+        "Root": 0.0906,
+        "Forearm_R": 0.3958,
+        "Hand_R": 0.0001
+      }
+    },
+    {
+      "vertex": 12667,
+      "nearest_bone": "Forearm_R",
+      "dist": 0.12693,
+      "neighbors": 1,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.4666,
+        "Root": 0.0823,
+        "Forearm_R": 0.451,
+        "Hand_R": 0.0
+      }
+    },
+    {
+      "vertex": 14417,
+      "nearest_bone": "Forearm_R",
+      "dist": 0.13227,
+      "neighbors": 1,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.4424,
+        "Root": 0.0781,
+        "Forearm_R": 0.4795
+      }
+    },
+    {
+      "vertex": 14418,
+      "nearest_bone": "Forearm_R",
+      "dist": 0.13284,
+      "neighbors": 5,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.3999,
+        "Root": 0.0706,
+        "Forearm_R": 0.5295
+      }
+    },
+    {
+      "vertex": 15204,
+      "nearest_bone": "Forearm_R",
+      "dist": 0.1362,
+      "neighbors": 1,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.4674,
+        "Root": 0.0825,
+        "Forearm_R": 0.4501
+      }
+    },
+    {
+      "vertex": 15205,
+      "nearest_bone": "Forearm_R",
+      "dist": 0.13618,
+      "neighbors": 2,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.4239,
+        "Root": 0.0748,
+        "Forearm_R": 0.5013
+      }
+    },
+    {
+      "vertex": 15206,
+      "nearest_bone": "Forearm_R",
+      "dist": 0.13911,
+      "neighbors": 1,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.4878,
+        "Root": 0.0861,
+        "Forearm_R": 0.4261
+      }
+    },
+    {
+      "vertex": 16024,
+      "nearest_bone": "Forearm_R",
+      "dist": 0.13708,
+      "neighbors": 3,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.4319,
+        "Root": 0.0762,
+        "Forearm_R": 0.4918
+      }
+    },
+    {
+      "vertex": 16125,
+      "nearest_bone": "Forearm_R",
+      "dist": 0.14001,
+      "neighbors": 1,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.4946,
+        "Root": 0.0873,
+        "Forearm_R": 0.4181
+      }
+    },
+    {
+      "vertex": 16718,
+      "nearest_bone": "Forearm_R",
+      "dist": 0.13959,
+      "neighbors": 3,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.4768,
+        "Root": 0.0841,
+        "Forearm_R": 0.439
+      }
+    },
+    {
+      "vertex": 17614,
+      "nearest_bone": "Forearm_R",
+      "dist": 0.14387,
+      "neighbors": 1,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.5083,
+        "Root": 0.0897,
+        "Forearm_R": 0.402
+      }
+    },
+    {
+      "vertex": 18305,
+      "nearest_bone": "Forearm_R",
+      "dist": 0.14364,
+      "neighbors": 1,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.4685,
+        "Root": 0.0827,
+        "Forearm_R": 0.4489
+      }
+    },
+    {
+      "vertex": 102310,
+      "nearest_bone": "Forearm_L",
+      "dist": 0.12852,
+      "neighbors": 1,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.2359,
+        "Root": 0.0416,
+        "UpperArm_L": 0.3573,
+        "Forearm_L": 0.3652
+      }
+    },
+    {
+      "vertex": 102881,
+      "nearest_bone": "Forearm_L",
+      "dist": 0.12972,
+      "neighbors": 4,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.2814,
+        "Root": 0.0497,
+        "UpperArm_L": 0.214,
+        "Forearm_L": 0.455
+      }
+    },
+    {
+      "vertex": 103078,
+      "nearest_bone": "Forearm_L",
+      "dist": 0.13372,
+      "neighbors": 1,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.3667,
+        "Root": 0.0647,
+        "UpperArm_L": 0.1819,
+        "Forearm_L": 0.3867
+      }
+    },
+    {
+      "vertex": 103472,
+      "nearest_bone": "Forearm_L",
+      "dist": 0.13539,
+      "neighbors": 1,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.4392,
+        "Root": 0.0775,
+        "UpperArm_L": 0.1546,
+        "Forearm_L": 0.3287
+      }
+    },
+    {
+      "vertex": 103714,
+      "nearest_bone": "Forearm_L",
+      "dist": 0.13395,
+      "neighbors": 1,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.4392,
+        "Root": 0.0775,
+        "UpperArm_L": 0.1546,
+        "Forearm_L": 0.3287
+      }
+    },
+    {
+      "vertex": 103715,
+      "nearest_bone": "Forearm_L",
+      "dist": 0.13018,
+      "neighbors": 5,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.3286,
+        "Root": 0.058,
+        "UpperArm_L": 0.079,
+        "Forearm_L": 0.5343
+      }
+    },
+    {
+      "vertex": 104054,
+      "nearest_bone": "Forearm_L",
+      "dist": 0.1316,
+      "neighbors": 4,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.308,
+        "Root": 0.0543,
+        "UpperArm_L": 0.0179,
+        "Forearm_L": 0.6198
+      }
+    },
+    {
+      "vertex": 104241,
+      "nearest_bone": "Forearm_L",
+      "dist": 0.13399,
+      "neighbors": 1,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.2359,
+        "Root": 0.0416,
+        "Forearm_L": 0.7225
+      }
+    },
+    {
+      "vertex": 104460,
+      "nearest_bone": "Forearm_L",
+      "dist": 0.13159,
+      "neighbors": 4,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.3078,
+        "Root": 0.0543,
+        "Forearm_L": 0.634,
+        "UpperArm_L": 0.0038
+      }
+    },
+    {
+      "vertex": 104478,
+      "nearest_bone": "Forearm_L",
+      "dist": 0.13289,
+      "neighbors": 2,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.2589,
+        "Root": 0.0457,
+        "Forearm_L": 0.6954
+      }
+    },
+    {
+      "vertex": 104479,
+      "nearest_bone": "Forearm_L",
+      "dist": 0.1322,
+      "neighbors": 6,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.2569,
+        "Root": 0.0453,
+        "Forearm_L": 0.6978
+      }
+    },
+    {
+      "vertex": 104599,
+      "nearest_bone": "Forearm_L",
+      "dist": 0.12855,
+      "neighbors": 3,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.3118,
+        "Root": 0.055,
+        "Forearm_L": 0.6278,
+        "UpperArm_L": 0.0054
+      }
+    },
+    {
+      "vertex": 107304,
+      "nearest_bone": "Forearm_L",
+      "dist": 0.13439,
+      "neighbors": 3,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.3893,
+        "Root": 0.0687,
+        "Forearm_L": 0.542
+      }
+    },
+    {
+      "vertex": 108142,
+      "nearest_bone": "Forearm_L",
+      "dist": 0.13168,
+      "neighbors": 1,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.4933,
+        "Root": 0.0871,
+        "Forearm_L": 0.4196
+      }
+    },
+    {
+      "vertex": 108383,
+      "nearest_bone": "Forearm_L",
+      "dist": 0.12701,
+      "neighbors": 2,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.4605,
+        "Root": 0.0813,
+        "Forearm_L": 0.4582
+      }
+    },
+    {
+      "vertex": 108468,
+      "nearest_bone": "Forearm_L",
+      "dist": 0.12699,
+      "neighbors": 1,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.3036,
+        "Root": 0.0416,
+        "Forearm_L": 0.2985,
+        "Hand_L": 0.3563
+      }
+    },
+    {
+      "vertex": 108512,
+      "nearest_bone": "Forearm_L",
+      "dist": 0.12437,
+      "neighbors": 3,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.3518,
+        "Root": 0.0407,
+        "Forearm_L": 0.2824,
+        "Hand_L": 0.3251
+      }
+    },
+    {
+      "vertex": 108516,
+      "nearest_bone": "Forearm_L",
+      "dist": 0.12559,
+      "neighbors": 3,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.325,
+        "Root": 0.0489,
+        "Forearm_L": 0.3275,
+        "Hand_L": 0.2987
+      }
+    },
+    {
+      "vertex": 108526,
+      "nearest_bone": "Forearm_L",
+      "dist": 0.12542,
+      "neighbors": 3,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.3462,
+        "Root": 0.0573,
+        "Forearm_L": 0.4161,
+        "Hand_L": 0.1804
+      }
+    },
+    {
+      "vertex": 108536,
+      "nearest_bone": "Forearm_L",
+      "dist": 0.12469,
+      "neighbors": 4,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.4364,
+        "Root": 0.076,
+        "Forearm_L": 0.4366,
+        "Hand_L": 0.0509
+      }
+    },
+    {
+      "vertex": 109522,
+      "nearest_bone": "Hand_L",
+      "dist": 0.11666,
+      "neighbors": 2,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.368,
+        "Root": 0.0649,
+        "Hand_L": 0.5319,
+        "Forearm_L": 0.0352
+      }
+    },
+    {
+      "vertex": 109678,
+      "nearest_bone": "Hand_L",
+      "dist": 0.11808,
+      "neighbors": 5,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.4293,
+        "Root": 0.0758,
+        "Hand_L": 0.4544,
+        "Forearm_L": 0.0405
+      }
+    },
+    {
+      "vertex": 109851,
+      "nearest_bone": "Hand_L",
+      "dist": 0.11979,
+      "neighbors": 4,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.3669,
+        "Root": 0.0647,
+        "Hand_L": 0.5222,
+        "Forearm_L": 0.0462
+      }
+    },
+    {
+      "vertex": 109887,
+      "nearest_bone": "Hand_L",
+      "dist": 0.11747,
+      "neighbors": 2,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.4611,
+        "Root": 0.0814,
+        "Hand_L": 0.4558,
+        "Forearm_L": 0.0017
+      }
+    },
+    {
+      "vertex": 109891,
+      "nearest_bone": "Hand_L",
+      "dist": 0.11874,
+      "neighbors": 4,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.3058,
+        "Root": 0.054,
+        "Hand_L": 0.6215,
+        "Forearm_L": 0.0188
+      }
+    },
+    {
+      "vertex": 109905,
+      "nearest_bone": "Hand_L",
+      "dist": 0.1209,
+      "neighbors": 2,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.2589,
+        "Root": 0.0457,
+        "Hand_L": 0.6954
+      }
+    },
+    {
+      "vertex": 109909,
+      "nearest_bone": "Hand_L",
+      "dist": 0.12032,
+      "neighbors": 3,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.303,
+        "Root": 0.0535,
+        "Hand_L": 0.6435
+      }
+    }
+  ]
+}

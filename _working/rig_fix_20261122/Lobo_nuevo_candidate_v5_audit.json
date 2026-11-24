@@ -1,0 +1,1303 @@
+{
+  "file": "C:\\Users\\irisg\\Documents\\LoboUPVT\\_working\\rig_fix_20261122\\Lobo_nuevo_candidate_v5.blend",
+  "scene": "Scene",
+  "mode": "POSE",
+  "objects": [
+    {
+      "name": "Mesh_0_Rig",
+      "type": "ARMATURE",
+      "parent": null
+    },
+    {
+      "name": "Light",
+      "type": "LIGHT",
+      "parent": null
+    },
+    {
+      "name": "Camera",
+      "type": "CAMERA",
+      "parent": null
+    },
+    {
+      "name": "Mesh_0",
+      "type": "MESH",
+      "parent": "Mesh_0_Rig"
+    }
+  ],
+  "armatures": [
+    {
+      "name": "Mesh_0_Rig",
+      "bone_count": 42,
+      "bones": [
+        {
+          "name": "Root",
+          "parent": null,
+          "connected": false,
+          "head": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "tail": [
+            0.0,
+            0.0,
+            0.18
+          ],
+          "length": 0.18
+        },
+        {
+          "name": "Spine",
+          "parent": "Root",
+          "connected": true,
+          "head": [
+            0.0,
+            0.0,
+            0.18
+          ],
+          "tail": [
+            0.0,
+            0.0,
+            0.45
+          ],
+          "length": 0.27
+        },
+        {
+          "name": "Ear_L",
+          "parent": "Spine",
+          "connected": false,
+          "head": [
+            0.12,
+            -0.1,
+            0.63
+          ],
+          "tail": [
+            0.2,
+            -0.22,
+            0.92
+          ],
+          "length": 0.32388
+        },
+        {
+          "name": "Ear_R",
+          "parent": "Spine",
+          "connected": false,
+          "head": [
+            -0.11,
+            -0.09,
+            0.63
+          ],
+          "tail": [
+            -0.15,
+            -0.2,
+            0.94
+          ],
+          "length": 0.33136
+        },
+        {
+          "name": "UpperArm_L",
+          "parent": "Spine",
+          "connected": false,
+          "head": [
+            0.08,
+            -0.01,
+            0.38
+          ],
+          "tail": [
+            0.27,
+            -0.01,
+            0.372
+          ],
+          "length": 0.19017
+        },
+        {
+          "name": "Forearm_L",
+          "parent": "UpperArm_L",
+          "connected": true,
+          "head": [
+            0.27,
+            -0.01,
+            0.372
+          ],
+          "tail": [
+            0.46,
+            -0.01,
+            0.365
+          ],
+          "length": 0.19013
+        },
+        {
+          "name": "Hand_L",
+          "parent": "Forearm_L",
+          "connected": true,
+          "head": [
+            0.46,
+            -0.01,
+            0.365
+          ],
+          "tail": [
+            0.61,
+            -0.01,
+            0.368
+          ],
+          "length": 0.15003
+        },
+        {
+          "name": "Index_01_L",
+          "parent": "Hand_L",
+          "connected": false,
+          "head": [
+            0.61,
+            -0.085,
+            0.368
+          ],
+          "tail": [
+            0.705,
+            -0.085,
+            0.368
+          ],
+          "length": 0.095
+        },
+        {
+          "name": "Index_02_L",
+          "parent": "Index_01_L",
+          "connected": true,
+          "head": [
+            0.705,
+            -0.085,
+            0.368
+          ],
+          "tail": [
+            0.8,
+            -0.085,
+            0.367
+          ],
+          "length": 0.09501
+        },
+        {
+          "name": "Middle_01_L",
+          "parent": "Hand_L",
+          "connected": false,
+          "head": [
+            0.61,
+            -0.035,
+            0.368
+          ],
+          "tail": [
+            0.705,
+            -0.035,
+            0.368
+          ],
+          "length": 0.095
+        },
+        {
+          "name": "Middle_02_L",
+          "parent": "Middle_01_L",
+          "connected": true,
+          "head": [
+            0.705,
+            -0.035,
+            0.368
+          ],
+          "tail": [
+            0.8,
+            -0.035,
+            0.367
+          ],
+          "length": 0.09501
+        },
+        {
+          "name": "Ring_01_L",
+          "parent": "Hand_L",
+          "connected": false,
+          "head": [
+            0.61,
+            0.015,
+            0.368
+          ],
+          "tail": [
+            0.705,
+            0.015,
+            0.368
+          ],
+          "length": 0.095
+        },
+        {
+          "name": "Ring_02_L",
+          "parent": "Ring_01_L",
+          "connected": true,
+          "head": [
+            0.705,
+            0.015,
+            0.368
+          ],
+          "tail": [
+            0.8,
+            0.015,
+            0.367
+          ],
+          "length": 0.09501
+        },
+        {
+          "name": "Pinky_01_L",
+          "parent": "Hand_L",
+          "connected": false,
+          "head": [
+            0.61,
+            0.065,
+            0.368
+          ],
+          "tail": [
+            0.705,
+            0.065,
+            0.368
+          ],
+          "length": 0.095
+        },
+        {
+          "name": "Pinky_02_L",
+          "parent": "Pinky_01_L",
+          "connected": true,
+          "head": [
+            0.705,
+            0.065,
+            0.368
+          ],
+          "tail": [
+            0.8,
+            0.065,
+            0.367
+          ],
+          "length": 0.09501
+        },
+        {
+          "name": "UpperArm_R",
+          "parent": "Spine",
+          "connected": false,
+          "head": [
+            -0.08,
+            -0.23,
+            0.38
+          ],
+          "tail": [
+            -0.27,
+            -0.23,
+            0.372
+          ],
+          "length": 0.19017
+        },
+        {
+          "name": "Forearm_R",
+          "parent": "UpperArm_R",
+          "connected": true,
+          "head": [
+            -0.27,
+            -0.23,
+            0.372
+          ],
+          "tail": [
+            -0.46,
+            -0.23,
+            0.365
+          ],
+          "length": 0.19013
+        },
+        {
+          "name": "Hand_R",
+          "parent": "Forearm_R",
+          "connected": true,
+          "head": [
+            -0.46,
+            -0.23,
+            0.365
+          ],
+          "tail": [
+            -0.61,
+            -0.23,
+            0.367
+          ],
+          "length": 0.15001
+        },
+        {
+          "name": "Index_01_R",
+          "parent": "Hand_R",
+          "connected": false,
+          "head": [
+            -0.61,
+            -0.295,
+            0.367
+          ],
+          "tail": [
+            -0.705,
+            -0.295,
+            0.367
+          ],
+          "length": 0.095
+        },
+        {
+          "name": "Index_02_R",
+          "parent": "Index_01_R",
+          "connected": true,
+          "head": [
+            -0.705,
+            -0.295,
+            0.367
+          ],
+          "tail": [
+            -0.8,
+            -0.295,
+            0.367
+          ],
+          "length": 0.095
+        },
+        {
+          "name": "Middle_01_R",
+          "parent": "Hand_R",
+          "connected": false,
+          "head": [
+            -0.61,
+            -0.245,
+            0.367
+          ],
+          "tail": [
+            -0.705,
+            -0.245,
+            0.367
+          ],
+          "length": 0.095
+        },
+        {
+          "name": "Middle_02_R",
+          "parent": "Middle_01_R",
+          "connected": true,
+          "head": [
+            -0.705,
+            -0.245,
+            0.367
+          ],
+          "tail": [
+            -0.8,
+            -0.245,
+            0.367
+          ],
+          "length": 0.095
+        },
+        {
+          "name": "Ring_01_R",
+          "parent": "Hand_R",
+          "connected": false,
+          "head": [
+            -0.61,
+            -0.195,
+            0.367
+          ],
+          "tail": [
+            -0.705,
+            -0.195,
+            0.367
+          ],
+          "length": 0.095
+        },
+        {
+          "name": "Ring_02_R",
+          "parent": "Ring_01_R",
+          "connected": true,
+          "head": [
+            -0.705,
+            -0.195,
+            0.367
+          ],
+          "tail": [
+            -0.8,
+            -0.195,
+            0.367
+          ],
+          "length": 0.095
+        },
+        {
+          "name": "Pinky_01_R",
+          "parent": "Hand_R",
+          "connected": false,
+          "head": [
+            -0.61,
+            -0.145,
+            0.367
+          ],
+          "tail": [
+            -0.705,
+            -0.145,
+            0.367
+          ],
+          "length": 0.095
+        },
+        {
+          "name": "Pinky_02_R",
+          "parent": "Pinky_01_R",
+          "connected": true,
+          "head": [
+            -0.705,
+            -0.145,
+            0.367
+          ],
+          "tail": [
+            -0.8,
+            -0.145,
+            0.367
+          ],
+          "length": 0.095
+        },
+        {
+          "name": "Tail_01",
+          "parent": "Root",
+          "connected": false,
+          "head": [
+            -0.145,
+            0.165,
+            -0.215
+          ],
+          "tail": [
+            -0.23,
+            0.175,
+            -0.315
+          ],
+          "length": 0.13162
+        },
+        {
+          "name": "Tail_02",
+          "parent": "Tail_01",
+          "connected": true,
+          "head": [
+            -0.23,
+            0.175,
+            -0.315
+          ],
+          "tail": [
+            -0.32,
+            0.195,
+            -0.34
+          ],
+          "length": 0.09552
+        },
+        {
+          "name": "Tail_03",
+          "parent": "Tail_02",
+          "connected": true,
+          "head": [
+            -0.32,
+            0.195,
+            -0.34
+          ],
+          "tail": [
+            -0.42,
+            0.225,
+            -0.34
+          ],
+          "length": 0.1044
+        },
+        {
+          "name": "Tail_04",
+          "parent": "Tail_03",
+          "connected": true,
+          "head": [
+            -0.42,
+            0.225,
+            -0.34
+          ],
+          "tail": [
+            -0.52,
+            0.255,
+            -0.355
+          ],
+          "length": 0.10548
+        },
+        {
+          "name": "Tail_05",
+          "parent": "Tail_04",
+          "connected": true,
+          "head": [
+            -0.52,
+            0.255,
+            -0.355
+          ],
+          "tail": [
+            -0.61,
+            0.285,
+            -0.35
+          ],
+          "length": 0.095
+        },
+        {
+          "name": "Tail_06",
+          "parent": "Tail_05",
+          "connected": true,
+          "head": [
+            -0.61,
+            0.285,
+            -0.35
+          ],
+          "tail": [
+            -0.68,
+            0.305,
+            -0.325
+          ],
+          "length": 0.07697
+        },
+        {
+          "name": "Pelvis_L",
+          "parent": "Root",
+          "connected": false,
+          "head": [
+            0.02,
+            -0.14,
+            -0.16
+          ],
+          "tail": [
+            0.22,
+            -0.14,
+            -0.25
+          ],
+          "length": 0.21932
+        },
+        {
+          "name": "Thigh_L",
+          "parent": "Pelvis_L",
+          "connected": true,
+          "head": [
+            0.22,
+            -0.14,
+            -0.25
+          ],
+          "tail": [
+            0.27,
+            -0.15,
+            -0.58
+          ],
+          "length": 0.33392
+        },
+        {
+          "name": "Shin_L",
+          "parent": "Thigh_L",
+          "connected": true,
+          "head": [
+            0.27,
+            -0.15,
+            -0.58
+          ],
+          "tail": [
+            0.3,
+            -0.18,
+            -0.86
+          ],
+          "length": 0.2832
+        },
+        {
+          "name": "Foot_L",
+          "parent": "Shin_L",
+          "connected": true,
+          "head": [
+            0.3,
+            -0.18,
+            -0.86
+          ],
+          "tail": [
+            0.31,
+            -0.35,
+            -0.92
+          ],
+          "length": 0.18055
+        },
+        {
+          "name": "Toe_L",
+          "parent": "Foot_L",
+          "connected": true,
+          "head": [
+            0.31,
+            -0.35,
+            -0.92
+          ],
+          "tail": [
+            0.31,
+            -0.42,
+            -0.94
+          ],
+          "length": 0.0728
+        },
+        {
+          "name": "Pelvis_R",
+          "parent": "Root",
+          "connected": false,
+          "head": [
+            -0.02,
+            -0.16,
+            -0.16
+          ],
+          "tail": [
+            -0.2,
+            -0.16,
+            -0.25
+          ],
+          "length": 0.20125
+        },
+        {
+          "name": "Thigh_R",
+          "parent": "Pelvis_R",
+          "connected": true,
+          "head": [
+            -0.2,
+            -0.16,
+            -0.25
+          ],
+          "tail": [
+            -0.24,
+            -0.18,
+            -0.58
+          ],
+          "length": 0.33302
+        },
+        {
+          "name": "Shin_R",
+          "parent": "Thigh_R",
+          "connected": true,
+          "head": [
+            -0.24,
+            -0.18,
+            -0.58
+          ],
+          "tail": [
+            -0.26,
+            -0.21,
+            -0.86
+          ],
+          "length": 0.28231
+        },
+        {
+          "name": "Foot_R",
+          "parent": "Shin_R",
+          "connected": true,
+          "head": [
+            -0.26,
+            -0.21,
+            -0.86
+          ],
+          "tail": [
+            -0.26,
+            -0.38,
+            -0.92
+          ],
+          "length": 0.18028
+        },
+        {
+          "name": "Toe_R",
+          "parent": "Foot_R",
+          "connected": true,
+          "head": [
+            -0.26,
+            -0.38,
+            -0.92
+          ],
+          "tail": [
+            -0.26,
+            -0.45,
+            -0.94
+          ],
+          "length": 0.0728
+        }
+      ]
+    }
+  ],
+  "meshes": [
+    {
+      "name": "Mesh_0",
+      "vertices": 114582,
+      "edges": 318883,
+      "groups": [
+        "Root",
+        "Spine",
+        "Hand_L",
+        "Hand_R",
+        "Index_01_L",
+        "Index_02_L",
+        "Middle_01_L",
+        "Middle_02_L",
+        "Ring_01_L",
+        "Ring_02_L",
+        "Pinky_01_L",
+        "Pinky_02_L",
+        "Index_01_R",
+        "Index_02_R",
+        "Middle_01_R",
+        "Middle_02_R",
+        "Ring_01_R",
+        "Ring_02_R",
+        "Pinky_01_R",
+        "Pinky_02_R",
+        "Tail_01",
+        "Tail_02",
+        "Tail_03",
+        "Tail_04",
+        "Ear_L",
+        "Ear_R",
+        "Foot_L",
+        "Toe_L",
+        "Foot_R",
+        "Toe_R",
+        "Thigh_L",
+        "Shin_L",
+        "Thigh_R",
+        "Shin_R",
+        "Tail_05",
+        "Tail_06",
+        "UpperArm_L",
+        "Forearm_L",
+        "UpperArm_R",
+        "Forearm_R",
+        "Pelvis_L",
+        "Pelvis_R"
+      ],
+      "modifiers": [
+        {
+          "name": "Armature",
+          "type": "ARMATURE",
+          "object": "Mesh_0_Rig"
+        }
+      ],
+      "armature_weights": {
+        "Toe_R": {
+          "vertex_count": 3671,
+          "weight_sum": 1396.9964,
+          "max_weight": 0.6698,
+          "weighted_z_min": -0.95184,
+          "weighted_z_max": -0.74395
+        },
+        "Foot_R": {
+          "vertex_count": 8653,
+          "weight_sum": 4025.7208,
+          "max_weight": 1.0,
+          "weighted_z_min": -0.95184,
+          "weighted_z_max": -0.69617
+        },
+        "Middle_01_R": {
+          "vertex_count": 1079,
+          "weight_sum": 194.693,
+          "max_weight": 0.4631,
+          "weighted_z_min": 0.31178,
+          "weighted_z_max": 0.42102
+        },
+        "Shin_L": {
+          "vertex_count": 9557,
+          "weight_sum": 5136.145,
+          "max_weight": 1.0,
+          "weighted_z_min": -0.95136,
+          "weighted_z_max": -0.40991
+        },
+        "Thigh_L": {
+          "vertex_count": 7278,
+          "weight_sum": 3335.5771,
+          "max_weight": 1.0,
+          "weighted_z_min": -0.70637,
+          "weighted_z_max": -0.11944
+        },
+        "Ring_02_R": {
+          "vertex_count": 1314,
+          "weight_sum": 536.0863,
+          "max_weight": 1.0,
+          "weighted_z_min": 0.3234,
+          "weighted_z_max": 0.42019
+        },
+        "Toe_L": {
+          "vertex_count": 3242,
+          "weight_sum": 1189.2432,
+          "max_weight": 0.6491,
+          "weighted_z_min": -0.95136,
+          "weighted_z_max": -0.75156
+        },
+        "Forearm_R": {
+          "vertex_count": 1656,
+          "weight_sum": 645.3908,
+          "max_weight": 1.0,
+          "weighted_z_min": 0.2778,
+          "weighted_z_max": 0.45933
+        },
+        "Pelvis_L": {
+          "vertex_count": 6899,
+          "weight_sum": 2876.3835,
+          "max_weight": 0.6667,
+          "weighted_z_min": -0.27994,
+          "weighted_z_max": -0.05344
+        },
+        "Spine": {
+          "vertex_count": 67259,
+          "weight_sum": 36208.4929,
+          "max_weight": 1.0,
+          "weighted_z_min": -0.94171,
+          "weighted_z_max": 0.94738
+        },
+        "Ring_01_R": {
+          "vertex_count": 886,
+          "weight_sum": 148.5996,
+          "max_weight": 0.4882,
+          "weighted_z_min": 0.31207,
+          "weighted_z_max": 0.42269
+        },
+        "Tail_01": {
+          "vertex_count": 4506,
+          "weight_sum": 3574.6439,
+          "max_weight": 1.0,
+          "weighted_z_min": -0.49494,
+          "weighted_z_max": -0.04003
+        },
+        "UpperArm_R": {
+          "vertex_count": 220,
+          "weight_sum": 83.4451,
+          "max_weight": 1.0,
+          "weighted_z_min": 0.2834,
+          "weighted_z_max": 0.44931
+        },
+        "Index_01_R": {
+          "vertex_count": 1047,
+          "weight_sum": 358.3374,
+          "max_weight": 1.0,
+          "weighted_z_min": 0.31036,
+          "weighted_z_max": 0.41083
+        },
+        "Shin_R": {
+          "vertex_count": 9517,
+          "weight_sum": 4903.1927,
+          "max_weight": 1.0,
+          "weighted_z_min": -0.95184,
+          "weighted_z_max": -0.40146
+        },
+        "Root": {
+          "vertex_count": 44739,
+          "weight_sum": 7112.8321,
+          "max_weight": 0.18,
+          "weighted_z_min": -0.94171,
+          "weighted_z_max": 0.59992
+        },
+        "Foot_L": {
+          "vertex_count": 8318,
+          "weight_sum": 3957.2502,
+          "max_weight": 1.0,
+          "weighted_z_min": -0.95136,
+          "weighted_z_max": -0.70498
+        },
+        "Thigh_R": {
+          "vertex_count": 6158,
+          "weight_sum": 2992.2441,
+          "max_weight": 1.0,
+          "weighted_z_min": -0.73729,
+          "weighted_z_max": -0.11945
+        },
+        "UpperArm_L": {
+          "vertex_count": 218,
+          "weight_sum": 72.7526,
+          "max_weight": 1.0,
+          "weighted_z_min": 0.28199,
+          "weighted_z_max": 0.45203
+        },
+        "Tail_05": {
+          "vertex_count": 3446,
+          "weight_sum": 1508.0376,
+          "max_weight": 1.0,
+          "weighted_z_min": -0.53999,
+          "weighted_z_max": -0.20465
+        },
+        "Tail_04": {
+          "vertex_count": 2806,
+          "weight_sum": 1686.8409,
+          "max_weight": 1.0,
+          "weighted_z_min": -0.53989,
+          "weighted_z_max": -0.21206
+        },
+        "Index_02_R": {
+          "vertex_count": 1073,
+          "weight_sum": 413.4293,
+          "max_weight": 1.0,
+          "weighted_z_min": 0.31785,
+          "weighted_z_max": 0.41083
+        },
+        "Pinky_02_R": {
+          "vertex_count": 764,
+          "weight_sum": 304.2891,
+          "max_weight": 0.9253,
+          "weighted_z_min": 0.32692,
+          "weighted_z_max": 0.40945
+        },
+        "Pelvis_R": {
+          "vertex_count": 5456,
+          "weight_sum": 2165.1622,
+          "max_weight": 0.6667,
+          "weighted_z_min": -0.27987,
+          "weighted_z_max": -0.05338
+        },
+        "Pinky_01_L": {
+          "vertex_count": 978,
+          "weight_sum": 318.1696,
+          "max_weight": 0.799,
+          "weighted_z_min": 0.32186,
+          "weighted_z_max": 0.42063
+        },
+        "Forearm_L": {
+          "vertex_count": 1761,
+          "weight_sum": 597.1885,
+          "max_weight": 1.0,
+          "weighted_z_min": 0.27827,
+          "weighted_z_max": 0.45776
+        },
+        "Hand_R": {
+          "vertex_count": 3683,
+          "weight_sum": 1971.6637,
+          "max_weight": 1.0,
+          "weighted_z_min": 0.27048,
+          "weighted_z_max": 0.45933
+        },
+        "Ear_L": {
+          "vertex_count": 9638,
+          "weight_sum": 8192.3002,
+          "max_weight": 0.85,
+          "weighted_z_min": 0.60004,
+          "weighted_z_max": 0.92835
+        },
+        "Middle_02_R": {
+          "vertex_count": 1415,
+          "weight_sum": 561.7537,
+          "max_weight": 1.0,
+          "weighted_z_min": 0.32434,
+          "weighted_z_max": 0.41872
+        },
+        "Tail_03": {
+          "vertex_count": 2631,
+          "weight_sum": 1397.1204,
+          "max_weight": 1.0,
+          "weighted_z_min": -0.5399,
+          "weighted_z_max": -0.19048
+        },
+        "Middle_02_L": {
+          "vertex_count": 1182,
+          "weight_sum": 454.4431,
+          "max_weight": 1.0,
+          "weighted_z_min": 0.32469,
+          "weighted_z_max": 0.41762
+        },
+        "Middle_01_L": {
+          "vertex_count": 1014,
+          "weight_sum": 165.4313,
+          "max_weight": 0.4787,
+          "weighted_z_min": 0.3158,
+          "weighted_z_max": 0.42405
+        },
+        "Tail_02": {
+          "vertex_count": 3726,
+          "weight_sum": 2301.4969,
+          "max_weight": 1.0,
+          "weighted_z_min": -0.53856,
+          "weighted_z_max": -0.16222
+        },
+        "Index_01_L": {
+          "vertex_count": 890,
+          "weight_sum": 318.643,
+          "max_weight": 1.0,
+          "weighted_z_min": 0.31498,
+          "weighted_z_max": 0.41208
+        },
+        "Ring_02_L": {
+          "vertex_count": 1261,
+          "weight_sum": 544.7863,
+          "max_weight": 1.0,
+          "weighted_z_min": 0.32701,
+          "weighted_z_max": 0.4188
+        },
+        "Pinky_02_L": {
+          "vertex_count": 1072,
+          "weight_sum": 588.366,
+          "max_weight": 1.0,
+          "weighted_z_min": 0.32821,
+          "weighted_z_max": 0.41131
+        },
+        "Ear_R": {
+          "vertex_count": 9194,
+          "weight_sum": 7814.9002,
+          "max_weight": 0.85,
+          "weighted_z_min": 0.60006,
+          "weighted_z_max": 0.94738
+        },
+        "Ring_01_L": {
+          "vertex_count": 1003,
+          "weight_sum": 154.5827,
+          "max_weight": 0.4748,
+          "weighted_z_min": 0.31621,
+          "weighted_z_max": 0.42444
+        },
+        "Tail_06": {
+          "vertex_count": 2785,
+          "weight_sum": 1627.2115,
+          "max_weight": 1.0,
+          "weighted_z_min": -0.5067,
+          "weighted_z_max": -0.19651
+        },
+        "Hand_L": {
+          "vertex_count": 3628,
+          "weight_sum": 2145.4202,
+          "max_weight": 1.0,
+          "weighted_z_min": 0.27009,
+          "weighted_z_max": 0.45776
+        },
+        "Index_02_L": {
+          "vertex_count": 798,
+          "weight_sum": 273.3059,
+          "max_weight": 0.7223,
+          "weighted_z_min": 0.31568,
+          "weighted_z_max": 0.40859
+        },
+        "Pinky_01_R": {
+          "vertex_count": 739,
+          "weight_sum": 297.5734,
+          "max_weight": 0.9356,
+          "weighted_z_min": 0.31571,
+          "weighted_z_max": 0.41514
+        }
+      }
+    }
+  ],
+  "pose_tests": [
+    {
+      "rig": "Mesh_0_Rig",
+      "mesh": "Mesh_0",
+      "bone": "UpperArm_L",
+      "local_axis": "X",
+      "degrees": -90,
+      "meaningful_edges": 206474,
+      "excluded_near_zero_edges": 112409,
+      "edge_ratio_p95": 1.0,
+      "edge_ratio_p99": 2.2629,
+      "edge_ratio_max": 107.6935,
+      "edges_ratio_gt_2": 2221,
+      "edges_ratio_gt_3": 1724,
+      "max_vertex_displacement": 1.02512
+    },
+    {
+      "rig": "Mesh_0_Rig",
+      "mesh": "Mesh_0",
+      "bone": "UpperArm_L",
+      "local_axis": "X",
+      "degrees": 90,
+      "meaningful_edges": 206474,
+      "excluded_near_zero_edges": 112409,
+      "edge_ratio_p95": 1.0,
+      "edge_ratio_p99": 2.63,
+      "edge_ratio_max": 107.693,
+      "edges_ratio_gt_2": 2360,
+      "edges_ratio_gt_3": 1906,
+      "max_vertex_displacement": 1.02512
+    },
+    {
+      "rig": "Mesh_0_Rig",
+      "mesh": "Mesh_0",
+      "bone": "UpperArm_L",
+      "local_axis": "Z",
+      "degrees": -90,
+      "meaningful_edges": 206474,
+      "excluded_near_zero_edges": 112409,
+      "edge_ratio_p95": 1.0,
+      "edge_ratio_p99": 2.3006,
+      "edge_ratio_max": 110.8775,
+      "edges_ratio_gt_2": 2203,
+      "edges_ratio_gt_3": 1796,
+      "max_vertex_displacement": 1.02512
+    },
+    {
+      "rig": "Mesh_0_Rig",
+      "mesh": "Mesh_0",
+      "bone": "UpperArm_L",
+      "local_axis": "Z",
+      "degrees": 90,
+      "meaningful_edges": 206474,
+      "excluded_near_zero_edges": 112409,
+      "edge_ratio_p95": 1.0,
+      "edge_ratio_p99": 2.5287,
+      "edge_ratio_max": 111.3534,
+      "edges_ratio_gt_2": 2336,
+      "edges_ratio_gt_3": 1858,
+      "max_vertex_displacement": 1.02512
+    },
+    {
+      "rig": "Mesh_0_Rig",
+      "mesh": "Mesh_0",
+      "bone": "Forearm_L",
+      "local_axis": "X",
+      "degrees": -90,
+      "meaningful_edges": 206474,
+      "excluded_near_zero_edges": 112409,
+      "edge_ratio_p95": 1.0,
+      "edge_ratio_p99": 2.2796,
+      "edge_ratio_max": 97.4401,
+      "edges_ratio_gt_2": 2242,
+      "edges_ratio_gt_3": 1688,
+      "max_vertex_displacement": 0.97093
+    },
+    {
+      "rig": "Mesh_0_Rig",
+      "mesh": "Mesh_0",
+      "bone": "Forearm_L",
+      "local_axis": "X",
+      "degrees": 90,
+      "meaningful_edges": 206474,
+      "excluded_near_zero_edges": 112409,
+      "edge_ratio_p95": 1.0,
+      "edge_ratio_p99": 2.4373,
+      "edge_ratio_max": 93.9438,
+      "edges_ratio_gt_2": 2329,
+      "edges_ratio_gt_3": 1792,
+      "max_vertex_displacement": 0.944
+    },
+    {
+      "rig": "Mesh_0_Rig",
+      "mesh": "Mesh_0",
+      "bone": "Forearm_L",
+      "local_axis": "Z",
+      "degrees": -90,
+      "meaningful_edges": 206474,
+      "excluded_near_zero_edges": 112409,
+      "edge_ratio_p95": 1.0,
+      "edge_ratio_p99": 1.5658,
+      "edge_ratio_max": 54.4409,
+      "edges_ratio_gt_2": 1582,
+      "edges_ratio_gt_3": 950,
+      "max_vertex_displacement": 0.36079
+    },
+    {
+      "rig": "Mesh_0_Rig",
+      "mesh": "Mesh_0",
+      "bone": "Forearm_L",
+      "local_axis": "Z",
+      "degrees": 90,
+      "meaningful_edges": 206474,
+      "excluded_near_zero_edges": 112409,
+      "edge_ratio_p95": 1.0,
+      "edge_ratio_p99": 2.7857,
+      "edge_ratio_max": 140.4028,
+      "edges_ratio_gt_2": 2442,
+      "edges_ratio_gt_3": 1980,
+      "max_vertex_displacement": 1.27919
+    },
+    {
+      "rig": "Mesh_0_Rig",
+      "mesh": "Mesh_0",
+      "bone": "UpperArm_R",
+      "local_axis": "X",
+      "degrees": -90,
+      "meaningful_edges": 206474,
+      "excluded_near_zero_edges": 112409,
+      "edge_ratio_p95": 1.0,
+      "edge_ratio_p99": 6.0141,
+      "edge_ratio_max": 140.4028,
+      "edges_ratio_gt_2": 4931,
+      "edges_ratio_gt_3": 3984,
+      "max_vertex_displacement": 1.27919
+    },
+    {
+      "rig": "Mesh_0_Rig",
+      "mesh": "Mesh_0",
+      "bone": "UpperArm_R",
+      "local_axis": "X",
+      "degrees": 90,
+      "meaningful_edges": 206474,
+      "excluded_near_zero_edges": 112409,
+      "edge_ratio_p95": 1.0,
+      "edge_ratio_p99": 6.3728,
+      "edge_ratio_max": 140.4028,
+      "edges_ratio_gt_2": 5050,
+      "edges_ratio_gt_3": 4159,
+      "max_vertex_displacement": 1.27919
+    },
+    {
+      "rig": "Mesh_0_Rig",
+      "mesh": "Mesh_0",
+      "bone": "UpperArm_R",
+      "local_axis": "Z",
+      "degrees": -90,
+      "meaningful_edges": 206474,
+      "excluded_near_zero_edges": 112409,
+      "edge_ratio_p95": 1.0,
+      "edge_ratio_p99": 6.1318,
+      "edge_ratio_max": 140.4028,
+      "edges_ratio_gt_2": 4905,
+      "edges_ratio_gt_3": 3966,
+      "max_vertex_displacement": 1.27919
+    },
+    {
+      "rig": "Mesh_0_Rig",
+      "mesh": "Mesh_0",
+      "bone": "UpperArm_R",
+      "local_axis": "Z",
+      "degrees": 90,
+      "meaningful_edges": 206474,
+      "excluded_near_zero_edges": 112409,
+      "edge_ratio_p95": 1.0,
+      "edge_ratio_p99": 6.2958,
+      "edge_ratio_max": 140.4028,
+      "edges_ratio_gt_2": 5036,
+      "edges_ratio_gt_3": 4132,
+      "max_vertex_displacement": 1.27919
+    },
+    {
+      "rig": "Mesh_0_Rig",
+      "mesh": "Mesh_0",
+      "bone": "Forearm_R",
+      "local_axis": "X",
+      "degrees": -90,
+      "meaningful_edges": 206474,
+      "excluded_near_zero_edges": 112409,
+      "edge_ratio_p95": 1.0,
+      "edge_ratio_p99": 5.7717,
+      "edge_ratio_max": 140.4028,
+      "edges_ratio_gt_2": 4970,
+      "edges_ratio_gt_3": 3916,
+      "max_vertex_displacement": 1.27919
+    },
+    {
+      "rig": "Mesh_0_Rig",
+      "mesh": "Mesh_0",
+      "bone": "Forearm_R",
+      "local_axis": "X",
+      "degrees": 90,
+      "meaningful_edges": 206474,
+      "excluded_near_zero_edges": 112409,
+      "edge_ratio_p95": 1.0,
+      "edge_ratio_p99": 5.9703,
+      "edge_ratio_max": 140.4028,
+      "edges_ratio_gt_2": 5007,
+      "edges_ratio_gt_3": 4033,
+      "max_vertex_displacement": 1.27919
+    },
+    {
+      "rig": "Mesh_0_Rig",
+      "mesh": "Mesh_0",
+      "bone": "Forearm_R",
+      "local_axis": "Z",
+      "degrees": -90,
+      "meaningful_edges": 206474,
+      "excluded_near_zero_edges": 112409,
+      "edge_ratio_p95": 1.0,
+      "edge_ratio_p99": 4.4552,
+      "edge_ratio_max": 140.4028,
+      "edges_ratio_gt_2": 4292,
+      "edges_ratio_gt_3": 3068,
+      "max_vertex_displacement": 1.27919
+    },
+    {
+      "rig": "Mesh_0_Rig",
+      "mesh": "Mesh_0",
+      "bone": "Forearm_R",
+      "local_axis": "Z",
+      "degrees": 90,
+      "meaningful_edges": 206474,
+      "excluded_near_zero_edges": 112409,
+      "edge_ratio_p95": 1.0,
+      "edge_ratio_p99": 6.6586,
+      "edge_ratio_max": 140.4028,
+      "edges_ratio_gt_2": 5136,
+      "edges_ratio_gt_3": 4239,
+      "max_vertex_displacement": 1.28711
+    }
+  ]
+}

@@ -1,0 +1,138 @@
+{
+  "source": "C:\\Users\\irisg\\Documents\\LoboUPVT\\_working\\rig_fix_20261122\\Lobo_nuevo_working.blend",
+  "candidate": "C:\\Users\\irisg\\Documents\\LoboUPVT\\_working\\rig_fix_20261122\\Lobo_nuevo_candidate_v3.blend",
+  "method": "one-ring local weight smoothing, 50% original + 50% fixed-snapshot neighbor average",
+  "centers": [
+    9929,
+    9990
+  ],
+  "affected_count": 10,
+  "changes": [
+    {
+      "vertex": 9822,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "degree": 6
+    },
+    {
+      "vertex": 9871,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.61389,
+        "Root": 0.10833,
+        "Forearm_R": 0.11885,
+        "Hand_R": 0.15893
+      },
+      "degree": 9
+    },
+    {
+      "vertex": 9919,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "degree": 7
+    },
+    {
+      "vertex": 9929,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.765,
+        "Root": 0.135,
+        "Forearm_R": 0.1
+      },
+      "degree": 5
+    },
+    {
+      "vertex": 9989,
+      "old": {
+        "Forearm_R": 0.48293,
+        "Hand_R": 0.51707
+      },
+      "new": {
+        "Forearm_R": 0.51111,
+        "Hand_R": 0.38889,
+        "Spine": 0.085,
+        "Root": 0.015
+      },
+      "degree": 5
+    },
+    {
+      "vertex": 9990,
+      "old": {
+        "Forearm_R": 1.0
+      },
+      "new": {
+        "Forearm_R": 0.74878,
+        "Spine": 0.18214,
+        "Root": 0.03214,
+        "Hand_R": 0.03693
+      },
+      "degree": 7
+    },
+    {
+      "vertex": 10021,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.68,
+        "Root": 0.12,
+        "Forearm_R": 0.2
+      },
+      "degree": 5
+    },
+    {
+      "vertex": 10093,
+      "old": {
+        "Forearm_R": 1.0
+      },
+      "new": {
+        "Forearm_R": 0.7,
+        "Spine": 0.255,
+        "Root": 0.045
+      },
+      "degree": 5
+    },
+    {
+      "vertex": 10155,
+      "old": {
+        "Forearm_R": 1.0
+      },
+      "new": {
+        "Forearm_R": 0.85034,
+        "Hand_R": 0.14966
+      },
+      "degree": 7
+    },
+    {
+      "vertex": 10179,
+      "old": {
+        "Forearm_R": 1.0
+      },
+      "new": {
+        "Forearm_R": 0.9,
+        "Spine": 0.085,
+        "Root": 0.015
+      },
+      "degree": 5
+    }
+  ]
+}

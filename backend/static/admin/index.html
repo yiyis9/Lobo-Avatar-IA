@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#A61F43">
+    <title>Administración | Lobo UPVT</title>
+    <link rel="stylesheet" href="/panel/styles.css?v=20261122-brand-1">
+    <link rel="stylesheet" href="/accesibilidad/accessibility.css?v=20261122-brand-1">
+    <script src="/accesibilidad/accessibility.js?v=20261118-5" defer></script>
+    <script src="/panel/app.js?v=20261120-2" defer></script>
+</head>
+<body>
+    <div class="color-bar" aria-hidden="true"><span></span><span></span><span></span></div>
+    <div id="contact-notification" class="contact-notification hidden" role="status" aria-live="polite"><span id="contact-notification-text"></span><button id="contact-notification-open" class="button secondary" type="button">Ver mensajes</button></div>
+    <main id="access-screen" class="access-screen">
+        <section class="access-panel" aria-labelledby="access-title">
+            <a class="access-back" href="/?opciones=1" title="Volver a elegir una interfaz">← <span>Volver</span></a>
+            <p class="eyebrow">Universidad Politécnica del Valle de Toluca</p>
+            <h1 id="access-title">Lobo UPVT</h1>
+            <p class="muted">Panel administrativo</p>
+            <div class="access-tabs" role="tablist" aria-label="Acceso administrativo">
+                <button class="tab-button selected" type="button" data-access-tab="login" role="tab" aria-selected="true">Iniciar sesión</button>
+                <button class="tab-button" type="button" data-access-tab="register" role="tab" aria-selected="false">Solicitar registro</button>
+            </div>
+            <form id="login-form" class="form-stack" data-access-form="login">
+                <label>Correo<input name="correo" type="email" autocomplete="username" required maxlength="100" title="Correo de una cuenta administrativa autorizada."></label>
+                <label>Contraseña<span class="password-field"><input name="contrasena" type="password" autocomplete="current-password" required maxlength="256" title="Contraseña de tu cuenta administrativa."><button class="password-visibility-toggle" type="button" aria-label="Mostrar contraseña" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m3 3 18 18M10.6 6.2A10.8 10.8 0 0 1 12 6c6.25 0 9.75 6 9.75 6a16 16 0 0 1-2.5 3.1M6.2 6.2C3.65 7.8 2.25 12 2.25 12s3.5 6 9.75 6c.7 0 1.38-.08 2-.22"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/></svg></button></span></label>
+                <button class="button primary" type="submit">Ingresar</button>
+            </form>
+            <button id="forgot-password-button" class="inline-action" type="button">¿Olvidaste tu contraseña?</button>
+            <form id="register-form" class="form-stack hidden" data-access-form="register">
+                <label>Nombre completo<input name="nombre" autocomplete="name" required minlength="2" maxlength="100" pattern="[A-Za-zÀ-ÖØ-öø-ÿ]+(?:[ '-][A-Za-zÀ-ÖØ-öø-ÿ]+)*" title="Usa letras; puedes incluir espacios, guiones o apóstrofos."></label>
+                <label>Correo<input name="correo" type="email" autocomplete="email" required maxlength="100"></label>
+                <label>Tipo de acceso<select name="rol" required><option value="admin_contenido">Administrador de contenido</option><option value="admin">Administrador general</option></select></label>
+                <label id="registration-authorization-field">Clave de autorización<span class="password-field"><input name="clave_autorizacion" type="password" autocomplete="off" required maxlength="256" title="Clave compartida por el administrador principal para solicitar acceso."><button class="password-visibility-toggle" type="button" aria-label="Mostrar contraseña" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m3 3 18 18M10.6 6.2A10.8 10.8 0 0 1 12 6c6.25 0 9.75 6 9.75 6a16 16 0 0 1-2.5 3.1M6.2 6.2C3.65 7.8 2.25 12 2.25 12s3.5 6 9.75 6c.7 0 1.38-.08 2-.22"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/></svg></button></span></label>
+                <label id="principal-recovery-field" class="hidden">Clave de relevo de emergencia<span class="password-field"><input name="clave_relevo" type="password" autocomplete="new-password" maxlength="256" aria-describedby="principal-recovery-help" title="Clave secreta de un solo uso. Solo funciona si el administrador principal actual ya no está activo."><button class="password-visibility-toggle" type="button" aria-label="Mostrar contraseña" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m3 3 18 18M10.6 6.2A10.8 10.8 0 0 1 12 6c6.25 0 9.75 6 9.75 6a16 16 0 0 1-2.5 3.1M6.2 6.2C3.65 7.8 2.25 12 2.25 12s3.5 6 9.75 6c.7 0 1.38-.08 2-.22"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/></svg></button></span></label>
+                <p id="principal-recovery-help" class="form-help hidden">Úsala solo si el administrador principal ya no está activo. Si sigue activo, deja este campo vacío y envía la solicitud normal para aprobación.</p>
+                <label>Contraseña<span class="password-field"><input name="contrasena" type="password" autocomplete="new-password" required minlength="12" maxlength="256" aria-describedby="password-requirements" title="Debe cumplir todos los requisitos de seguridad."><button class="password-visibility-toggle" type="button" aria-label="Mostrar contraseña" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m3 3 18 18M10.6 6.2A10.8 10.8 0 0 1 12 6c6.25 0 9.75 6 9.75 6a16 16 0 0 1-2.5 3.1M6.2 6.2C3.65 7.8 2.25 12 2.25 12s3.5 6 9.75 6c.7 0 1.38-.08 2-.22"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/></svg></button></span></label>
+                <p id="password-requirements" class="form-help">Usa al menos 12 caracteres, con mayúscula, minúscula, número y símbolo. No incluyas espacios.</p>
+                <label>Confirmar contraseña<span class="password-field"><input name="confirmacion" type="password" autocomplete="new-password" required minlength="12" maxlength="256"><button class="password-visibility-toggle" type="button" aria-label="Mostrar contraseña" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m3 3 18 18M10.6 6.2A10.8 10.8 0 0 1 12 6c6.25 0 9.75 6 9.75 6a16 16 0 0 1-2.5 3.1M6.2 6.2C3.65 7.8 2.25 12 2.25 12s3.5 6 9.75 6c.7 0 1.38-.08 2-.22"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/></svg></button></span></label>
+                <button class="button primary" type="submit">Enviar solicitud</button>
+            </form>
+            <form id="forgot-password-form" class="form-stack hidden" novalidate>
+                <p class="recovery-title">Recuperar contraseña</p>
+                <label>Correo de tu cuenta<input name="correo" type="email" autocomplete="email" required maxlength="100"></label>
+                <button class="button primary" type="submit">Enviar código</button>
+                <button class="inline-action" type="button" data-recovery-back>← Volver a iniciar sesión</button>
+            </form>
+            <form id="reset-password-form" class="form-stack hidden" novalidate>
+                <p class="recovery-title">Escribe el código que recibiste</p>
+                <label>Correo<input name="correo" type="email" autocomplete="email" readonly required maxlength="100"></label>
+                <label>Código de 6 dígitos<input name="codigo" type="text" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" required minlength="6" maxlength="6"></label>
+                <label>Nueva contraseña<span class="password-field"><input name="contrasena_nueva" type="password" autocomplete="new-password" required minlength="12" maxlength="256" aria-describedby="reset-password-requirements"><button class="password-visibility-toggle" type="button" aria-label="Mostrar contraseña" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m3 3 18 18M10.6 6.2A10.8 10.8 0 0 1 12 6c6.25 0 9.75 6 9.75 6a16 16 0 0 1-2.5 3.1M6.2 6.2C3.65 7.8 2.25 12 2.25 12s3.5 6 9.75 6c.7 0 1.38-.08 2-.22"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/></svg></button></span></label>
+                <p id="reset-password-requirements" class="form-help">Mínimo 12 caracteres, con mayúscula, minúscula, número y símbolo; sin espacios.</p>
+                <label>Confirmar contraseña<span class="password-field"><input name="confirmacion" type="password" autocomplete="new-password" required minlength="12" maxlength="256"><button class="password-visibility-toggle" type="button" aria-label="Mostrar contraseña" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m3 3 18 18M10.6 6.2A10.8 10.8 0 0 1 12 6c6.25 0 9.75 6 9.75 6a16 16 0 0 1-2.5 3.1M6.2 6.2C3.65 7.8 2.25 12 2.25 12s3.5 6 9.75 6c.7 0 1.38-.08 2-.22"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/></svg></button></span></label>
+                <button class="button primary" type="submit">Restablecer contraseña</button>
+                <button class="inline-action" type="button" data-recovery-back>← Volver a iniciar sesión</button>
+            </form>
+            <p id="access-message" class="message" role="status" aria-live="polite"></p>
+        </section>
+    </main>
+
+    <div id="admin-screen" class="admin-screen hidden">
+        <header class="topbar">
+            <a class="wordmark" href="#resumen"><img class="wordmark-logo" src="/kiosko/upvt-logo.jpg?v=20261122-logo-1" alt="Logotipo de la Universidad Politécnica del Valle de Toluca"><span class="wordmark-copy"><span class="wordmark-name">Lobo UPVT</span><span>Administración</span></span></a>
+            <div class="account-tools"><div class="account-identity"><span id="admin-name" class="account-name"></span><span id="admin-role" class="account-role"></span></div><button id="profile-button" class="button secondary" type="button">Mi perfil</button><a class="button secondary kiosk-link" href="/kiosko/" target="_blank" rel="noopener" title="Abre la interfaz pública del kiosko en otra pestaña.">Abrir kiosko</a><button id="logout-button" class="button secondary" type="button">Cerrar sesión</button></div>
+        </header>
+        <div class="layout">
+            <aside class="sidebar" aria-label="Navegación administrativa">
+                <p class="nav-label">Panel</p>
+                <nav class="nav-list">
+                    <button class="nav-button active" type="button" data-view="summary"><svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg><span>Resumen</span></button>
+                    <button class="nav-button" type="button" data-view="questions"><svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11.5a7.5 7.5 0 0 1-7.5 7.5H6l-3 2v-6.5A7.5 7.5 0 1 1 20 11.5Z"/><path d="M9 9a3 3 0 0 1 5.8 1c0 2-2.8 2.5-2.8 4"/><path d="M12 17h.01"/></svg><span>Preguntas y respuestas</span></button>
+                    <button class="nav-button" type="button" data-view="information"><svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg><span>Información institucional</span></button>
+                    <button class="nav-button" type="button" data-view="requests"><svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4h8l3 3v13H5V4h3Z"/><path d="M9 4v4h6V4M8 12h8M8 16h6"/></svg><span>Solicitudes</span><span id="requests-pending-badge" class="notification-badge hidden" aria-label="Solicitudes pendientes">0</span></button>
+                    <button class="nav-button" type="button" data-view="contact-messages"><svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v14H4z"/><path d="m4 7 8 6 8-6"/></svg><span>Mensajes de contacto</span><span id="contact-unread-badge" class="notification-badge hidden" aria-label="Mensajes sin leer">0</span></button>
+                    <button class="nav-button" type="button" data-view="users"><svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3"/><path d="M3.5 20v-1.5A5.5 5.5 0 0 1 9 13a5.5 5.5 0 0 1 5.5 5.5V20M16 5.5a3 3 0 0 1 0 5.8M17 14a5 5 0 0 1 3.5 4.5V20"/></svg><span>Usuarios</span></button>
+                    <button class="nav-button" type="button" data-view="history"><svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg><span>Historial</span></button>
+                    <button class="nav-button" type="button" data-view="metrics"><svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V11h4v9M10 20V5h4v15M16 20v-7h4v7"/></svg><span>Métricas</span></button>
+                    <button class="nav-button" type="button" data-view="backups"><svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v7c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 12v7c0 1.7 3.6 3 8 3s8-1.3 8-3v-7"/></svg><span>Respaldos</span></button>
+                    <button class="nav-button" type="button" data-view="trash"><svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M10 3h4M6 7l1 14h10l1-14M10 11v6M14 11v6"/></svg><span>Papelera</span></button>
+                </nav>
+            </aside>
+            <main class="main-content">
+                <p id="app-message" class="message" role="status" aria-live="polite"></p>
+                <p id="content-voice-status" class="message" role="status" aria-live="polite"></p>
+                <section class="view" data-page="summary">
+                    <div class="page-heading dashboard-heading"><div class="dashboard-heading-copy"><p class="eyebrow">Centro de control</p><h1>Resumen</h1><p class="dashboard-description">Contenido y actividad del kiosko, de un vistazo.</p></div><div class="dashboard-signature" aria-hidden="true"><span>LOBO</span><strong>UPVT</strong><i></i></div></div>
+                    <div class="metric-grid">
+                        <article class="metric metric-red"><span>Respuestas activas</span><strong id="metric-faq">—</strong></article>
+                        <article class="metric metric-green"><span>Consultas atendidas</span><strong id="metric-attentions">—</strong></article>
+                        <article class="metric metric-lime"><span>Solicitudes pendientes</span><strong id="metric-pending">—</strong></article>
+                    </div>
+                    <section class="content-section"><h2>Preguntas más consultadas</h2><div id="popular-questions" class="simple-list"></div></section>
+                    <section id="service-health-section" class="content-section"><h2>Estado de servicios</h2><p id="service-health" class="service-health" role="status" aria-live="polite">Consultando API y MySQL…</p></section>
+                </section>
+
+                <section class="view hidden" data-page="questions">
+                    <div class="page-heading"><p class="eyebrow">Contenido del kiosko</p><h1>Preguntas y respuestas</h1></div>
+                    <section class="content-pane">
+                    <form id="question-form" class="editor form-grid">
+                        <input name="id" type="hidden">
+                        <input name="emocion" type="hidden" value="neutral">
+                        <label>Categoría<input name="categoria" required maxlength="50"></label>
+                        <label>Dirigido a<select name="dirigido_a" title="Define a qué público puede mostrarse esta respuesta."><option value="todos">Todos</option><option value="alumnos">Alumnos</option><option value="profesores">Profesores</option><option value="directivos">Directivos</option></select></label>
+                        <label class="wide">Pregunta<input name="pregunta" required minlength="3" maxlength="255"></label>
+                        <label class="wide">Respuesta<textarea name="respuesta" required rows="8" maxlength="1000000"></textarea></label>
+                        <label class="wide">Adjuntar PDFs o imágenes (opcional)<input id="question-attachment" name="archivo" type="file" multiple accept="application/pdf,.pdf,image/png,.png,image/jpeg,.jpg,.jpeg,image/webp,.webp" title="Puedes agregar hasta 20 PDFs o imágenes al crear o editar la respuesta."></label>
+                        <div id="question-selected-files" class="selected-files wide" aria-live="polite"></div>
+                        <label class="privacy-confirm wide"><input id="question-attachment-confirmation" type="checkbox"> Confirmo que el archivo contiene únicamente información pública y autorizo mostrarlo desde el kiosko.</label>
+                        <p class="muted wide import-note">Tipos de archivo admitidos: PDF, PNG, JPG y WEBP.</p>
+                        <label>Palabras clave<input name="palabras_clave" maxlength="255"></label>
+                        <div class="avatar-action-editor wide">
+                            <label>Animación correspondiente<select name="animacion"><option value="Hablar">Hablar</option><option value="Explicar">Explicar</option><option value="Saludo">Saludo</option><option value="Pensar">Pensar</option><option value="Celebrar">Celebrar</option><option value="idle">Reposo</option></select></label>
+                            <label>Descripción de animación del avatar<textarea id="question-avatar-action" name="accion_avatar" rows="3" maxlength="500" placeholder="Describe el gesto que acompañará esta respuesta." title="Describe brevemente el gesto o movimiento que acompañará esta respuesta."></textarea></label>
+                            <div class="avatar-action-tools"><button class="button secondary" type="button" data-generate-avatar-action="question" title="Analiza la pregunta y la respuesta para completar el gesto; no guarda el formulario.">Generar con Gemini</button><span id="question-avatar-action-status" role="status" aria-live="polite"></span></div>
+                        </div>
+                        <label class="check-label"><input name="activo" type="checkbox" checked title="Las respuestas activas pueden aparecer en el kiosko."> Activa</label>
+                        <div class="form-actions wide"><button class="button primary" type="submit">Guardar respuesta</button><button id="question-reset" class="button secondary" type="button">Limpiar</button></div>
+                    </form>
+                    <div class="editor question-filters">
+                        <label>Buscar<input id="questions-search" type="search" maxlength="100" placeholder="Pregunta, respuesta o palabra clave"></label>
+                        <label>Categoría<select id="questions-category"><option value="">Todas las categorías</option></select></label>
+                        <span id="questions-page-summary" class="muted" aria-live="polite"></span>
+                        <div class="row-actions"><button id="questions-prev" class="button secondary" type="button">Anterior</button><button id="questions-next" class="button secondary" type="button">Siguiente</button></div>
+                    </div>
+                    <div class="table-wrap"><table><thead><tr><th>Pregunta</th><th>Categoría</th><th>Animación</th><th>Estado</th><th>Archivos</th><th>Acciones</th></tr></thead><tbody id="questions-body"></tbody></table></div>
+                    </section>
+                </section>
+
+                <section class="view hidden" data-page="information">
+                    <div class="page-heading"><p class="eyebrow">Contenido del kiosko</p><h1>Información institucional</h1></div>
+                    <section class="content-pane">
+                    <div class="page-heading"><p class="eyebrow">Asistente de carga</p><h2>Administrar información y documentos</h2></div>
+                    <section class="content-section">
+                        <h2 id="manual-information-heading">Agregar información</h2>
+                        <p class="muted import-note">Escribe el contenido que consultarán los alumnos. Puedes adjuntar un PDF o una imagen pública.</p>
+                        <form id="manual-information-form" class="editor form-grid">
+                            <input name="id" type="hidden">
+                            <input name="emocion" type="hidden" value="neutral">
+                            <label>Clave<input name="clave" required minlength="2" maxlength="100" placeholder="mapa-curricular-ti" title="Identificador único, corto y sin espacios para esta información."></label>
+                            <label>Categoría<input name="categoria" required maxlength="80" value="Oferta educativa" title="Usa la categoría Avisos para incluir esta ficha en el carrusel público del kiosko."></label>
+                            <label class="wide">Título<input name="titulo" required minlength="2" maxlength="180" placeholder="Mapa curricular de Ingeniería en Tecnologías de la Información"></label>
+                            <label class="wide">Información para el alumno<textarea name="contenido" required rows="12" maxlength="1000000" placeholder="Puedes pegar aquí textos extensos, como antecedentes, objetivos y cobertura institucional."></textarea></label>
+                            <div class="avatar-action-editor wide">
+                                <label>Animación correspondiente<select name="animacion"><option value="Hablar">Hablar</option><option value="Explicar">Explicar</option><option value="Saludo">Saludo</option><option value="Pensar">Pensar</option><option value="Celebrar">Celebrar</option><option value="idle">Reposo</option></select></label>
+                                <label>Descripción de animación del avatar<textarea id="information-avatar-action" name="accion_avatar" rows="3" maxlength="500" placeholder="Describe el gesto que acompañará esta información." title="Describe brevemente el gesto o movimiento que acompañará esta información."></textarea></label>
+                                <div class="avatar-action-tools"><button class="button secondary" type="button" data-generate-avatar-action="information" title="Analiza el título y el contenido para completar el gesto; no guarda el formulario.">Generar con Gemini</button><span id="information-avatar-action-status" role="status" aria-live="polite"></span></div>
+                            </div>
+                            <label class="wide">Adjuntar PDFs o imágenes (opcional)<input id="manual-information-pdf" name="archivo" type="file" multiple accept="application/pdf,.pdf,image/png,.png,image/jpeg,.jpg,.jpeg,image/webp,.webp" title="Adjunta hasta 20 PDFs o imágenes para que los alumnos puedan consultarlos desde el kiosko."></label>
+                            <div id="manual-information-selected-files" class="selected-files wide" aria-live="polite"></div>
+                            <label id="manual-pdf-confirmation-row" class="privacy-confirm wide"><input id="manual-pdf-confirmation" type="checkbox"> Confirmo que el archivo contiene solo información pública y autorizo su publicación en el kiosko y el análisis de su texto si es PDF.</label>
+                            <p class="muted wide import-note">Tipos de archivo admitidos: PDF, PNG, JPG y WEBP.</p>
+                            <label class="check-label wide"><input name="activo" type="checkbox" checked title="Si está activo, el contenido y su PDF estarán disponibles para el público del kiosko."> Publicar para alumnos y visitantes</label>
+                            <div class="form-actions wide"><button id="save-manual-information" class="button primary" type="submit">Guardar información</button><button id="cancel-information-edit" class="button secondary hidden" type="button">Cancelar edición</button></div>
+                        </form>
+                        <div id="manual-information-status" class="message" role="status" aria-live="polite"></div>
+                    </section>
+                    <section class="content-section import-section">
+                        <h2>Crear borradores desde un documento</h2>
+                        <p class="muted import-note">El documento original se guardará como fuente de consulta del kiosko; si es PDF, también podrá abrirse desde ahí. Gemini propondrá fichas opcionales para que las revises y guardes.</p>
+                        <form id="information-import-form" class="editor import-form">
+                            <label>Documento institucional (.pdf, .txt o .md)<input id="information-file" type="file" accept=".pdf,.txt,.md,application/pdf,text/plain,text/markdown" required title="Elige un documento público del que se propondrán fichas institucionales."></label>
+                            <label class="privacy-confirm"><input id="public-content-confirmation" type="checkbox" required title="Confirma que tienes autorización para enviar el contenido y que no contiene datos privados."> Confirmo que el documento contiene solo información pública y no incluye contraseñas, datos personales ni información confidencial.</label>
+                            <p class="privacy-note">El texto y las tablas del PDF se analizarán con Gemini y se conservarán en la base de datos para responder preguntas específicas. No cargues expedientes ni documentos internos. El nivel gratuito de Gemini puede usar el contenido para mejorar sus productos.</p>
+                            <div class="form-actions"><button id="generate-information-drafts" class="button primary" type="submit">Analizar documento</button></div>
+                        </form>
+                        <div id="information-import-status" class="message" role="status" aria-live="polite"></div>
+                        <div id="information-drafts" class="draft-list"></div>
+                    </section>
+                    <section class="content-section">
+                        <h2>Información guardada</h2>
+                        <div class="table-wrap"><table><thead><tr><th>Título</th><th>Categoría</th><th>Animación</th><th>Estado</th><th>Documentos</th><th>Acciones</th></tr></thead><tbody id="information-body"></tbody></table></div>
+                    </section>
+                    </section>
+                </section>
+
+                <section class="view hidden" data-page="requests">
+                    <div class="page-heading"><p class="eyebrow">Acceso al sistema</p><h1>Solicitudes pendientes</h1></div>
+                    <div class="table-wrap"><table><thead><tr><th>Nombre</th><th>Correo</th><th>Fecha</th><th>Acciones</th></tr></thead><tbody id="requests-body"></tbody></table></div>
+                </section>
+
+                <section class="view hidden" data-page="contact-messages">
+                    <div class="page-heading"><p class="eyebrow">Atención a visitantes</p><h1>Mensajes de contacto</h1><p class="muted">Los mensajes del kiosko aparecen aquí. Al responder, se marcarán como leídos y pasarán al historial inferior.</p></div>
+                    <div class="row-actions contact-inbox-actions"><button id="contact-messages-refresh" class="button secondary" type="button">Actualizar mensajes</button></div>
+                    <div class="table-wrap"><table><thead><tr><th>Fecha</th><th>Nombre</th><th>Correo</th><th>Asunto y mensaje</th><th>Estado</th><th>Acciones</th></tr></thead><tbody id="contact-messages-body"></tbody></table></div>
+                    <section class="content-section contact-replied-history" aria-labelledby="contact-replied-title">
+                        <div class="page-heading"><p class="eyebrow">Seguimiento</p><h2 id="contact-replied-title">Historial de mensajes respondidos</h2><p class="muted">Aquí aparecen los mensajes que ya recibieron respuesta por correo.</p></div>
+                        <div class="table-wrap"><table><thead><tr><th>Fecha del mensaje</th><th>Nombre</th><th>Correo</th><th>Asunto y mensaje</th><th>Respondido el</th><th>Acciones</th></tr></thead><tbody id="contact-replied-body"></tbody></table></div>
+                    </section>
+                </section>
+
+                <section class="view hidden" data-page="users">
+                    <div class="page-heading"><p class="eyebrow">Cuentas autorizadas</p><h1>Usuarios</h1></div>
+                    <div class="row-actions"><button id="users-open-trash" class="button secondary" type="button">Papelera de usuarios</button></div>
+                    <div class="table-wrap"><table><thead><tr><th>Nombre</th><th>Correo</th><th>Rol</th><th>Estado</th><th>Acciones</th></tr></thead><tbody id="users-body"></tbody></table></div>
+                </section>
+
+                <section class="view hidden" data-page="history">
+                    <div class="page-heading"><p class="eyebrow">Actividad del kiosko</p><h1>Historial de consultas</h1></div>
+                    <div class="editor metrics-filter">
+                        <label>Desde<input id="history-from" type="date"></label>
+                        <label>Hasta<input id="history-to" type="date"></label>
+                        <button id="history-search" class="button secondary" type="button">Consultar historial</button>
+                        <button id="history-purge" class="button secondary" type="button">Depurar periodo</button>
+                    </div>
+                    <p id="history-status" class="muted" aria-live="polite"></p>
+                    <div class="table-wrap"><table><thead><tr><th>Fecha</th><th>Categoría</th><th>Módulo consultado</th><th>Pregunta</th><th>Respuesta</th><th>Origen</th></tr></thead><tbody id="history-body"></tbody></table></div>
+                </section>
+
+                <section class="view hidden" data-page="metrics">
+                    <div class="page-heading"><p class="eyebrow">Actividad del kiosko</p><h1>Métricas</h1></div>
+                    <div class="editor metrics-filter"><label>Periodo<select id="metric-days" title="Cambia el intervalo usado para calcular las consultas del gráfico."><option value="7">Últimos 7 días</option><option value="30" selected>Últimos 30 días</option><option value="90">Últimos 90 días</option></select></label><strong id="metrics-total">— consultas</strong></div>
+                    <div id="metrics-chart" class="chart-list" aria-label="Consultas por día"></div>
+                </section>
+
+                <section class="view hidden" data-page="backups">
+                    <div class="page-heading"><p class="eyebrow">Base de datos</p><h1>Respaldos</h1></div>
+                    <section class="content-section backup-section">
+                        <h2>Guardar respaldo de la base de datos</h2>
+                        <p class="muted">Descarga una copia SQL de la base configurada para este sistema. El archivo puede incluir datos personales y hashes de contraseñas; guárdalo en un lugar privado.</p>
+                        <button id="download-backup" class="button primary" type="button" title="Descarga una copia SQL de la base de datos. El archivo contiene información sensible.">Descargar respaldo</button>
+                        <p id="backup-message" class="message" role="status" aria-live="polite"></p>
+                    </section>
+                </section>
+
+                <section class="view hidden" data-page="trash">
+                    <div class="page-heading"><p class="eyebrow">Elementos retirados</p><h1>Papelera</h1></div>
+                    <p class="muted trash-note">Los elementos se conservarán aquí durante 30 días antes de eliminarse automáticamente. Puedes restaurarlos mientras permanezcan en la papelera.</p>
+                    <section class="content-section">
+                        <h2>Preguntas y respuestas</h2>
+                        <div class="table-wrap"><table><thead><tr><th>Pregunta</th><th>Categoría</th><th>En papelera desde</th><th>Eliminación automática</th><th>Acciones</th></tr></thead><tbody id="trash-questions-body"></tbody></table></div>
+                    </section>
+                    <section class="content-section">
+                        <h2>Información institucional</h2>
+                        <div class="table-wrap"><table><thead><tr><th>Título</th><th>Categoría</th><th>En papelera desde</th><th>Eliminación automática</th><th>Acciones</th></tr></thead><tbody id="trash-information-body"></tbody></table></div>
+                    </section>
+                    <section class="content-section">
+                        <h2>Documentos</h2>
+                        <div class="table-wrap"><table><thead><tr><th>Archivo</th><th>Relacionado con</th><th>En papelera desde</th><th>Eliminación automática</th><th>Acciones</th></tr></thead><tbody id="trash-documents-body"></tbody></table></div>
+                    </section>
+                    <section id="trash-users-section" class="content-section">
+                        <h2>Usuarios</h2>
+                        <div class="table-wrap"><table><thead><tr><th>Nombre</th><th>Correo</th><th>Rol</th><th>En papelera desde</th><th>Eliminación automática</th><th>Acciones</th></tr></thead><tbody id="trash-users-body"></tbody></table></div>
+                    </section>
+                </section>
+            </main>
+        </div>
+    </div>
+    <dialog id="profile-dialog" class="profile-dialog" aria-labelledby="profile-title">
+        <form id="profile-form" class="form-stack">
+            <h2 id="profile-title">Mi perfil</h2>
+            <label>Nombre completo<input name="nombre" required minlength="2" maxlength="100" pattern="[A-Za-zÀ-ÖØ-öø-ÿ]+(?:[ '-][A-Za-zÀ-ÖØ-öø-ÿ]+)*" title="Usa letras; puedes incluir espacios, guiones o apóstrofos."></label>
+            <label>Contraseña actual (solo para cambiarla)<span class="password-field"><input name="contrasena_actual" type="password" autocomplete="current-password" maxlength="256"><button class="password-visibility-toggle" type="button" aria-label="Mostrar contraseña" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m3 3 18 18M10.6 6.2A10.8 10.8 0 0 1 12 6c6.25 0 9.75 6 9.75 6a16 16 0 0 1-2.5 3.1M6.2 6.2C3.65 7.8 2.25 12 2.25 12s3.5 6 9.75 6c.7 0 1.38-.08 2-.22"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/></svg></button></span></label>
+            <button id="profile-forgot-password" class="inline-action" type="button">¿Olvidaste tu contraseña?</button>
+            <label>Nueva contraseña<span class="password-field"><input name="contrasena_nueva" type="password" autocomplete="new-password" minlength="12" maxlength="256" aria-describedby="profile-password-requirements"><button class="password-visibility-toggle" type="button" aria-label="Mostrar contraseña" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m3 3 18 18M10.6 6.2A10.8 10.8 0 0 1 12 6c6.25 0 9.75 6 9.75 6a16 16 0 0 1-2.5 3.1M6.2 6.2C3.65 7.8 2.25 12 2.25 12s3.5 6 9.75 6c.7 0 1.38-.08 2-.22"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/></svg></button></span></label>
+            <p id="profile-password-requirements" class="form-help">Mínimo 12 caracteres, con mayúscula, minúscula, número y símbolo; sin espacios.</p>
+            <p id="profile-message" class="message" role="status" aria-live="polite"></p>
+            <div class="form-actions"><button class="button primary" type="submit">Guardar cambios</button><button id="profile-close" class="button secondary" type="button">Cerrar</button></div>
+        </form>
+    </dialog>
+    <dialog id="contact-message-dialog" class="profile-dialog contact-message-dialog" aria-labelledby="contact-message-detail-title">
+        <section class="form-stack">
+            <h2 id="contact-message-detail-title">Mensaje de contacto</h2>
+            <p id="contact-message-detail-meta" class="form-help contact-message-detail-meta"></p>
+            <div id="contact-message-detail-body" class="contact-message-detail-body" tabindex="0"></div>
+            <div class="form-actions"><button id="contact-message-close" class="button secondary" type="button">Cerrar</button></div>
+        </section>
+    </dialog>
+    <dialog id="contact-reply-dialog" class="profile-dialog contact-message-dialog" aria-labelledby="contact-reply-title">
+        <form id="contact-reply-form" class="form-stack">
+            <h2 id="contact-reply-title">Responder al mensaje</h2>
+            <p id="contact-reply-recipient" class="form-help contact-message-detail-meta"></p>
+            <label>Asunto<input id="contact-reply-subject" type="text" readonly></label>
+            <label>Respuesta<textarea id="contact-reply-body" required maxlength="20000" rows="8" placeholder="Escribe aquí tu respuesta."></textarea></label>
+            <div class="contact-attachment-tools" aria-label="Adjuntar archivos">
+                <button id="contact-attach-files" class="button secondary" type="button">＋ Adjuntar archivos</button>
+                <button id="contact-attach-images" class="button secondary" type="button">＋ Adjuntar imágenes</button>
+                <input id="contact-reply-file-input" class="hidden" type="file" multiple accept=".pdf,.png,.jpg,.jpeg,.gif,.webp,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.csv">
+                <input id="contact-reply-image-input" class="hidden" type="file" multiple accept="image/png,image/jpeg,image/gif,image/webp">
+            </div>
+            <p class="form-help">Hasta 10 archivos y 17 MB en total. PDF, documentos de Office, TXT, CSV e imágenes PNG, JPG, GIF o WEBP.</p>
+            <ul id="contact-reply-attachments" class="contact-attachment-list" aria-live="polite"></ul>
+            <p id="contact-reply-status" class="message" role="status" aria-live="polite"></p>
+            <div class="form-actions"><button id="contact-reply-send" class="button primary" type="submit">Enviar respuesta</button><button id="contact-reply-close" class="button secondary" type="button">Cancelar</button></div>
+        </form>
+    </dialog>
+    <script>
+        (() => {
+            const role = document.querySelector('#register-form select[name="rol"]');
+            const field = document.querySelector("#principal-recovery-field");
+            const help = document.querySelector("#principal-recovery-help");
+            const updateRecoveryVisibility = () => {
+                const show = role.value === "admin";
+                field.classList.toggle("hidden", !show);
+                help.classList.toggle("hidden", !show);
+            };
+            role.addEventListener("change", updateRecoveryVisibility);
+            updateRecoveryVisibility();
+        })();
+    </script>
+</body>
+</html>

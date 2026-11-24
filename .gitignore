@@ -1,0 +1,37 @@
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+backend/.env
+backend/.env.*
+!backend/.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+backend/uploads/
+
+# Unity generated files
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Ll]ogs/
+[Uu]serSettings/
+[Bb]uild/
+[Bb]uilds/
+.vs/
+
+# .NET build output
+**/bin/
+**/obj/
+
+# Blender working files
+*.blend1
+_working/rig_fix_20261122/
+
+# Local .NET SDK and NuGet caches
+.dotnet-cli/
+.nuget-packages/

@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" fill="none">
+  <defs>
+    <linearGradient id="sky" x1="600" y1="0" x2="600" y2="800" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fff" stop-opacity=".72"/>
+      <stop offset=".68" stop-color="#f5f8f4" stop-opacity=".2"/>
+      <stop offset="1" stop-color="#dce9dc" stop-opacity=".42"/>
+    </linearGradient>
+    <radialGradient id="clear" cx="0" cy="0" r="1" gradientTransform="matrix(0 390 -470 0 600 375)" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fff" stop-opacity=".94"/>
+      <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="ground" x1="600" y1="570" x2="600" y2="800" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#c8d9c9" stop-opacity=".12"/>
+      <stop offset="1" stop-color="#a9c4aa" stop-opacity=".38"/>
+    </linearGradient>
+  </defs>
+  <path fill="url(#sky)" d="M0 0h1200v800H0z"/>
+  <path fill="url(#clear)" d="M0 0h1200v800H0z"/>
+  <g opacity=".24" stroke="#5c8a5e" stroke-width="2">
+    <path d="M0 630c170-33 305-36 444-12m312 0c145-25 293-23 444 10"/>
+    <path d="M0 672c174-20 316-17 452 4m296 0c155-25 300-24 452-5" opacity=".65"/>
+  </g>
+  <g fill="#d5e2d5" fill-opacity=".52" stroke="#98b59a" stroke-opacity=".38" stroke-width="2">
+    <path d="M0 474h132v168H0z"/>
+    <path d="M132 510h112v132H132z"/>
+    <path d="M0 452h144v24H0z" fill="#BF5672" fill-opacity=".14"/>
+    <path d="M1056 495h144v147h-144z"/>
+    <path d="M944 526h112v116H944z"/>
+    <path d="M1040 473h160v22h-160z" fill="#A61F43" fill-opacity=".1"/>
+  </g>
+  <g fill="#729775" fill-opacity=".23">
+    <path d="M50 642c0-26 19-47 43-47s43 21 43 47H50Z"/>
+    <path d="M1030 642c0-31 22-56 49-56s49 25 49 56h-98Z"/>
+    <path d="M1130 642c0-21 15-38 34-38s34 17 34 38h-68Z"/>
+  </g>
+  <path fill="url(#ground)" d="M0 643c193-40 370-35 548-4 182 32 421 24 652-23v184H0V643Z"/>
+  <path stroke="#BF5672" stroke-opacity=".27" stroke-width="3" d="M0 685c210-38 379-27 563 3 197 32 408 23 637-18"/>
+</svg>

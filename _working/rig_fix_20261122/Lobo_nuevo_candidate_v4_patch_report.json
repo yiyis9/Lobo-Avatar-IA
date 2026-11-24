@@ -1,0 +1,326 @@
+{
+  "source": "C:\\Users\\irisg\\Documents\\LoboUPVT\\_working\\rig_fix_20261122\\Lobo_nuevo_working.blend",
+  "candidate": "C:\\Users\\irisg\\Documents\\LoboUPVT\\_working\\rig_fix_20261122\\Lobo_nuevo_candidate_v4.blend",
+  "method": "three simultaneous Laplacian smoothing passes with 50% neighbor average over a two-ring neighborhood around seam vertices 9929 and 9990",
+  "affected_count": 25,
+  "changes": [
+    {
+      "vertex": 9719,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.83454,
+        "Root": 0.14727,
+        "Hand_R": 0.01538,
+        "Forearm_R": 0.00281
+      }
+    },
+    {
+      "vertex": 9737,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.84607,
+        "Root": 0.14931,
+        "Hand_R": 0.0017,
+        "Forearm_R": 0.00293
+      }
+    },
+    {
+      "vertex": 9788,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.69901,
+        "Root": 0.12335,
+        "Hand_R": 0.14273,
+        "Forearm_R": 0.03491
+      }
+    },
+    {
+      "vertex": 9789,
+      "old": {
+        "Hand_R": 1.0
+      },
+      "new": {
+        "Hand_R": 0.43163,
+        "Forearm_R": 0.13109,
+        "Spine": 0.37168,
+        "Root": 0.06559
+      }
+    },
+    {
+      "vertex": 9822,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.78116,
+        "Root": 0.13785,
+        "Forearm_R": 0.04009,
+        "Hand_R": 0.0409
+      }
+    },
+    {
+      "vertex": 9870,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.57796,
+        "Root": 0.10199,
+        "Hand_R": 0.25586,
+        "Forearm_R": 0.06419
+      }
+    },
+    {
+      "vertex": 9871,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.47431,
+        "Root": 0.0837,
+        "Forearm_R": 0.19737,
+        "Hand_R": 0.24462
+      }
+    },
+    {
+      "vertex": 9890,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.84695,
+        "Root": 0.14946,
+        "Forearm_R": 0.00358
+      }
+    },
+    {
+      "vertex": 9919,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.79713,
+        "Root": 0.14067,
+        "Forearm_R": 0.0591,
+        "Hand_R": 0.0031
+      }
+    },
+    {
+      "vertex": 9929,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.65513,
+        "Root": 0.11561,
+        "Forearm_R": 0.18821,
+        "Hand_R": 0.04105
+      }
+    },
+    {
+      "vertex": 9950,
+      "old": {
+        "Forearm_R": 0.31918,
+        "Hand_R": 0.68082
+      },
+      "new": {
+        "Forearm_R": 0.25734,
+        "Hand_R": 0.57434,
+        "Spine": 0.14307,
+        "Root": 0.02525
+      }
+    },
+    {
+      "vertex": 9988,
+      "old": {
+        "Forearm_R": 0.33713,
+        "Hand_R": 0.66287
+      },
+      "new": {
+        "Forearm_R": 0.32741,
+        "Hand_R": 0.46936,
+        "Spine": 0.17274,
+        "Root": 0.03048
+      }
+    },
+    {
+      "vertex": 9989,
+      "old": {
+        "Forearm_R": 0.48293,
+        "Hand_R": 0.51707
+      },
+      "new": {
+        "Forearm_R": 0.4762,
+        "Hand_R": 0.32854,
+        "Spine": 0.16597,
+        "Root": 0.02929
+      }
+    },
+    {
+      "vertex": 9990,
+      "old": {
+        "Forearm_R": 1.0
+      },
+      "new": {
+        "Forearm_R": 0.53401,
+        "Spine": 0.31715,
+        "Root": 0.05597,
+        "Hand_R": 0.09287
+      }
+    },
+    {
+      "vertex": 10005,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.80102,
+        "Root": 0.14136,
+        "Forearm_R": 0.05748,
+        "Hand_R": 0.00014
+      }
+    },
+    {
+      "vertex": 10021,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.59857,
+        "Root": 0.10563,
+        "Forearm_R": 0.28479,
+        "Hand_R": 0.011
+      }
+    },
+    {
+      "vertex": 10022,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.68577,
+        "Root": 0.12102,
+        "Forearm_R": 0.19233,
+        "Hand_R": 0.00088
+      }
+    },
+    {
+      "vertex": 10042,
+      "old": {
+        "Forearm_R": 0.35938,
+        "Hand_R": 0.64062
+      },
+      "new": {
+        "Forearm_R": 0.41561,
+        "Hand_R": 0.53642,
+        "Spine": 0.04077,
+        "Root": 0.00719
+      }
+    },
+    {
+      "vertex": 10093,
+      "old": {
+        "Forearm_R": 1.0
+      },
+      "new": {
+        "Forearm_R": 0.48701,
+        "Spine": 0.42647,
+        "Root": 0.07526,
+        "Hand_R": 0.01127
+      }
+    },
+    {
+      "vertex": 10124,
+      "old": {
+        "Spine": 0.85,
+        "Root": 0.15
+      },
+      "new": {
+        "Spine": 0.63252,
+        "Root": 0.11162,
+        "Forearm_R": 0.25127,
+        "Hand_R": 0.00458
+      }
+    },
+    {
+      "vertex": 10148,
+      "old": {
+        "Forearm_R": 0.45765,
+        "Hand_R": 0.54235
+      },
+      "new": {
+        "Forearm_R": 0.49734,
+        "Hand_R": 0.49378,
+        "Spine": 0.00755,
+        "Root": 0.00133
+      }
+    },
+    {
+      "vertex": 10155,
+      "old": {
+        "Forearm_R": 1.0
+      },
+      "new": {
+        "Forearm_R": 0.65809,
+        "Hand_R": 0.23622,
+        "Spine": 0.08984,
+        "Root": 0.01585
+      }
+    },
+    {
+      "vertex": 10179,
+      "old": {
+        "Forearm_R": 1.0
+      },
+      "new": {
+        "Forearm_R": 0.65582,
+        "Spine": 0.25644,
+        "Root": 0.04525,
+        "Hand_R": 0.04249
+      }
+    },
+    {
+      "vertex": 10266,
+      "old": {
+        "Forearm_R": 1.0
+      },
+      "new": {
+        "Forearm_R": 0.46554,
+        "Spine": 0.41264,
+        "Root": 0.07282,
+        "Hand_R": 0.04899
+      }
+    },
+    {
+      "vertex": 10284,
+      "old": {
+        "Forearm_R": 0.60479,
+        "Hand_R": 0.39521
+      },
+      "new": {
+        "Forearm_R": 0.65956,
+        "Hand_R": 0.30293,
+        "Spine": 0.03188,
+        "Root": 0.00563
+      }
+    }
+  ]
+}
