@@ -35,3 +35,9 @@ _working/rig_fix_20261122/
 # Local .NET SDK and NuGet caches
 .dotnet-cli/
 .nuget-packages/
+
+# Retired Unity projects (local copies are kept)
+/LoboUPVT_Kiosko/LoboUPVT_Kiosko/
+/LoboUPVT_Kioskouno/
+/MyLoboUPVT_Kiosko/
+/UPVT_Lobo/
