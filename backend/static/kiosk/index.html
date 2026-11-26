@@ -9,8 +9,8 @@
     <link rel="stylesheet" href="/accesibilidad/accessibility.css?v=20261122-brand-1">
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
     <script src="/accesibilidad/accessibility.js?v=20261118-5" defer></script>
-    <script src="/kiosko/app.js?v=20261120-5" defer></script>
-    <script type="module" src="/kiosko/camera.js?v=20261118-2"></script>
+    <script src="/kiosko/app.js?v=20261126-motion-fallback-2" defer></script>
+    <script type="module" src="/kiosko/camera.js?v=20261126-presence-debug-3"></script>
 </head>
 <body>
     <div class="color-bar" aria-hidden="true"><span></span><span></span><span></span></div>
@@ -57,7 +57,7 @@
                     <span id="camera-status" role="status" aria-live="polite">Cámara apagada</span>
                     <video id="presence-camera" autoplay playsinline muted aria-hidden="true"></video>
                 </div>
-                <model-viewer class="lobo-avatar" src="/kiosko/models/lobo-upvt-rigged.glb?v=20261120-clean-4" alt="Avatar 3D del Lobo UPVT" animation-name="Idle" animation-crossfade-duration="450" autoplay camera-controls touch-action="pan-y" shadow-intensity="0.7" exposure="1" camera-orbit="0deg 75deg auto" field-of-view="25deg" interaction-prompt="none">
+                <model-viewer class="lobo-avatar" src="/kiosko/models/buggy-upvt-animated.glb?v=20261126-buggy-anim-1" alt="Avatar 3D del Lobo UPVT" animation-name="Idle" animation-crossfade-duration="450" autoplay camera-controls touch-action="pan-y" shadow-intensity="0.7" exposure="1" camera-orbit="0deg 75deg auto" field-of-view="25deg" interaction-prompt="none">
                     <p slot="poster" class="avatar-loading">Cargando al Lobo UPVT…</p>
                 </model-viewer>
                 <div class="avatar-speaking" id="avatar-speaking" role="status" aria-live="polite" hidden>

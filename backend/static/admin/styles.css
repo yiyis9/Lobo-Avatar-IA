@@ -566,6 +566,7 @@ input:focus, textarea:focus, select:focus { outline: 3px solid rgb(191 86 114 / 
 table { line-height: 1.45; }
 th { letter-spacing: .015em; }
 td { overflow-wrap: anywhere; }
+td.gesture-cell { min-width: 230px; max-width: 380px; }
 tbody tr:nth-child(even) { background: #F2F2F2; }
 tbody tr:hover { background: #F2F2F2; }
 .row-actions { align-items: center; }

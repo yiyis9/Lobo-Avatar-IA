@@ -50,15 +50,19 @@ let speechGeneration = 0;
 let avatarMotionTimer = null;
 let greetingGestureTimer = null;
 
-// Duraciones de los clips incluidos en lobo-upvt-rigged.glb. El saludo debe
+// Duraciones de los clips incluidos en buggy-upvt-animated.glb. El saludo debe
 // poder terminar aunque la voz de respuesta sea más corta.
 const avatarClipDurations = {
-    Idle: 0.084,
-    Hablar: 1,
-    Explicar: 1.792,
-    Pensar: 1.125,
+    Idle: 3,
+    Hablar: 1.3,
+    Explicar: 1.8,
+    Pensar: 1.3,
     Saludo: 2.834,
     Celebrar: 1.292,
+    Presentar: 1.9,
+    Senalar: 1.4,
+    Asentir: 1.17,
+    Escuchar: 1.3,
 };
 
 function prepareSpeechAudio() {
@@ -213,14 +217,17 @@ function playAvatarAnimation(requestedName, { loop = false } = {}) {
         ? loboAvatar.availableAnimations
         : [];
     const requested = normalizeAvatarText(requestedName);
-    const explanationFallback = requested === "explicar" && available.length
-        ? available.find((name) => normalizeAvatarText(name) === "hablar")
-        : null;
-    const clip = available.find((name) => normalizeAvatarText(name) === requested)
+    const selectedClip = available.find((name) => normalizeAvatarText(name) === requested)
         || available.find((name) => normalizeAvatarText(name).includes(requested))
-        || explanationFallback
-        || ["Idle", "Hablar", "Explicar", "Pensar", "Saludo", "Celebrar"]
-            .find((name) => normalizeAvatarText(name) === requested);
+        || null;
+    const fallbackClip = available.length
+        ? available.find((name) => normalizeAvatarText(name) === "hablar")
+            || available.find((name) => normalizeAvatarText(name) === "explicar")
+            || available.find((name) => normalizeAvatarText(name) !== "idle")
+            || available[0]
+        : null;
+    const clip = selectedClip || fallbackClip || ["Idle", "Hablar", "Explicar", "Pensar", "Saludo", "Celebrar", "Presentar", "Senalar", "Asentir", "Escuchar"]
+        .find((name) => normalizeAvatarText(name) === requested);
     if (!clip) return false;
 
     loboAvatar.removeAttribute("loop");
@@ -249,6 +256,16 @@ function shouldLoopAvatarAnimation(name) {
 }
 
 function animationForReply(payload, question) {
+    const action = normalizeAvatarText(payload?.accion_avatar || "");
+    if (/salud|desped|wave|bienven/.test(action)) return "Saludo";
+    if (/senal|indica|apunta|apuntar/.test(action)) return "Senalar";
+    if (/escuch|oreja/.test(action)) return "Escuchar";
+    if (/asient|afirma|inclina la cabeza|mueve la cabeza afirm/.test(action)) return "Asentir";
+    if (/presenta|abre ambas manos|abre los brazos|palmas abiertas/.test(action)) return "Presentar";
+    if (/celebr|festej|aplaud/.test(action)) return "Celebrar";
+    if (/piensa|reflexiona|duda/.test(action)) return "Pensar";
+    if (/explica|expone|gestos suaves de ambas manos/.test(action)) return "Explicar";
+
     const selectedAnimation = normalizeAvatarText(payload?.animacion || "");
     const selectedClips = {
         hablar: "Hablar",
@@ -256,11 +273,19 @@ function animationForReply(payload, question) {
         saludo: "Saludo",
         pensar: "Pensar",
         celebrar: "Celebrar",
-        idle: "Idle",
-        reposo: "Idle",
+        // Reposo es solo para cuando no hay interacción; al contestar se usa
+        // un gesto de habla para que el avatar no parezca congelado.
+        idle: "Hablar",
+        reposo: "Hablar",
         greeting: "Saludo",
         thinking: "Pensar",
         celebrate: "Celebrar",
+        presentar: "Presentar",
+        mostrar: "Presentar",
+        senalar: "Senalar",
+        indicar: "Senalar",
+        asentir: "Asentir",
+        escuchar: "Escuchar",
     };
     if (selectedClips[selectedAnimation]) return selectedClips[selectedAnimation];
     const metadata = normalizeAvatarText(`${payload?.animacion || ""} ${payload?.emocion || ""} ${payload?.accion_avatar || ""}`);
@@ -706,13 +731,15 @@ function speakResponse(text, animation = "Hablar") {
     stopSpeech();
     const generation = speechGeneration;
     playAvatarAnimation(animation, { loop: shouldLoopAvatarAnimation(animation) });
-    if (animation === "Saludo") {
-        // Let the full wave finish, then switch to a relaxed speaking gesture
-        // if the greeting audio is still playing.
+    if (animation !== "Hablar" && animation !== "Explicar" && animation !== "Idle") {
+        // Deja que se vea el gesto propio de la ficha y luego acompaña la voz
+        // con Hablar mientras dura la respuesta.
         greetingGestureTimer = window.setTimeout(() => {
             greetingGestureTimer = null;
-            if (generation === speechGeneration) playAvatarAnimation("Hablar", { loop: true });
-        }, Math.ceil((avatarClipDurations.Saludo || 2.9) * 1000) + 80);
+            if (generation === speechGeneration && avatarSpeaking && !avatarSpeaking.hidden) {
+                playAvatarAnimation("Hablar", { loop: true });
+            }
+        }, Math.ceil((avatarClipDurations[animation] || 2.9) * 1000) + 80);
     }
     if (!window.speechSynthesis || typeof SpeechSynthesisUtterance === "undefined") {
         statusLabel.textContent = "La voz no está disponible en este navegador. La respuesta sigue visible.";
@@ -730,7 +757,7 @@ function speakResponse(text, animation = "Hablar") {
         const finish = (error = null) => {
             if (generation === speechGeneration) {
                 setAvatarSpeaking(false);
-                if (shouldLoopAvatarAnimation(animation) || animation === "Saludo") stopAvatarMotion();
+                stopAvatarMotion();
                 statusLabel.textContent = error
                     ? "No se pudo reproducir la voz de Lobo. La respuesta sigue visible."
                     : "";
@@ -1199,7 +1226,8 @@ window.LoboKiosk = {
             const payload = await requestChat(text, []);
             addMessage(payload.respuesta, "assistant");
             statusLabel.textContent = "";
-            void speakKioskReply(payload.respuesta, animationForReply(payload, text));
+            const gestureAnimation = ["Saludo", "Celebrar"].includes(animation) ? animation : null;
+            void speakKioskReply(payload.respuesta, gestureAnimation || animationForReply(payload, text));
             return true;
         } catch {
             statusLabel.textContent = "No se pudo conectar. Puedes escribir tu pregunta y volver a intentarlo.";

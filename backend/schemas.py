@@ -149,7 +149,7 @@ class GenerarAccionAvatarRequest(APIModel):
 
 class GenerarAccionAvatarResponse(APIModel):
     accion_avatar: str = Field(min_length=1, max_length=500)
-    animacion: Literal["idle", "Hablar", "Explicar", "Saludo", "Pensar", "Celebrar"] = "Hablar"
+    animacion: Literal["idle", "Hablar", "Explicar", "Saludo", "Pensar", "Celebrar", "Presentar", "Senalar", "Asentir", "Escuchar"] = "Hablar"
     emocion: Literal["neutral", "happy"] = "neutral"
     metodo: Literal["gemini", "local"] = "gemini"
 
@@ -161,7 +161,7 @@ class PreguntaCreate(APIModel):
     palabras_clave: str | None = Field(default=None, max_length=255)
     accion_avatar: str = Field(default="", max_length=500)
     dirigido_a: Literal["todos", "alumnos", "profesores", "directivos"] = "todos"
-    animacion: Literal["idle", "Hablar", "Explicar", "Saludo", "Pensar", "Celebrar"] = "Hablar"
+    animacion: Literal["idle", "Hablar", "Explicar", "Saludo", "Pensar", "Celebrar", "Presentar", "Senalar", "Asentir", "Escuchar"] = "Hablar"
     emocion: str = Field(default="neutral", max_length=80)
     activo: bool = True
 
@@ -340,7 +340,7 @@ class InformacionCreate(APIModel):
     contenido: str = Field(min_length=1, max_length=1_000_000)
     categoria: str = Field(default="General", min_length=1, max_length=80)
     accion_avatar: str = Field(default="", max_length=500)
-    animacion: Literal["idle", "Hablar", "Explicar", "Saludo", "Pensar", "Celebrar"] = "Hablar"
+    animacion: Literal["idle", "Hablar", "Explicar", "Saludo", "Pensar", "Celebrar", "Presentar", "Senalar", "Asentir", "Escuchar"] = "Hablar"
     emocion: Literal["neutral", "happy"] = "neutral"
     activo: bool = True
 
@@ -426,7 +426,7 @@ class BorradorInformacion(APIModel):
     titulo: str = Field(min_length=2, max_length=180)
     contenido: str = Field(min_length=1)
     categoria: str = Field(default="General", min_length=1, max_length=80)
-    animacion: Literal["idle", "Hablar", "Explicar", "Saludo", "Pensar", "Celebrar"] = "Hablar"
+    animacion: Literal["idle", "Hablar", "Explicar", "Saludo", "Pensar", "Celebrar", "Presentar", "Senalar", "Asentir", "Escuchar"] = "Hablar"
     accion_avatar: str = Field(default="", max_length=500)
     emocion: Literal["neutral", "happy"] = "neutral"
 

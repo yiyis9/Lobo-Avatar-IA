@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#A61F43">
     <title>Administración | Lobo UPVT</title>
-    <link rel="stylesheet" href="/panel/styles.css?v=20261124-admin-content-2">
+    <link rel="stylesheet" href="/panel/styles.css?v=20261126-gesture-columns-2">
     <link rel="stylesheet" href="/accesibilidad/accessibility.css?v=20261122-brand-1">
     <script src="/accesibilidad/accessibility.js?v=20261118-5" defer></script>
-    <script src="/panel/app.js?v=20261124-summary-xlsx-chart-1" defer></script>
+    <script src="/panel/app.js?v=20261126-gesture-columns-2" defer></script>
 </head>
 <body>
     <div class="color-bar" aria-hidden="true"><span></span><span></span><span></span></div>
@@ -108,7 +108,7 @@
                         <label class="wide">Respuesta<textarea name="respuesta" required rows="8" maxlength="1000000"></textarea></label>
                         <label>Palabras clave<input name="palabras_clave" maxlength="255"></label>
                         <div class="avatar-action-editor wide">
-                            <label>Animación correspondiente<select name="animacion"><option value="Hablar">Hablar</option><option value="Explicar">Explicar</option><option value="Saludo">Saludo</option><option value="Pensar">Pensar</option><option value="Celebrar">Celebrar</option><option value="idle">Reposo</option></select></label>
+                            <label>Animación correspondiente<select name="animacion"><option value="Hablar">Hablar</option><option value="Explicar">Explicar</option><option value="Presentar">Presentar</option><option value="Senalar">Señalar</option><option value="Asentir">Asentir</option><option value="Escuchar">Escuchar</option><option value="Saludo">Saludo</option><option value="Pensar">Pensar</option><option value="Celebrar">Celebrar</option><option value="idle">Reposo</option></select></label>
                             <label>Descripción de animación del avatar<textarea id="question-avatar-action" name="accion_avatar" rows="3" maxlength="500" placeholder="Describe el gesto que acompañará esta respuesta." title="Describe brevemente el gesto o movimiento que acompañará esta respuesta."></textarea></label>
                             <div class="avatar-action-tools"><span id="question-avatar-action-status" role="status" aria-live="polite"></span></div>
                         </div>
@@ -126,7 +126,7 @@
                         <span id="questions-page-summary" class="muted" aria-live="polite"></span>
                         <div class="row-actions"><button id="questions-prev" class="button secondary" type="button">Anterior</button><button id="questions-next" class="button secondary" type="button">Siguiente</button></div>
                     </div>
-                    <div class="table-wrap"><table><thead><tr><th>Pregunta</th><th>Categoría</th><th>Animación</th><th>Estado</th><th>Archivos</th><th>Acciones</th></tr></thead><tbody id="questions-body"></tbody></table></div>
+                    <div class="table-wrap"><table><thead><tr><th>Pregunta</th><th>Categoría</th><th>Animación</th><th>Gesto del lobo</th><th>Estado</th><th>Archivos</th><th>Acciones</th></tr></thead><tbody id="questions-body"></tbody></table></div>
                     </section>
                 </section>
 
@@ -145,7 +145,7 @@
                             <label class="wide">Título<input name="titulo" required minlength="2" maxlength="180" placeholder="Mapa curricular de Ingeniería en Tecnologías de la Información"></label>
                             <label class="wide">Información para el alumno<textarea name="contenido" required rows="12" maxlength="1000000" placeholder="Puedes pegar aquí textos extensos, como antecedentes, objetivos y cobertura institucional."></textarea></label>
                             <div class="avatar-action-editor wide">
-                                <label>Animación correspondiente<select name="animacion"><option value="Hablar">Hablar</option><option value="Explicar">Explicar</option><option value="Saludo">Saludo</option><option value="Pensar">Pensar</option><option value="Celebrar">Celebrar</option><option value="idle">Reposo</option></select></label>
+                                <label>Animación correspondiente<select name="animacion"><option value="Hablar">Hablar</option><option value="Explicar">Explicar</option><option value="Presentar">Presentar</option><option value="Senalar">Señalar</option><option value="Asentir">Asentir</option><option value="Escuchar">Escuchar</option><option value="Saludo">Saludo</option><option value="Pensar">Pensar</option><option value="Celebrar">Celebrar</option><option value="idle">Reposo</option></select></label>
                                 <label>Descripción de animación del avatar<textarea id="information-avatar-action" name="accion_avatar" rows="3" maxlength="500" placeholder="Describe el gesto que acompañará esta información." title="Describe brevemente el gesto o movimiento que acompañará esta información."></textarea></label>
                                 <div class="avatar-action-tools"><span id="information-avatar-action-status" role="status" aria-live="polite"></span></div>
                             </div>
@@ -163,7 +163,7 @@
                     </section>
                     <section class="content-section">
                         <h2>Información guardada</h2>
-                        <div class="table-wrap"><table><thead><tr><th>Título</th><th>Categoría</th><th>Animación</th><th>Estado</th><th>Documentos</th><th>Acciones</th></tr></thead><tbody id="information-body"></tbody></table></div>
+                        <div class="table-wrap"><table><thead><tr><th>Título</th><th>Categoría</th><th>Animación</th><th>Gesto del lobo</th><th>Estado</th><th>Documentos</th><th>Acciones</th></tr></thead><tbody id="information-body"></tbody></table></div>
                     </section>
                     </section>
                 </section>

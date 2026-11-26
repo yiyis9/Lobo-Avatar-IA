@@ -15,6 +15,8 @@ let lastInferenceAt = 0;
 let detectedFaceFrames = 0;
 let missingFaceSince = 0;
 let visitorPresent = false;
+let greetingDelivered = false;
+let lastFaceSearchStatusAt = 0;
 let lastGestureAt = 0;
 let lastWristX = null;
 let lastDirection = 0;
@@ -36,7 +38,7 @@ async function startCamera() {
     // Solo se solicita video; no se activa ni se captura el micrófono.
     cameraStream = await navigator.mediaDevices.getUserMedia({
         audio: false,
-        video: { facingMode: { ideal: "environment" }, width: { ideal: 640 }, height: { ideal: 480 }, frameRate: { ideal: 15, max: 24 } },
+        video: { facingMode: { ideal: "user" }, width: { ideal: 640 }, height: { ideal: 480 }, frameRate: { ideal: 15, max: 24 } },
     });
     video.srcObject = cameraStream;
     await video.play();
@@ -45,28 +47,40 @@ async function startCamera() {
     const visionModuleUrl = `https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@${MEDIAPIPE_VERSION}/+esm`;
     const { FilesetResolver, FaceDetector, GestureRecognizer } = await import(visionModuleUrl);
     const vision = await FilesetResolver.forVisionTasks(VISION_WASM);
-    [faceDetector, gestureRecognizer] = await Promise.all([
-        FaceDetector.createFromOptions(vision, {
-            baseOptions: { modelAssetPath: FACE_MODEL, delegate: "CPU" },
-            runningMode: "VIDEO",
-            minDetectionConfidence: 0.62,
-        }),
-        GestureRecognizer.createFromOptions(vision, {
-            baseOptions: { modelAssetPath: GESTURE_MODEL, delegate: "CPU" },
-            runningMode: "VIDEO",
-            numHands: 1,
-            minHandDetectionConfidence: 0.65,
-            minHandPresenceConfidence: 0.55,
-            minTrackingConfidence: 0.55,
-        }),
-    ]);
+    faceDetector = await FaceDetector.createFromOptions(vision, {
+        baseOptions: { modelAssetPath: FACE_MODEL, delegate: "CPU" },
+        runningMode: "VIDEO",
+        minDetectionConfidence: 0.5,
+    });
 
     lastInferenceAt = 0;
     detectedFaceFrames = 0;
     missingFaceSince = 0;
     visitorPresent = false;
-    setCameraState(true, "Cámara activa · procesamiento local");
+    greetingDelivered = false;
+    lastFaceSearchStatusAt = 0;
+    setCameraState(true, "Cámara activa · buscando tu rostro…");
     animationFrame = requestAnimationFrame(detectLoop);
+
+    // La bienvenida no debe depender de que el modelo de gestos termine de
+    // descargarse. Si ese modelo falla, la detección de rostro sigue activa.
+    void GestureRecognizer.createFromOptions(vision, {
+        baseOptions: { modelAssetPath: GESTURE_MODEL, delegate: "CPU" },
+        runningMode: "VIDEO",
+        numHands: 1,
+        minHandDetectionConfidence: 0.65,
+        minHandPresenceConfidence: 0.55,
+        minTrackingConfidence: 0.55,
+    }).then((recognizer) => {
+        if (!cameraStream?.active) {
+            recognizer.close();
+            return;
+        }
+        gestureRecognizer = recognizer;
+    }).catch(() => {
+        // El saludo por presencia continúa; solo se desactivan los gestos de mano.
+        if (cameraStream?.active) setCameraState(true, "Presencia activa · gestos de mano no disponibles");
+    });
 }
 
 function resetWave() {
@@ -122,28 +136,31 @@ function handleHandGesture(result, now) {
 
 function detectLoop(now) {
     if (!cameraStream?.active || document.hidden) return;
-    if (video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA && now - lastInferenceAt >= 350) {
+    if (video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA && video.videoWidth > 0 && video.videoHeight > 0 && now - lastInferenceAt >= 350) {
         lastInferenceAt = now;
         try {
             const timestamp = Math.round(now);
             const faceResult = faceDetector.detectForVideo(video, timestamp);
-            const hasFace = (faceResult.detections || []).some((item) => item.categories?.[0]?.score >= 0.62);
+            const hasFace = (faceResult.detections || []).some((item) => item.categories?.[0]?.score >= 0.5);
             if (hasFace) {
                 detectedFaceFrames++;
                 missingFaceSince = 0;
                 if (!visitorPresent && detectedFaceFrames >= 3) {
                     visitorPresent = true;
+                    greetingDelivered = false;
                     setCameraState(true, "Visitante detectado · listo para interactuar");
-                    if (!window.LoboKiosk?.isBusy) {
-                        window.LoboKiosk?.welcomeVisitor();
-                    }
                 }
             } else {
                 detectedFaceFrames = 0;
+                if (!visitorPresent && now - lastFaceSearchStatusAt > 1800) {
+                    lastFaceSearchStatusAt = now;
+                    setCameraState(true, "Cámara activa · centra tu rostro frente a la pantalla");
+                }
                 if (visitorPresent) {
                     missingFaceSince ||= now;
                     if (now - missingFaceSince > 4000) {
                         visitorPresent = false;
+                        greetingDelivered = false;
                         setCameraState(true, "Cámara activa · esperando visitante");
                         resetWave();
                         window.LoboKiosk?.visitorLeft();
@@ -152,11 +169,16 @@ function detectLoop(now) {
             }
 
             if (visitorPresent) {
-                const handResult = gestureRecognizer.recognizeForVideo(video, timestamp);
-                handleHandGesture(handResult, now);
+                if (!greetingDelivered && !window.LoboKiosk?.isBusy) {
+                    greetingDelivered = window.LoboKiosk?.welcomeVisitor() === true;
+                }
+                if (gestureRecognizer) {
+                    const handResult = gestureRecognizer.recognizeForVideo(video, timestamp);
+                    handleHandGesture(handResult, now);
+                }
             }
         } catch {
-            setCameraState(true, "Cámara activa · detección pausada");
+            setCameraState(true, "No puedo analizar la cámara. Desactívala y vuelve a activarla.");
         }
     }
     animationFrame = requestAnimationFrame(detectLoop);
@@ -174,6 +196,7 @@ function stopCamera(label = "Cámara apagada") {
     gestureRecognizer = null;
     detectedFaceFrames = 0;
     visitorPresent = false;
+    greetingDelivered = false;
     resetWave();
     window.LoboKiosk?.visitorLeft();
     setCameraState(false, label);

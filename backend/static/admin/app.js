@@ -242,6 +242,23 @@ function cell(row, value, className = "") {
     return element;
 }
 
+function avatarGestureText(item) {
+    const configured = String(item.accion_avatar || "").trim();
+    if (configured) return configured;
+    return ({
+        Hablar: "Hace gestos suaves mientras habla.",
+        Explicar: "Explica con gestos de las manos.",
+        Saludo: "Saluda con la mano.",
+        Pensar: "Adopta una pose reflexiva.",
+        Celebrar: "Celebra con entusiasmo moderado.",
+        Presentar: "Abre las manos para presentar la información.",
+        Senalar: "Extiende el brazo para señalar.",
+        Asentir: "Asiente con la cabeza.",
+        Escuchar: "Acerca la mano a la oreja.",
+        idle: "Sin movimiento durante la respuesta.",
+    })[item.animacion || "Hablar"] || "Sin gesto asignado.";
+}
+
 function emptyRow(body, columns, text) {
     body.replaceChildren();
     const row = document.createElement("tr");
@@ -350,12 +367,13 @@ async function loadQuestions() {
     document.querySelector("#questions-prev").disabled = result.pagina <= 1;
     document.querySelector("#questions-next").disabled = result.pagina >= pages;
     body.replaceChildren();
-    if (!items.length) return emptyRow(body, 6, "No hay respuestas registradas.");
+    if (!items.length) return emptyRow(body, 7, "No hay respuestas registradas.");
     items.forEach((item) => {
         const row = document.createElement("tr");
         cell(row, item.pregunta);
         cell(row, item.categoria);
         cell(row, item.animacion || "Hablar");
+        cell(row, avatarGestureText(item), "gesture-cell");
         cell(row, item.activo ? "Activa" : "Archivada", `status ${item.activo ? "active" : "inactive"}`);
         const documentsCell = document.createElement("td");
         const documents = (item.documentos || []).filter((doc) => doc.activo && !doc.papelera_en);
@@ -426,12 +444,13 @@ async function loadInformation() {
     const body = document.querySelector("#information-body");
     const items = await api("/admin/informacion");
     body.replaceChildren();
-    if (!items.length) return emptyRow(body, 6, "Todavía no hay información institucional guardada.");
+    if (!items.length) return emptyRow(body, 7, "Todavía no hay información institucional guardada.");
     items.forEach((item) => {
         const row = document.createElement("tr");
         cell(row, item.titulo);
         cell(row, item.categoria);
         cell(row, item.animacion || "Hablar");
+        cell(row, avatarGestureText(item), "gesture-cell");
         cell(row, item.activo ? "Activa" : "Archivada", `status ${item.activo ? "active" : "inactive"}`);
         const documentsCell = document.createElement("td");
         const documents = (item.documentos || []).filter((documentItem) => !documentItem.papelera_en);
