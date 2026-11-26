@@ -1,0 +1,39 @@
+services:
+  - type: web
+    name: lobo-upvt-demo
+    runtime: docker
+    plan: free
+    rootDir: backend
+    dockerfilePath: Dockerfile
+    dockerContext: .
+    dockerCommand: 'sh -c "python -m deploy.bootstrap_tidb && exec uvicorn main:app --host 0.0.0.0 --port ${PORT:-10000}"'
+    healthCheckPath: /health
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: DB_SSL_CA
+        value: /etc/ssl/certs/ca-certificates.crt
+      - key: DB_SSL_VERIFY_IDENTITY
+        value: "true"
+      - key: DB_POOL_RECYCLE
+        value: "300"
+      - key: DB_POOL_SIZE
+        value: "2"
+      - key: DB_MAX_OVERFLOW
+        value: "0"
+      - key: DB_POOL_TIMEOUT
+        value: "10"
+      - key: FORCE_HTTPS
+        value: "true"
+      - key: BOOTSTRAP_DATABASE_SCHEMA
+        value: "true"
+      - key: ADMIN_TOKEN_SECRET
+        generateValue: true
+      - key: REGISTRATION_AUTHORIZATION_KEY
+        generateValue: true
+      - key: PRINCIPAL_ADMIN_EMAIL
+        sync: false
+      - key: PRINCIPAL_ADMIN_RECOVERY_KEY
+        generateValue: true
+      - key: GEMINI_API_KEY
+        sync: false

@@ -39,12 +39,25 @@ class Base(DeclarativeBase):
 engine = create_engine(
     _database_url(),
     pool_pre_ping=True,
-    pool_recycle=1800,
+    # TiDB Cloud Starter may close idle connections after a few minutes.
+    pool_recycle=max(1, int(os.getenv("DB_POOL_RECYCLE", "300"))),
     pool_size=max(1, min(20, int(os.getenv("DB_POOL_SIZE", "5")))),
     max_overflow=max(0, min(40, int(os.getenv("DB_MAX_OVERFLOW", "10")))),
     pool_timeout=max(1, min(60, int(os.getenv("DB_POOL_TIMEOUT", "10")))),
     pool_use_lifo=True,
-    connect_args={"connect_timeout": 5},
+    connect_args={
+        "connect_timeout": 5,
+        **(
+            {
+                "ssl_ca": os.getenv("DB_SSL_CA"),
+                "ssl_verify_cert": True,
+                "ssl_verify_identity": os.getenv("DB_SSL_VERIFY_IDENTITY", "true").strip().lower()
+                not in {"0", "false", "no", "off"},
+            }
+            if os.getenv("DB_SSL_CA", "").strip()
+            else {}
+        ),
+    },
 )
 SessionLocal = sessionmaker(bind=engine, autoflush=False, expire_on_commit=False)
 
