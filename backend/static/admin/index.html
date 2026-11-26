@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#A61F43">
     <title>Administración | Lobo UPVT</title>
-    <link rel="stylesheet" href="/panel/styles.css?v=20261122-brand-1">
+    <link rel="stylesheet" href="/panel/styles.css?v=20261124-admin-content-2">
     <link rel="stylesheet" href="/accesibilidad/accessibility.css?v=20261122-brand-1">
     <script src="/accesibilidad/accessibility.js?v=20261118-5" defer></script>
-    <script src="/panel/app.js?v=20261120-2" defer></script>
+    <script src="/panel/app.js?v=20261124-summary-xlsx-chart-1" defer></script>
 </head>
 <body>
     <div class="color-bar" aria-hidden="true"><span></span><span></span><span></span></div>
@@ -86,7 +86,7 @@
                 <p id="app-message" class="message" role="status" aria-live="polite"></p>
                 <p id="content-voice-status" class="message" role="status" aria-live="polite"></p>
                 <section class="view" data-page="summary">
-                    <div class="page-heading dashboard-heading"><div class="dashboard-heading-copy"><p class="eyebrow">Centro de control</p><h1>Resumen</h1><p class="dashboard-description">Contenido y actividad del kiosko, de un vistazo.</p></div><div class="dashboard-signature" aria-hidden="true"><span>LOBO</span><strong>UPVT</strong><i></i></div></div>
+                    <div class="page-heading dashboard-heading"><div class="dashboard-heading-copy"><p class="eyebrow">Centro de control</p><h1>Resumen</h1><p class="dashboard-description">Contenido y actividad del kiosko, de un vistazo.</p></div><div class="dashboard-heading-actions"><button id="download-summary-report" class="button secondary" type="button">Descargar reporte</button><div class="dashboard-signature" aria-hidden="true"><span>LOBO</span><strong>UPVT</strong><i></i></div></div></div>
                     <div class="metric-grid">
                         <article class="metric metric-red"><span>Respuestas activas</span><strong id="metric-faq">—</strong></article>
                         <article class="metric metric-green"><span>Consultas atendidas</span><strong id="metric-attentions">—</strong></article>
@@ -106,16 +106,17 @@
                         <label>Dirigido a<select name="dirigido_a" title="Define a qué público puede mostrarse esta respuesta."><option value="todos">Todos</option><option value="alumnos">Alumnos</option><option value="profesores">Profesores</option><option value="directivos">Directivos</option></select></label>
                         <label class="wide">Pregunta<input name="pregunta" required minlength="3" maxlength="255"></label>
                         <label class="wide">Respuesta<textarea name="respuesta" required rows="8" maxlength="1000000"></textarea></label>
-                        <label class="wide">Adjuntar PDFs o imágenes (opcional)<input id="question-attachment" name="archivo" type="file" multiple accept="application/pdf,.pdf,image/png,.png,image/jpeg,.jpg,.jpeg,image/webp,.webp" title="Puedes agregar hasta 20 PDFs o imágenes al crear o editar la respuesta."></label>
-                        <div id="question-selected-files" class="selected-files wide" aria-live="polite"></div>
-                        <label class="privacy-confirm wide"><input id="question-attachment-confirmation" type="checkbox"> Confirmo que el archivo contiene únicamente información pública y autorizo mostrarlo desde el kiosko.</label>
-                        <p class="muted wide import-note">Tipos de archivo admitidos: PDF, PNG, JPG y WEBP.</p>
                         <label>Palabras clave<input name="palabras_clave" maxlength="255"></label>
                         <div class="avatar-action-editor wide">
                             <label>Animación correspondiente<select name="animacion"><option value="Hablar">Hablar</option><option value="Explicar">Explicar</option><option value="Saludo">Saludo</option><option value="Pensar">Pensar</option><option value="Celebrar">Celebrar</option><option value="idle">Reposo</option></select></label>
                             <label>Descripción de animación del avatar<textarea id="question-avatar-action" name="accion_avatar" rows="3" maxlength="500" placeholder="Describe el gesto que acompañará esta respuesta." title="Describe brevemente el gesto o movimiento que acompañará esta respuesta."></textarea></label>
-                            <div class="avatar-action-tools"><button class="button secondary" type="button" data-generate-avatar-action="question" title="Analiza la pregunta y la respuesta para completar el gesto; no guarda el formulario.">Generar con Gemini</button><span id="question-avatar-action-status" role="status" aria-live="polite"></span></div>
+                            <div class="avatar-action-tools"><span id="question-avatar-action-status" role="status" aria-live="polite"></span></div>
                         </div>
+                        <label class="wide">Subir documento o adjuntar archivos<input id="question-attachment" name="archivo" type="file" multiple accept="application/pdf,.pdf,.txt,.md,text/plain,text/markdown,image/png,.png,image/jpeg,.jpg,.jpeg,image/webp,.webp" title="Selecciona PDF, TXT o MD para autocompletar la pregunta y respuesta."></label>
+                        <div id="question-selected-files" class="selected-files wide" aria-live="polite"></div>
+                        <label class="privacy-confirm wide"><input id="question-public-confirmation" type="checkbox"> Confirmo que la información es pública.</label>
+                        <p class="muted wide import-note">PDF/PNG/JPG/JPEG/WEBP: 10 MB c/u · TXT/MD: 2 MB solo Autocompletado · 20 MB total.</p>
+                        <div class="form-actions wide"><button id="question-autocomplete" class="button secondary" type="button">Autocompletado</button><span id="question-autocomplete-status" class="muted" role="status" aria-live="polite">No se guarda hasta pulsar «Guardar respuesta».</span></div>
                         <label class="check-label"><input name="activo" type="checkbox" checked title="Las respuestas activas pueden aparecer en el kiosko."> Activa</label>
                         <div class="form-actions wide"><button class="button primary" type="submit">Guardar respuesta</button><button id="question-reset" class="button secondary" type="button">Limpiar</button></div>
                     </form>
@@ -135,7 +136,7 @@
                     <div class="page-heading"><p class="eyebrow">Asistente de carga</p><h2>Administrar información y documentos</h2></div>
                     <section class="content-section">
                         <h2 id="manual-information-heading">Agregar información</h2>
-                        <p class="muted import-note">Escribe el contenido que consultarán los alumnos. Puedes adjuntar un PDF o una imagen pública.</p>
+                        <p class="muted import-note">Completa los campos manualmente o usa un documento para autocompletarlos.</p>
                         <form id="manual-information-form" class="editor form-grid">
                             <input name="id" type="hidden">
                             <input name="emocion" type="hidden" value="neutral">
@@ -146,26 +147,17 @@
                             <div class="avatar-action-editor wide">
                                 <label>Animación correspondiente<select name="animacion"><option value="Hablar">Hablar</option><option value="Explicar">Explicar</option><option value="Saludo">Saludo</option><option value="Pensar">Pensar</option><option value="Celebrar">Celebrar</option><option value="idle">Reposo</option></select></label>
                                 <label>Descripción de animación del avatar<textarea id="information-avatar-action" name="accion_avatar" rows="3" maxlength="500" placeholder="Describe el gesto que acompañará esta información." title="Describe brevemente el gesto o movimiento que acompañará esta información."></textarea></label>
-                                <div class="avatar-action-tools"><button class="button secondary" type="button" data-generate-avatar-action="information" title="Analiza el título y el contenido para completar el gesto; no guarda el formulario.">Generar con Gemini</button><span id="information-avatar-action-status" role="status" aria-live="polite"></span></div>
+                                <div class="avatar-action-tools"><span id="information-avatar-action-status" role="status" aria-live="polite"></span></div>
                             </div>
-                            <label class="wide">Adjuntar PDFs o imágenes (opcional)<input id="manual-information-pdf" name="archivo" type="file" multiple accept="application/pdf,.pdf,image/png,.png,image/jpeg,.jpg,.jpeg,image/webp,.webp" title="Adjunta hasta 20 PDFs o imágenes para que los alumnos puedan consultarlos desde el kiosko."></label>
+                            <label class="wide">Subir documento o adjuntar archivos<input id="manual-information-pdf" name="archivo" type="file" multiple accept="application/pdf,.pdf,.txt,.md,text/plain,text/markdown,image/png,.png,image/jpeg,.jpg,.jpeg,image/webp,.webp" title="Selecciona un documento y pulsa Autocompletado."></label>
                             <div id="manual-information-selected-files" class="selected-files wide" aria-live="polite"></div>
-                            <label id="manual-pdf-confirmation-row" class="privacy-confirm wide"><input id="manual-pdf-confirmation" type="checkbox"> Confirmo que el archivo contiene solo información pública y autorizo su publicación en el kiosko y el análisis de su texto si es PDF.</label>
-                            <p class="muted wide import-note">Tipos de archivo admitidos: PDF, PNG, JPG y WEBP.</p>
+                            <label class="privacy-confirm wide"><input id="information-public-confirmation" type="checkbox"> Confirmo que la información es pública.</label>
+                            <p class="muted wide import-note">PDF/PNG/JPG/JPEG/WEBP: 10 MB c/u · TXT/MD: 2 MB solo Autocompletado · 20 MB total.</p>
+                            <div class="form-actions wide"><button id="generate-information-drafts" class="button secondary" type="button">Autocompletado</button><span class="muted">No se guarda hasta pulsar «Guardar información».</span></div>
                             <label class="check-label wide"><input name="activo" type="checkbox" checked title="Si está activo, el contenido y su PDF estarán disponibles para el público del kiosko."> Publicar para alumnos y visitantes</label>
                             <div class="form-actions wide"><button id="save-manual-information" class="button primary" type="submit">Guardar información</button><button id="cancel-information-edit" class="button secondary hidden" type="button">Cancelar edición</button></div>
                         </form>
                         <div id="manual-information-status" class="message" role="status" aria-live="polite"></div>
-                    </section>
-                    <section class="content-section import-section">
-                        <h2>Crear borradores desde un documento</h2>
-                        <p class="muted import-note">El documento original se guardará como fuente de consulta del kiosko; si es PDF, también podrá abrirse desde ahí. Gemini propondrá fichas opcionales para que las revises y guardes.</p>
-                        <form id="information-import-form" class="editor import-form">
-                            <label>Documento institucional (.pdf, .txt o .md)<input id="information-file" type="file" accept=".pdf,.txt,.md,application/pdf,text/plain,text/markdown" required title="Elige un documento público del que se propondrán fichas institucionales."></label>
-                            <label class="privacy-confirm"><input id="public-content-confirmation" type="checkbox" required title="Confirma que tienes autorización para enviar el contenido y que no contiene datos privados."> Confirmo que el documento contiene solo información pública y no incluye contraseñas, datos personales ni información confidencial.</label>
-                            <p class="privacy-note">El texto y las tablas del PDF se analizarán con Gemini y se conservarán en la base de datos para responder preguntas específicas. No cargues expedientes ni documentos internos. El nivel gratuito de Gemini puede usar el contenido para mejorar sus productos.</p>
-                            <div class="form-actions"><button id="generate-information-drafts" class="button primary" type="submit">Analizar documento</button></div>
-                        </form>
                         <div id="information-import-status" class="message" role="status" aria-live="polite"></div>
                         <div id="information-drafts" class="draft-list"></div>
                     </section>
@@ -240,6 +232,10 @@
                         <h2>Documentos</h2>
                         <div class="table-wrap"><table><thead><tr><th>Archivo</th><th>Relacionado con</th><th>En papelera desde</th><th>Eliminación automática</th><th>Acciones</th></tr></thead><tbody id="trash-documents-body"></tbody></table></div>
                     </section>
+                    <section class="content-section">
+                        <h2>Mensajes de contacto</h2>
+                        <div class="table-wrap"><table><thead><tr><th>Nombre</th><th>Correo</th><th>Asunto</th><th>En papelera desde</th><th>Eliminación automática</th><th>Acciones</th></tr></thead><tbody id="trash-contact-messages-body"></tbody></table></div>
+                    </section>
                     <section id="trash-users-section" class="content-section">
                         <h2>Usuarios</h2>
                         <div class="table-wrap"><table><thead><tr><th>Nombre</th><th>Correo</th><th>Rol</th><th>En papelera desde</th><th>Eliminación automática</th><th>Acciones</th></tr></thead><tbody id="trash-users-body"></tbody></table></div>
@@ -276,9 +272,7 @@
             <label>Respuesta<textarea id="contact-reply-body" required maxlength="20000" rows="8" placeholder="Escribe aquí tu respuesta."></textarea></label>
             <div class="contact-attachment-tools" aria-label="Adjuntar archivos">
                 <button id="contact-attach-files" class="button secondary" type="button">＋ Adjuntar archivos</button>
-                <button id="contact-attach-images" class="button secondary" type="button">＋ Adjuntar imágenes</button>
                 <input id="contact-reply-file-input" class="hidden" type="file" multiple accept=".pdf,.png,.jpg,.jpeg,.gif,.webp,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.csv">
-                <input id="contact-reply-image-input" class="hidden" type="file" multiple accept="image/png,image/jpeg,image/gif,image/webp">
             </div>
             <p class="form-help">Hasta 10 archivos y 17 MB en total. PDF, documentos de Office, TXT, CSV e imágenes PNG, JPG, GIF o WEBP.</p>
             <ul id="contact-reply-attachments" class="contact-attachment-list" aria-live="polite"></ul>

@@ -4,7 +4,7 @@ from pathlib import Path
 from uuid import uuid4
 
 
-MAX_PDF_BYTES = 50 * 1024 * 1024
+MAX_PDF_BYTES = 10 * 1024 * 1024
 MAX_PDF_PAGES = 1000
 MAX_EXTRACTED_CHARS = 120_000
 UPLOAD_DIRECTORY = Path(__file__).resolve().parents[1] / "uploads" / "institutional"
@@ -22,7 +22,7 @@ class DocumentValidationError(ValueError):
 
 def extract_pdf_text(content: bytes) -> str:
     if len(content) > MAX_PDF_BYTES or not content.startswith(b"%PDF-"):
-        raise DocumentValidationError("El archivo no parece ser un PDF válido o supera el límite de 50 MB.")
+        raise DocumentValidationError("El archivo no parece ser un PDF válido o supera el límite de 10 MB.")
     try:
         from pypdf import PdfReader
 
@@ -57,7 +57,7 @@ def store_pdf(filename: str | None, content: bytes) -> tuple[str, str]:
     if not safe_name or len(safe_name) > 255 or Path(safe_name).suffix.lower() != ".pdf":
         raise DocumentValidationError("Adjunta un archivo PDF válido.")
     if len(content) > MAX_PDF_BYTES:
-        raise DocumentValidationError("El PDF supera el límite de 50 MB.")
+        raise DocumentValidationError("El PDF supera el límite de 10 MB.")
     if not content.startswith(b"%PDF-"):
         raise DocumentValidationError("El archivo no parece ser un PDF válido.")
 
@@ -74,7 +74,7 @@ def store_institutional_file(filename: str | None, content: bytes) -> tuple[str,
     if not safe_name or len(safe_name) > 255:
         raise DocumentValidationError("El nombre del archivo no es válido.")
     if len(content) > MAX_PDF_BYTES:
-        raise DocumentValidationError("El archivo supera el límite de 50 MB.")
+        raise DocumentValidationError("El archivo supera el límite de 10 MB.")
 
     extracted_text = None
     if extension == ".pdf":

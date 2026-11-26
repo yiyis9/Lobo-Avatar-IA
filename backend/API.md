@@ -49,6 +49,8 @@ Las rutas `/api/v1/admin/*` requieren `Authorization: Bearer <access_token>`. El
 | `PATCH /api/v1/admin/mensajes-contacto/{id}/leido` | `{"leido":true}` | Admin general puede marcar leído/nuevo; administrador de contenido solo puede marcar leído. |
 | `GET /api/v1/admin/mensajes-contacto/eventos` | Bearer de administrador general o de contenido | Notificaciones en tiempo real de nuevos mensajes. |
 | `POST /api/v1/admin/mensajes-contacto/{id}/responder` | Mensaje y adjuntos opcionales | Envía respuesta por correo y marca leído/respondido. Disponible para ambos roles administrativos. |
+| `POST /api/v1/admin/mensajes-contacto/{id}/papelera` | ninguno | Retira el mensaje durante 30 días; luego se elimina automáticamente. |
+| `POST /api/v1/admin/mensajes-contacto/{id}/restaurar` | ninguno | Restaura el mensaje desde la papelera. |
 | `PUT /api/v1/admin/solicitudes/{id}` | `{"decision":"aprobar"}` o `{"decision":"rechazar"}` | Solo administrador principal; actualiza estado; `404` si no hay solicitud pendiente. |
 | `PATCH /api/v1/admin/usuarios/{id}/estado` | `{"activo":true}` | Solo administrador principal; activa/desactiva usuario. |
 | `PATCH /api/v1/admin/usuarios/{id}/rol` | `{"rol":"admin_contenido"}` | Solo administrador principal; asigna rol y protege al único administrador activo. |
@@ -62,13 +64,14 @@ Las rutas `/api/v1/admin/*` requieren `Authorization: Bearer <access_token>`. El
 | `PUT /api/v1/admin/preguntas/{id}` | mismos campos que POST | `200` FAQ actualizada; `404` si no existe. |
 | `DELETE /api/v1/admin/preguntas/{id}` | Bearer | Archiva sin borrar historial; `204`. |
 | `GET /api/v1/admin/informacion` | Bearer | Información institucional, activa y archivada. |
-| `POST /api/v1/admin/informacion/importar` | Bearer; `nombre_archivo`, contenido de archivo y `contenido_publico_confirmado: true` | Conserva la fuente completa en MySQL para consultas, analiza visualmente `.pdf` (incluidas tablas) y usa Gemini para preparar borradores opcionales. `.txt` y `.md` también se analizan con Gemini. Evita guardar dos veces la misma fuente. PDF máximo 50 MB/1000 páginas; TXT/MD máximo 5 MB. |
-| `POST /api/v1/admin/informacion/con-documento` | Bearer; JSON de información y hasta 20 adjuntos opcionales (`archivos_nombres` + `archivos_base64`) | Crea contenido escrito manualmente y adjunta PDFs o imágenes (máximo conjunto de 50 MB por guardado); los PDF se indexan para consultas. Se conserva el formato escalar anterior por compatibilidad. |
+| `POST /api/v1/admin/informacion/analizar` | Bearer; `nombre_archivo`, contenido de archivo y `contenido_publico_confirmado: true` | Analiza el documento con Gemini y devuelve borradores con categoría y animación sin guardar datos ni archivos. PDF máximo 10 MB; TXT/MD máximo 2 MB. |
+| `POST /api/v1/admin/informacion/importar` | Bearer; `nombre_archivo`, contenido de archivo y `contenido_publico_confirmado: true` | Ruta de importación anterior que conserva la fuente completa para consultas y prepara borradores opcionales. PDF máximo 10 MB; TXT/MD máximo 2 MB. |
+| `POST /api/v1/admin/informacion/con-documento` | Bearer; JSON de información y hasta 20 adjuntos opcionales (`archivos_nombres` + `archivos_base64`) | Crea contenido escrito manualmente y adjunta PDFs o imágenes (máximo 10 MB por archivo y 20 MB en total por ficha); los PDF se indexan para consultas. Se conserva el formato escalar anterior por compatibilidad. |
 | `DELETE /api/v1/admin/documentos/{id}` | Bearer | Archiva el adjunto sin borrar su archivo. |
 | `POST /api/v1/admin/informacion` | clave, titulo, contenido, categoria, activo | `201` registro creado. |
 | `PUT /api/v1/admin/informacion/{id}` | mismos campos que POST | Actualiza registro; `404` si no existe. |
 | `DELETE /api/v1/admin/informacion/{id}` | Bearer | Archiva sin borrar; `204`. |
-| `GET /api/v1/admin/papelera` | Bearer | Lista preguntas, información y documentos; también usuarios para la cuenta de administrador principal. |
+| `GET /api/v1/admin/papelera` | Bearer | Lista preguntas, información, documentos y mensajes; también usuarios para la cuenta de administrador principal. |
 | `GET /api/v1/admin/historial?limite=100` | 1–500 | Historial reciente del kiosco. |
 | `GET /api/v1/admin/historial?desde=AAAA-MM-DD&hasta=AAAA-MM-DD` | Fechas opcionales | Administrador general o de contenido; filtra consultas del kiosko por intervalo. |
 | `DELETE /api/v1/admin/historial?desde=AAAA-MM-DD&hasta=AAAA-MM-DD` | Ambas fechas obligatorias | Solo administrador general; borra las consultas del intervalo elegido. |

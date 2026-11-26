@@ -280,6 +280,34 @@ async function loadDashboard() {
     });
 }
 
+async function downloadDashboardReport(event) {
+    const button = event.currentTarget;
+    button.disabled = true;
+    showMessage(appMessage, "Preparando el Excel con gráficas…");
+    try {
+        const response = await fetch(`${API}/admin/dashboard/reporte.xlsx`, {
+            headers: { Authorization: `Bearer ${token()}` },
+        });
+        if (!response.ok) {
+            const payload = await response.json().catch(() => ({}));
+            throw new Error(payload.detail || `No se pudo generar el reporte (error ${response.status}).`);
+        }
+        const url = URL.createObjectURL(await response.blob());
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = `reporte-resumen-lobo-upvt-${new Date().toISOString().slice(0, 10)}.xlsx`;
+        document.body.append(link);
+        link.click();
+        link.remove();
+        window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+        showMessage(appMessage, "Reporte Excel descargado con sus gráficas.", "success");
+    } catch (error) {
+        showMessage(appMessage, error.message, "error");
+    } finally {
+        button.disabled = false;
+    }
+}
+
 function actionButton(text, callback, style = "secondary") {
     const button = document.createElement("button");
     button.className = `button ${style}`;
@@ -498,12 +526,14 @@ async function loadTrash() {
     const informationBody = document.querySelector("#trash-information-body");
     const documentsBody = document.querySelector("#trash-documents-body");
     const usersBody = document.querySelector("#trash-users-body");
+    const contactMessagesBody = document.querySelector("#trash-contact-messages-body");
     const usersSection = document.querySelector("#trash-users-section");
     const trash = await api("/admin/papelera");
     questionsBody.replaceChildren();
     informationBody.replaceChildren();
     documentsBody.replaceChildren();
     usersBody.replaceChildren();
+    contactMessagesBody.replaceChildren();
     usersSection.classList.toggle("hidden", !adminUser?.es_admin_principal);
     if (!trash.preguntas?.length) emptyRow(questionsBody, 5, "No hay preguntas en la papelera.");
     (trash.preguntas || []).forEach((item) => {
@@ -556,6 +586,25 @@ async function loadTrash() {
         }, "primary"));
         documentsBody.append(row);
     });
+    const trashedMessages = trash.mensajes_contacto || [];
+    if (!trashedMessages.length) emptyRow(contactMessagesBody, 6, "No hay mensajes de contacto en la papelera.");
+    trashedMessages.forEach((item) => {
+        const row = document.createElement("tr");
+        cell(row, item.nombre);
+        cell(row, item.correo);
+        cell(row, item.asunto);
+        cell(row, formatTrashDate(item.papelera_en));
+        cell(row, trashExpiryDate(item.papelera_en));
+        const actions = cell(row, "");
+        actions.append(actionButton("Restaurar", async () => {
+            try {
+                await api(`/admin/mensajes-contacto/${item.id}/restaurar`, { method: "POST" });
+                showMessage(appMessage, "Mensaje de contacto restaurado.", "success");
+                await loadTrash();
+            } catch (error) { showMessage(appMessage, error.message, "error"); }
+        }, "primary"));
+        contactMessagesBody.append(row);
+    });
     if (adminUser?.es_admin_principal) {
         const trashedUsers = trash.usuarios || [];
         if (!trashedUsers.length) emptyRow(usersBody, 6, "No hay usuarios en la papelera.");
@@ -591,6 +640,9 @@ function resetInformationForm() {
     form.elements.emocion.value = "neutral";
     document.querySelector("#information-avatar-action-status").textContent = "";
     document.querySelector("#information-avatar-action-status").className = "";
+    document.querySelector("#information-import-status").textContent = "";
+    document.querySelector("#information-import-status").className = "message";
+    document.querySelector("#information-drafts").replaceChildren();
     form.elements.activo.checked = true;
     document.querySelector("#manual-information-heading").textContent = "Agregar información";
     document.querySelector("#save-manual-information").textContent = "Guardar información";
@@ -663,8 +715,8 @@ document.querySelector("#manual-information-form").addEventListener("submit", as
         activo: form.elements.activo.checked,
     };
     if (files.length) {
-        if (!document.querySelector("#manual-pdf-confirmation").checked) {
-            showMessage(status, "Confirma que el archivo contiene información pública y autorizas publicarlo en el kiosko.", "error");
+        if (!document.querySelector("#information-public-confirmation").checked) {
+            showMessage(status, "Confirma que la información es pública.", "error");
             return;
         }
         if (!validateAttachments(files, status)) return;
@@ -752,34 +804,23 @@ document.querySelectorAll("[data-generate-avatar-action]").forEach((button) => b
     }
 }));
 
-function draftField(labelText, fieldName, value, multiline = false) {
-    const label = document.createElement("label");
-    label.textContent = labelText;
-    const input = document.createElement(multiline ? "textarea" : "input");
-    input.dataset.field = fieldName;
-    input.value = value || "";
-    if (multiline) input.rows = 4;
-    label.append(input);
-    return label;
-}
-
-function draftAnimationField(value = "Hablar") {
-    const label = document.createElement("label");
-    label.textContent = "Animación correspondiente";
-    const select = document.createElement("select");
-    select.dataset.field = "animacion";
-    [
-        ["Hablar", "Hablar"], ["Explicar", "Explicar"], ["Saludo", "Saludo"],
-        ["Pensar", "Pensar"], ["Celebrar", "Celebrar"], ["idle", "Reposo"],
-    ].forEach(([animation, title]) => {
-        const option = document.createElement("option");
-        option.value = animation;
-        option.textContent = title;
-        select.append(option);
-    });
-    select.value = value || "Hablar";
-    label.append(select);
-    return label;
+function applyInformationDraft(draft) {
+    const form = document.querySelector("#manual-information-form");
+    form.elements.id.value = "";
+    form.elements.clave.value = draft.clave || "informacion-institucional";
+    form.elements.titulo.value = draft.titulo || "";
+    form.elements.categoria.value = draft.categoria || "General";
+    form.elements.contenido.value = draft.contenido || "";
+    form.elements.animacion.value = draft.animacion || "Hablar";
+    form.elements.accion_avatar.value = draft.accion_avatar || "";
+    form.elements.emocion.value = draft.emocion || "neutral";
+    form.elements.activo.checked = true;
+    document.querySelector("#manual-information-heading").textContent = "Revisar borrador de información";
+    document.querySelector("#save-manual-information").textContent = "Guardar información";
+    document.querySelector("#manual-information-form").scrollIntoView({ behavior: "smooth", block: "start" });
+    const animationStatus = document.querySelector("#information-avatar-action-status");
+    animationStatus.className = "success";
+    animationStatus.textContent = `Borrador completado · animación sugerida: ${draft.animacion || "Hablar"}. Revisa los campos antes de guardar.`;
 }
 
 function showInformationDrafts(drafts) {
@@ -792,65 +833,24 @@ function showInformationDrafts(drafts) {
         list.append(empty);
         return;
     }
+    applyInformationDraft(drafts[0]);
+    const note = document.createElement("p");
+    note.className = "muted";
+    note.textContent = `${drafts.length} borrador(es) propuestos. El primero ya está en el formulario; revisa sus campos y pulsa «Guardar información» cuando esté listo.`;
+    list.append(note);
     drafts.forEach((draft) => {
         const card = document.createElement("article");
         card.className = "draft-item";
         const heading = document.createElement("h3");
-        heading.textContent = "Revisa el borrador";
-        const fields = document.createElement("div");
-        fields.className = "draft-fields";
-        fields.append(
-            draftField("Título", "titulo", draft.titulo),
-            draftField("Categoría", "categoria", draft.categoria),
-            draftField("Clave", "clave", draft.clave),
-            draftField("Contenido", "contenido", draft.contenido, true),
-            draftAnimationField(draft.animacion),
-            draftField("Descripción de movimiento", "accion_avatar", draft.accion_avatar, true),
-        );
+        heading.textContent = draft.titulo || "Información sugerida";
+        const summary = document.createElement("p");
+        summary.className = "muted";
+        summary.textContent = `${draft.categoria || "General"} · Animación: ${draft.animacion || "Hablar"}`;
         const actions = document.createElement("div");
         actions.className = "form-actions";
-        const generateAnimation = actionButton("Generar animación", async () => {
-            const information = Object.fromEntries([...fields.querySelectorAll("[data-field]")].map((field) => [field.dataset.field, field.value.trim()]));
-            generateAnimation.disabled = true;
-            heading.textContent = "Gemini está analizando el contenido…";
-            try {
-                const result = await api("/admin/avatar/accion/generar", {
-                    method: "POST",
-                    body: JSON.stringify({
-                        tipo: "informacion",
-                        titulo: information.titulo,
-                        categoria: information.categoria || "General",
-                        contenido: information.contenido.slice(0, 12000),
-                        archivos: [],
-                    }),
-                });
-                fields.querySelector('[data-field="animacion"]').value = result.animacion;
-                fields.querySelector('[data-field="accion_avatar"]').value = result.accion_avatar;
-                heading.textContent = result.metodo === "local"
-                    ? `Gemini no respondió; sugerencia local: ${result.animacion}. Revisa el borrador antes de guardarlo.`
-                    : `Animación sugerida: ${result.animacion}. Revisa el borrador antes de guardarlo.`;
-            } catch (error) {
-                heading.textContent = error.message || "No se pudo generar la animación.";
-            } finally {
-                generateAnimation.disabled = false;
-            }
-        }, "secondary");
-        const save = actionButton("Guardar en MySQL", async () => {
-            const information = Object.fromEntries([...fields.querySelectorAll("[data-field]")].map((field) => [field.dataset.field, field.value.trim()]));
-            save.disabled = true;
-            try {
-                await api("/admin/informacion", { method: "POST", body: JSON.stringify({ ...information, emocion: "neutral", activo: true }) });
-                card.remove();
-                showMessage(appMessage, "Información guardada en la base de datos.", "success");
-                await loadInformation();
-            } catch (error) {
-                showMessage(appMessage, error.message, "error");
-            } finally {
-                save.disabled = false;
-            }
-        }, "primary");
-        actions.append(generateAnimation, save);
-        card.append(heading, fields, actions);
+        const useDraft = actionButton("Usar este borrador", () => applyInformationDraft(draft), "secondary");
+        actions.append(useDraft);
+        card.append(heading, summary, actions);
         list.append(card);
     });
 }
@@ -866,7 +866,8 @@ async function encodeBase64(file) {
 }
 
 const MAX_ATTACHMENT_COUNT = 20;
-const MAX_ATTACHMENT_TOTAL_BYTES = 50 * 1024 * 1024;
+const MAX_ATTACHMENT_BYTES = 10 * 1024 * 1024;
+const MAX_ATTACHMENT_TOTAL_BYTES = 20 * 1024 * 1024;
 const ALLOWED_ATTACHMENT_EXTENSIONS = new Set(["pdf", "png", "jpg", "jpeg", "webp"]);
 const selectedFileCollections = new WeakMap();
 
@@ -943,14 +944,14 @@ function validateAttachments(files, messageElement) {
             showMessage(messageElement, "Adjunta únicamente PDF, PNG, JPG o WEBP.", "error");
             return false;
         }
-        if (file.size > MAX_ATTACHMENT_TOTAL_BYTES) {
-            showMessage(messageElement, `${file.name} supera el límite de 50 MB por archivo.`, "error");
+        if (file.size > MAX_ATTACHMENT_BYTES) {
+            showMessage(messageElement, `${file.name} supera el límite de 10 MB por archivo.`, "error");
             return false;
         }
         totalBytes += file.size;
     }
     if (totalBytes > MAX_ATTACHMENT_TOTAL_BYTES) {
-        showMessage(messageElement, "El tamaño conjunto de los archivos no puede superar 50 MB por guardado.", "error");
+        showMessage(messageElement, "El tamaño conjunto de los archivos no puede superar 20 MB por guardado.", "error");
         return false;
     }
     return true;
@@ -963,53 +964,76 @@ async function addAttachmentsToPayload(payload, files) {
     payload.contenido_publico_confirmado = true;
 }
 
-document.querySelector("#information-import-form").addEventListener("submit", async (event) => {
-    event.preventDefault();
-    const file = document.querySelector("#information-file").files[0];
+async function analyzeInformationDocument() {
+    const files = Array.from(document.querySelector("#manual-information-pdf").files);
+    const file = files[0];
     const submit = document.querySelector("#generate-information-drafts");
     const status = document.querySelector("#information-import-status");
     const drafts = document.querySelector("#information-drafts");
-    if (!file) return;
+    if (document.querySelector("#manual-information-form").elements.id.value) {
+        showMessage(status, "Primero cancela la edición actual para analizar un documento como borrador nuevo.", "error");
+        return;
+    }
+    if (!file) {
+        showMessage(status, "Selecciona un PDF, TXT o MD para analizar.", "error");
+        return;
+    }
+    if (files.length !== 1) {
+        showMessage(status, "Para analizar con Gemini, selecciona un solo documento.", "error");
+        return;
+    }
+    if (!document.querySelector("#information-public-confirmation").checked) {
+        showMessage(status, "Confirma que la información es pública.", "error");
+        return;
+    }
     const extension = file.name.toLowerCase().split(".").pop();
-    const maximumFileSize = extension === "pdf" ? 50 * 1024 * 1024 : 5 * 1024 * 1024;
+    if (!["pdf", "txt", "md"].includes(extension)) {
+        showMessage(status, "Gemini analiza PDF, TXT o MD. Las imágenes se pueden adjuntar a una ficha.", "error");
+        return;
+    }
+    const maximumFileSize = extension === "pdf" ? 10 * 1024 * 1024 : 2 * 1024 * 1024;
     if (file.size > maximumFileSize) {
-        showMessage(status, extension === "pdf" ? "El PDF supera el límite de 50 MB." : "El archivo de texto supera el límite de 5 MB.", "error");
+        showMessage(status, extension === "pdf" ? "El PDF supera el límite de 10 MB." : "El archivo de texto supera el límite de 2 MB.", "error");
         return;
     }
 
     submit.disabled = true;
     drafts.replaceChildren();
-    showMessage(status, "Preparando borradores con Gemini...");
+    const originalButtonLabel = submit.textContent;
+    submit.textContent = "Procesando documento…";
+    const startedAt = Date.now();
+    showMessage(status, "Leyendo el documento…");
+    const progressTimer = window.setInterval(() => {
+        const seconds = Math.floor((Date.now() - startedAt) / 1000);
+        status.textContent = `Analizando el documento… ${seconds} s.`;
+    }, 1000);
     try {
         const payload = {
             nombre_archivo: file.name,
-            contenido_publico_confirmado: document.querySelector("#public-content-confirmation").checked,
+            contenido_publico_confirmado: true,
         };
         if (extension === "pdf") payload.archivo_base64 = await encodeBase64(file);
         else if (extension === "txt" || extension === "md") payload.texto = await file.text();
         else throw new Error("Formato no admitido. Usa PDF, TXT o Markdown.");
 
-        const result = await api("/admin/informacion/importar", { method: "POST", body: JSON.stringify(payload) });
-        const sourceStatus = result.fuente_guardada
-            ? (result.fuente_ya_existia ? "La fuente ya estaba guardada; no se duplicó." : "Documento original guardado para consultas del kiosko.")
-            : "La fuente ya existe, pero está archivada. Actívala desde Información guardada si debe volver al kiosko.";
-        const visualStatus = result.analisis_visual_pendiente
-            ? (result.borradores.length
-                ? " El documento ya está guardado y disponible; Gemini ampliará el índice en segundo plano."
-                : " El PDF está guardado y Gemini lo está preparando para búsquedas en segundo plano.")
-            : result.analisis_visual_gemini ? " Gemini analizó visualmente el PDF." : "";
+        const result = await api("/admin/informacion/analizar", { method: "POST", body: JSON.stringify(payload) });
+        const analysisStatus = result.aviso_analisis ? ` ${result.aviso_analisis}` : "";
         const draftStatus = result.borradores.length
-            ? ` ${result.borradores.length} borrador(es) listos para revisar.`
-            : result.analisis_visual_pendiente ? " No hay borradores hasta que termine el análisis del PDF." : " No se generaron borradores.";
-        const analysisStatus = result.aviso_analisis ? ` Gemini no pudo preparar borradores: ${result.aviso_analisis}` : "";
-        showMessage(status, `${sourceStatus}${visualStatus}${draftStatus}${analysisStatus}`, result.aviso_analisis ? "error" : "success");
+            ? `${result.borradores.length} borrador(es) listos. Revisa y guarda.`
+            : "No se encontraron datos para completar. Revisa el archivo.";
+        showMessage(status, `${draftStatus}${analysisStatus}`, result.borradores.length ? "success" : "error");
         showInformationDrafts(result.borradores);
+        if (extension !== "pdf") clearSelectedFiles("#manual-information-pdf");
     } catch (error) {
         showMessage(status, error.message, "error");
     } finally {
+        window.clearInterval(progressTimer);
         submit.disabled = false;
+        submit.textContent = originalButtonLabel;
     }
-});
+}
+
+document.querySelector("#generate-information-drafts").addEventListener("click", analyzeInformationDocument);
 
 async function loadRequests() {
     const body = document.querySelector("#requests-body");
@@ -1132,13 +1156,20 @@ function renderContactMessageRows(body, items, isHistory) {
             document.querySelector("#contact-reply-body").value = `Hola ${item.nombre},\n\n`;
             contactReplyAttachments = [];
             document.querySelector("#contact-reply-file-input").value = "";
-            document.querySelector("#contact-reply-image-input").value = "";
             renderContactReplyAttachments();
             showMessage(document.querySelector("#contact-reply-status"), "");
             dialog.showModal();
             document.querySelector("#contact-reply-body").focus();
         });
         actionGroup.append(reply);
+        actionGroup.append(actionButton("Mover a papelera", async () => {
+            if (!window.confirm(`¿Mover el mensaje de ${item.nombre} a la papelera? Podrás restaurarlo durante 30 días.`)) return;
+            try {
+                await api(`/admin/mensajes-contacto/${item.id}/papelera`, { method: "POST" });
+                showMessage(appMessage, "Mensaje movido a la papelera.", "success");
+                await loadContactMessages();
+            } catch (error) { showMessage(appMessage, error.message, "error"); }
+        }));
         actions.append(actionGroup);
         row.append(actions);
         body.append(row);
@@ -1171,7 +1202,7 @@ function renderContactReplyAttachments() {
     });
 }
 
-async function addContactReplyFiles(fileList, imagesOnly = false) {
+async function addContactReplyFiles(fileList) {
     const status = document.querySelector("#contact-reply-status");
     const files = Array.from(fileList || []);
     if (!files.length) return;
@@ -1181,7 +1212,7 @@ async function addContactReplyFiles(fileList, imagesOnly = false) {
     for (const file of files) {
         const extension = file.name.split(".").pop()?.toLowerCase();
         const image = ["png", "jpg", "jpeg", "gif", "webp"].includes(extension);
-        if (!allowedExtensions.has(extension) || (imagesOnly && !image)) {
+        if (!allowedExtensions.has(extension)) {
             showMessage(status, `No se admite el archivo “${file.name}”.`, "error");
             continue;
         }
@@ -1646,8 +1677,8 @@ document.querySelector("#question-form").addEventListener("submit", async (event
     values.activo = form.elements.activo.checked;
     values.palabras_clave ||= null;
     if (files.length) {
-        if (!document.querySelector("#question-attachment-confirmation").checked) {
-            showMessage(appMessage, "Confirma que los archivos son públicos antes de adjuntarlos.", "error");
+        if (!document.querySelector("#question-public-confirmation").checked) {
+            showMessage(appMessage, "Confirma que la información es pública.", "error");
             return;
         }
         if (!validateAttachments(files, appMessage)) return;
@@ -1660,6 +1691,8 @@ document.querySelector("#question-form").addEventListener("submit", async (event
         form.elements.activo.checked = true;
         document.querySelector("#question-avatar-action-status").textContent = "";
         document.querySelector("#question-avatar-action-status").className = "";
+        document.querySelector("#question-autocomplete-status").textContent = "No se guarda hasta pulsar «Guardar respuesta».";
+        document.querySelector("#question-autocomplete-status").className = "muted";
         const pendingPdf = saved?.documentos?.some((doc) => files.some((file) => file.name === doc.nombre_archivo) && doc.activo && doc.estado_indice === "pendiente");
         showMessage(appMessage, files.length
             ? pendingPdf ? `Respuesta guardada con ${files.length} archivo(s). Los PDF se están indexando para búsquedas.` : `Respuesta guardada con ${files.length} archivo(s).`
@@ -1676,6 +1709,71 @@ document.querySelector("#question-reset").addEventListener("click", () => {
     form.elements.activo.checked = true;
     document.querySelector("#question-avatar-action-status").textContent = "";
     document.querySelector("#question-avatar-action-status").className = "";
+    document.querySelector("#question-autocomplete-status").textContent = "No se guarda hasta pulsar «Guardar respuesta».";
+});
+
+document.querySelector("#question-autocomplete").addEventListener("click", async () => {
+    const input = document.querySelector("#question-attachment");
+    const files = Array.from(input.files);
+    const status = document.querySelector("#question-autocomplete-status");
+    const button = document.querySelector("#question-autocomplete");
+    if (files.length !== 1) {
+        status.textContent = "Selecciona un solo PDF, TXT o MD.";
+        status.className = "error";
+        return;
+    }
+    if (!document.querySelector("#question-public-confirmation").checked) {
+        status.textContent = "Confirma que la información es pública.";
+        status.className = "error";
+        return;
+    }
+    const file = files[0];
+    const extension = file.name.toLowerCase().split(".").pop();
+    if (!["pdf", "txt", "md"].includes(extension)) {
+        status.textContent = "Para autocompletar, usa PDF, TXT o MD.";
+        status.className = "error";
+        return;
+    }
+    const maximumSize = extension === "pdf" ? 10 * 1024 * 1024 : 2 * 1024 * 1024;
+    if (file.size > maximumSize) {
+        status.textContent = extension === "pdf" ? "El PDF supera 10 MB." : "El archivo de texto supera 2 MB.";
+        status.className = "error";
+        return;
+    }
+
+    button.disabled = true;
+    const label = button.textContent;
+    button.textContent = "Procesando documento…";
+    status.className = "muted";
+    status.textContent = "Analizando el documento…";
+    try {
+        const payload = { nombre_archivo: file.name, contenido_publico_confirmado: true };
+        if (extension === "pdf") payload.archivo_base64 = await encodeBase64(file);
+        else payload.texto = await file.text();
+        const result = await api("/admin/informacion/analizar", { method: "POST", body: JSON.stringify(payload) });
+        const draft = result.borradores?.[0];
+        if (!draft) throw new Error(result.aviso_analisis || "No se encontraron datos para completar. Revisa el archivo.");
+        const form = document.querySelector("#question-form");
+        const title = (draft.titulo || "Información institucional").trim().replace(/[?.!]+$/, "");
+        form.elements.categoria.value = draft.categoria || "General";
+        form.elements.pregunta.value = /^[¿].*\?$/.test(draft.titulo || "")
+            ? draft.titulo
+            : `¿Qué información contiene el apartado «${title}»?`;
+        form.elements.respuesta.value = draft.contenido || "";
+        form.elements.palabras_clave.value = [draft.categoria, draft.titulo].filter(Boolean).join(", ").slice(0, 255);
+        form.elements.animacion.value = draft.animacion || "Hablar";
+        form.elements.accion_avatar.value = draft.accion_avatar || "";
+        form.elements.emocion.value = draft.emocion || "neutral";
+        status.className = "success";
+        status.textContent = "Pregunta, respuesta y animación listas. Revisa y guarda.";
+        if (extension !== "pdf") clearSelectedFiles("#question-attachment");
+    } catch (error) {
+        status.className = "error";
+        status.textContent = error.message || "No se pudo completar la pregunta y respuesta.";
+    } finally {
+        button.disabled = false;
+        button.textContent = label;
+    }
 });
 document.querySelector("#questions-search").addEventListener("input", () => {
     window.clearTimeout(questionsSearchTimer);
@@ -1769,16 +1867,10 @@ document.querySelector("#contact-reply-close").addEventListener("click", () => {
     document.querySelector("#contact-reply-dialog").close();
 });
 const contactReplyFileInput = document.querySelector("#contact-reply-file-input");
-const contactReplyImageInput = document.querySelector("#contact-reply-image-input");
 document.querySelector("#contact-attach-files").addEventListener("click", () => contactReplyFileInput.click());
-document.querySelector("#contact-attach-images").addEventListener("click", () => contactReplyImageInput.click());
 contactReplyFileInput.addEventListener("change", async () => {
     await addContactReplyFiles(contactReplyFileInput.files);
     contactReplyFileInput.value = "";
-});
-contactReplyImageInput.addEventListener("change", async () => {
-    await addContactReplyFiles(contactReplyImageInput.files, true);
-    contactReplyImageInput.value = "";
 });
 document.querySelector("#contact-reply-form").addEventListener("submit", async (event) => {
     event.preventDefault();
@@ -1821,6 +1913,7 @@ document.querySelector("#profile-forgot-password").addEventListener("click", () 
     document.querySelector('#login-form input[name="correo"]').value = email;
     document.querySelector("#forgot-password-button").click();
 });
+document.querySelector("#download-summary-report").addEventListener("click", downloadDashboardReport);
 profileForm.addEventListener("submit", async (event) => {
     event.preventDefault();
     const current = profileForm.elements.contrasena_actual.value;

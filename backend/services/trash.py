@@ -3,7 +3,7 @@ from datetime import datetime, timedelta, timezone
 from sqlalchemy import select, update
 from sqlalchemy.orm import Session
 
-from models import DocumentoInstitucional, HistorialConsulta, InformacionInstitucional, PreguntaFrecuente, Usuario
+from models import DocumentoInstitucional, HistorialConsulta, InformacionInstitucional, MensajeContacto, PreguntaFrecuente, Usuario
 from services.institutional_documents import discard_pdf
 
 
@@ -81,6 +81,9 @@ def purge_expired_trash(db: Session, now: datetime | None = None) -> int:
         Usuario.papelera_en <= expires_before,
         Usuario.rol != "admin",
     )))
+    expired_contact_messages = list(db.scalars(
+        select(MensajeContacto).where(MensajeContacto.papelera_en <= expires_before)
+    ))
     expired_user_ids = [user.id for user in expired_users]
     expired_documents = list(db.scalars(
         select(DocumentoInstitucional).where(
@@ -104,7 +107,9 @@ def purge_expired_trash(db: Session, now: datetime | None = None) -> int:
         )
     for user in expired_users:
         db.delete(user)
+    for message in expired_contact_messages:
+        db.delete(message)
     db.commit()
     for file_key in file_keys:
         discard_pdf(file_key)
-    return len(expired_documents) + len(expired_information) + len(expired_questions) + len(expired_users)
+    return len(expired_documents) + len(expired_information) + len(expired_questions) + len(expired_users) + len(expired_contact_messages)

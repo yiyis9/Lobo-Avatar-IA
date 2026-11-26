@@ -208,3 +208,4 @@ class MensajeContacto(Base):
     contestado: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False, server_default="0")
     creado_en: Mapped[datetime] = mapped_column(TIMESTAMP, server_default=func.current_timestamp(), nullable=False)
     contestado_en: Mapped[datetime | None] = mapped_column(TIMESTAMP, nullable=True)
+    papelera_en: Mapped[datetime | None] = mapped_column(TIMESTAMP, nullable=True)
