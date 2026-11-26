@@ -172,7 +172,7 @@ class PreguntaUpdate(PreguntaCreate):
 
 class PreguntaConDocumentoRequest(PreguntaUpdate):
     archivo_nombre: str | None = Field(default=None, max_length=255)
-    archivo_base64: str | None = Field(default=None, max_length=70_000_000)
+    archivo_base64: str | None = Field(default=None, max_length=14_000_000)
     archivos_nombres: list[str] = Field(default_factory=list, max_length=20)
     archivos_base64: list[str] = Field(default_factory=list, max_length=20)
     contenido_publico_confirmado: bool = False
@@ -184,7 +184,9 @@ class PreguntaConDocumentoRequest(PreguntaUpdate):
                 raise ValueError("Envía los archivos en un solo formato.")
             if len(self.archivos_nombres) != len(self.archivos_base64):
                 raise ValueError("Cada archivo debe tener un nombre y contenido completos.")
-            if sum(map(len, self.archivos_base64)) > 70_000_000:
+            if any(len(encoded) > 14_000_000 for encoded in self.archivos_base64):
+                raise ValueError("Cada archivo adjunto debe pesar como máximo 10 MB.")
+            if sum(map(len, self.archivos_base64)) > 28_000_000:
                 raise ValueError("El tamaño conjunto de los archivos supera el límite permitido.")
         elif bool(self.archivo_nombre) != bool(self.archivo_base64):
             raise ValueError("Selecciona archivos completos o deja los adjuntos vacíos.")
@@ -345,7 +347,7 @@ class InformacionCreate(APIModel):
 
 class InformacionConDocumentoRequest(InformacionCreate):
     archivo_nombre: str | None = Field(default=None, max_length=255)
-    archivo_base64: str | None = Field(default=None, max_length=70_000_000)
+    archivo_base64: str | None = Field(default=None, max_length=14_000_000)
     archivos_nombres: list[str] = Field(default_factory=list, max_length=20)
     archivos_base64: list[str] = Field(default_factory=list, max_length=20)
     contenido_publico_confirmado: bool = False
@@ -357,7 +359,9 @@ class InformacionConDocumentoRequest(InformacionCreate):
                 raise ValueError("Envía los archivos en un solo formato.")
             if len(self.archivos_nombres) != len(self.archivos_base64):
                 raise ValueError("Cada archivo debe tener un nombre y contenido completos.")
-            if sum(map(len, self.archivos_base64)) > 70_000_000:
+            if any(len(encoded) > 14_000_000 for encoded in self.archivos_base64):
+                raise ValueError("Cada archivo adjunto debe pesar como máximo 10 MB.")
+            if sum(map(len, self.archivos_base64)) > 28_000_000:
                 raise ValueError("El tamaño conjunto de los archivos supera el límite permitido.")
         elif bool(self.archivo_nombre) != bool(self.archivo_base64):
             raise ValueError("Selecciona archivos completos o deja los adjuntos vacíos.")
@@ -413,7 +417,7 @@ class DocumentoPublicoResponse(APIModel):
 class ImportarInformacionRequest(APIModel):
     nombre_archivo: str = Field(min_length=1, max_length=200)
     texto: str | None = Field(default=None, max_length=50000)
-    archivo_base64: str | None = Field(default=None, max_length=70000000)
+    archivo_base64: str | None = Field(default=None, max_length=14000000)
     contenido_publico_confirmado: bool = False
 
 
@@ -422,6 +426,9 @@ class BorradorInformacion(APIModel):
     titulo: str = Field(min_length=2, max_length=180)
     contenido: str = Field(min_length=1)
     categoria: str = Field(default="General", min_length=1, max_length=80)
+    animacion: Literal["idle", "Hablar", "Explicar", "Saludo", "Pensar", "Celebrar"] = "Hablar"
+    accion_avatar: str = Field(default="", max_length=500)
+    emocion: Literal["neutral", "happy"] = "neutral"
 
 
 class ImportarInformacionResponse(APIModel):

@@ -5,6 +5,7 @@ import logging
 import mimetypes
 import queue
 import smtplib
+from io import BytesIO
 from datetime import datetime
 from datetime import date, timedelta, timezone
 from pathlib import Path
@@ -12,6 +13,9 @@ from starlette.background import BackgroundTask
 
 from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, Query, Request, Response, status
 from fastapi.responses import FileResponse, StreamingResponse
+from openpyxl import Workbook
+from openpyxl.chart import BarChart, LineChart, Reference
+from openpyxl.styles import Alignment, Font, PatternFill
 from sqlalchemy import delete, func, select
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
@@ -55,6 +59,7 @@ from services.gemini_import import (
     extract_source_text,
     _stable_key,
     suggest_information,
+    suggest_information_from_pdf,
 )
 from services.database_backup import BackupConfigurationError, create_database_backup
 from services.trash import (
@@ -80,7 +85,8 @@ router = APIRouter(prefix="/api/v1/admin", tags=["Administración"])
 logger = logging.getLogger(__name__)
 ATTACHMENT_FIELDS = {"archivo_nombre", "archivo_base64", "archivos_nombres", "archivos_base64", "contenido_publico_confirmado"}
 MAX_ATTACHMENT_COUNT = 20
-MAX_ATTACHMENT_TOTAL_BYTES = 50 * 1024 * 1024
+MAX_ATTACHMENT_BYTES = 10 * 1024 * 1024
+MAX_ATTACHMENT_TOTAL_BYTES = 20 * 1024 * 1024
 MAX_EMAIL_ATTACHMENT_BYTES = 17 * 1024 * 1024
 
 
@@ -89,7 +95,12 @@ def contact_messages(
     db: Session = Depends(get_db),
     _: Usuario = Depends(require_content_admin),
 ) -> list[MensajeContacto]:
-    return list(db.scalars(select(MensajeContacto).order_by(MensajeContacto.creado_en.desc()).limit(500)))
+    return list(db.scalars(
+        select(MensajeContacto)
+        .where(MensajeContacto.papelera_en.is_(None))
+        .order_by(MensajeContacto.creado_en.desc())
+        .limit(500)
+    ))
 
 
 @router.get("/mensajes-contacto/eventos")
@@ -128,7 +139,7 @@ def set_contact_message_read(
     if current.rol == "admin_contenido" and not request.leido:
         raise HTTPException(status_code=403, detail="El administrador de contenido solo puede marcar mensajes como leídos.")
     item = db.get(MensajeContacto, message_id)
-    if item is None:
+    if item is None or item.papelera_en is not None:
         raise HTTPException(status_code=404, detail="Mensaje de contacto no encontrado.")
     item.leido = request.leido
     db.commit()
@@ -144,7 +155,7 @@ def reply_to_contact_message(
     _: Usuario = Depends(require_content_admin),
 ) -> Response:
     item = db.get(MensajeContacto, message_id)
-    if item is None:
+    if item is None or item.papelera_en is not None:
         raise HTTPException(status_code=404, detail="Mensaje de contacto no encontrado.")
     if not is_email_configured():
         raise HTTPException(status_code=503, detail="El envío de correo no está configurado en el backend.")
@@ -168,6 +179,34 @@ def reply_to_contact_message(
         item.leido = True
     item.contestado = True
     item.contestado_en = datetime.now(timezone.utc)
+    db.commit()
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
+
+
+@router.post("/mensajes-contacto/{message_id}/papelera", status_code=status.HTTP_204_NO_CONTENT)
+def trash_contact_message(
+    message_id: int,
+    db: Session = Depends(get_db),
+    _: Usuario = Depends(require_content_admin),
+) -> Response:
+    item = db.get(MensajeContacto, message_id)
+    if item is None or item.papelera_en is not None:
+        raise HTTPException(status_code=404, detail="Mensaje de contacto disponible no encontrado.")
+    item.papelera_en = datetime.now(timezone.utc).replace(tzinfo=None)
+    db.commit()
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
+
+
+@router.post("/mensajes-contacto/{message_id}/restaurar", status_code=status.HTTP_204_NO_CONTENT)
+def restore_contact_message(
+    message_id: int,
+    db: Session = Depends(get_db),
+    _: Usuario = Depends(require_content_admin),
+) -> Response:
+    item = db.get(MensajeContacto, message_id)
+    if item is None or item.papelera_en is None:
+        raise HTTPException(status_code=404, detail="Mensaje de contacto no encontrado en la papelera.")
+    item.papelera_en = None
     db.commit()
     return Response(status_code=status.HTTP_204_NO_CONTENT)
 
@@ -201,8 +240,10 @@ def _decode_request_attachments(request: PreguntaConDocumentoRequest | Informaci
         except (ValueError, binascii.Error) as error:
             raise HTTPException(status_code=422, detail="Uno de los archivos adjuntos no tiene un formato válido.") from error
         total_bytes += len(content)
+        if len(content) > MAX_ATTACHMENT_BYTES:
+            raise HTTPException(status_code=422, detail=f"Cada archivo adjunto debe pesar como máximo {MAX_ATTACHMENT_BYTES // (1024 * 1024)} MB.")
         if total_bytes > MAX_ATTACHMENT_TOTAL_BYTES:
-            raise HTTPException(status_code=422, detail="El tamaño conjunto de los archivos no puede superar 50 MB por guardado.")
+            raise HTTPException(status_code=422, detail=f"El tamaño conjunto de los archivos no puede superar {MAX_ATTACHMENT_TOTAL_BYTES // (1024 * 1024)} MB por guardado.")
         decoded.append((filename, content))
     return decoded
 
@@ -287,6 +328,108 @@ def dashboard(db: Session = Depends(get_db), current: Usuario = Depends(require_
             .limit(5)
         ).mappings().all()],
     }
+
+
+@router.get("/dashboard/reporte.xlsx")
+def dashboard_report(db: Session = Depends(get_db), current: Usuario = Depends(require_content_admin)) -> StreamingResponse:
+    today = date.today()
+    since = today - timedelta(days=29)
+    daily_rows = db.execute(
+        select(func.date(HistorialConsulta.fecha_consulta).label("fecha"), func.count().label("consultas"))
+        .where(HistorialConsulta.fecha_consulta >= since)
+        .group_by(func.date(HistorialConsulta.fecha_consulta))
+        .order_by(func.date(HistorialConsulta.fecha_consulta))
+    ).mappings().all()
+    daily_counts = {str(row["fecha"]): row["consultas"] for row in daily_rows}
+    faq_count = db.scalar(select(func.count()).select_from(PreguntaFrecuente).where(
+        PreguntaFrecuente.activo.is_(True), PreguntaFrecuente.papelera_en.is_(None)
+    )) or 0
+    total_queries = db.scalar(select(func.count()).select_from(HistorialConsulta)) or 0
+    popular = db.execute(
+        select(PreguntaFrecuente.pregunta, func.count(HistorialConsulta.id).label("consultas"))
+        .outerjoin(HistorialConsulta, HistorialConsulta.pregunta_frecuente_id == PreguntaFrecuente.id)
+        .where(PreguntaFrecuente.activo.is_(True), PreguntaFrecuente.papelera_en.is_(None))
+        .group_by(PreguntaFrecuente.id, PreguntaFrecuente.pregunta)
+        .order_by(func.count(HistorialConsulta.id).desc())
+        .limit(10)
+    ).mappings().all()
+
+    workbook = Workbook()
+    sheet = workbook.active
+    sheet.title = "Resumen"
+    sheet.append(["Reporte del resumen · Lobo UPVT"])
+    sheet.append(["Generado", datetime.now().strftime("%d/%m/%Y %H:%M")])
+    sheet.append(["Indicador", "Valor"])
+    sheet.append(["Respuestas activas", faq_count])
+    sheet.append(["Consultas atendidas", total_queries])
+    if current.rol != "admin_contenido":
+        pending = db.scalar(select(func.count()).select_from(Usuario).where(Usuario.estado_solicitud == "pendiente")) or 0
+        today_count = db.scalar(select(func.count()).select_from(HistorialConsulta).where(
+            HistorialConsulta.fecha_consulta >= today
+        )) or 0
+        sheet.append(["Consultas de hoy", today_count])
+        sheet.append(["Solicitudes pendientes", pending])
+
+    daily_col = 4
+    sheet.cell(row=1, column=daily_col, value="Consultas por día · últimos 30 días")
+    sheet.cell(row=2, column=daily_col, value="Fecha")
+    sheet.cell(row=2, column=daily_col + 1, value="Consultas")
+    for offset in range(30):
+        day = since + timedelta(days=offset)
+        row_num = 3 + offset
+        sheet.cell(row=row_num, column=daily_col, value=day)
+        sheet.cell(row=row_num, column=daily_col).number_format = "dd/mm/yyyy"
+        sheet.cell(row=row_num, column=daily_col + 1, value=daily_counts.get(day.isoformat(), 0))
+
+    popular_col = 7
+    sheet.cell(row=1, column=popular_col, value="Preguntas más consultadas")
+    sheet.cell(row=2, column=popular_col, value="Pregunta")
+    sheet.cell(row=2, column=popular_col + 1, value="Consultas")
+    for row_num, item in enumerate(popular, start=3):
+        sheet.cell(row=row_num, column=popular_col, value=item["pregunta"])
+        sheet.cell(row=row_num, column=popular_col + 1, value=item["consultas"])
+
+    header_fill = PatternFill("solid", fgColor="A61F43")
+    for row in (1, 2, 3):
+        for cell in sheet[row]:
+            if cell.value is not None:
+                cell.font = Font(color="FFFFFF", bold=True, size=14 if row == 1 else 11)
+                cell.fill = header_fill
+                cell.alignment = Alignment(vertical="center", wrap_text=True)
+    for column, width in {1: 30, 2: 20, 4: 16, 5: 14, 7: 48, 8: 14}.items():
+        sheet.column_dimensions[chr(64 + column)].width = width
+    sheet.freeze_panes = "A4"
+
+    line = LineChart()
+    line.title = "Actividad diaria (30 días)"
+    line.y_axis.title = "Consultas"
+    line.x_axis.title = "Fecha"
+    line.height, line.width = 8, 16
+    line.add_data(Reference(sheet, min_col=daily_col + 1, min_row=2, max_row=32), titles_from_data=True)
+    line.set_categories(Reference(sheet, min_col=daily_col, min_row=3, max_row=32))
+    sheet.add_chart(line, "A11")
+
+    if popular:
+        bar = BarChart()
+        bar.type = "bar"
+        bar.style = 10
+        bar.title = "Preguntas más consultadas"
+        bar.x_axis.title = "Consultas"
+        bar.y_axis.title = "Pregunta"
+        bar.height, bar.width = 9, 18
+        bar.add_data(Reference(sheet, min_col=popular_col + 1, min_row=2, max_row=2 + len(popular)), titles_from_data=True)
+        bar.set_categories(Reference(sheet, min_col=popular_col, min_row=3, max_row=2 + len(popular)))
+        sheet.add_chart(bar, "J11")
+
+    output = BytesIO()
+    workbook.save(output)
+    output.seek(0)
+    filename = f"reporte-resumen-lobo-upvt-{today.isoformat()}.xlsx"
+    return StreamingResponse(
+        output,
+        media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        headers={"Content-Disposition": f'attachment; filename="{filename}"'},
+    )
 
 
 @router.get("/metricas")
@@ -646,6 +789,11 @@ def list_trash(
         .where(Usuario.papelera_en.is_not(None))
         .order_by(Usuario.papelera_en.desc())
     )) if current is not None and current.es_admin_principal else []
+    contact_messages = list(db.scalars(
+        select(MensajeContacto)
+        .where(MensajeContacto.papelera_en.is_not(None))
+        .order_by(MensajeContacto.papelera_en.desc())
+    ))
     return {
         "preguntas": [{
             "id": item.id,
@@ -681,6 +829,13 @@ def list_trash(
             "activo": user.activo,
             "papelera_en": user.papelera_en,
         } for user in users],
+        "mensajes_contacto": [{
+            "id": item.id,
+            "nombre": item.nombre,
+            "correo": item.correo,
+            "asunto": item.asunto,
+            "papelera_en": item.papelera_en,
+        } for item in contact_messages],
     }
 
 
@@ -760,6 +915,86 @@ def restore_trashed_document(document_id: int, db: Session = Depends(get_db), _:
     restore_document(document)
     db.commit()
     return Response(status_code=status.HTTP_204_NO_CONTENT)
+
+
+@router.post("/informacion/analizar", response_model=ImportarInformacionResponse)
+def analyze_information_document(
+    request: ImportarInformacionRequest,
+    _: Usuario = Depends(require_content_admin),
+) -> dict[str, object]:
+    if not request.contenido_publico_confirmado:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Confirma que el documento contiene únicamente información pública y no sensible.",
+        )
+    try:
+        filename = Path(request.nombre_archivo.replace("\\", "/")).name
+        is_pdf = filename.lower().endswith(".pdf")
+        source = extract_source_text(
+            filename,
+            request.texto,
+            request.archivo_base64,
+            allow_short_pdf=is_pdf,
+        )
+        title = filename.rsplit(".", 1)[0][:180] or "Documento institucional"
+        drafts: list[dict[str, str]] = []
+        analysis_warning = None
+        analysis_completed = False
+
+        def fallback_draft() -> dict[str, str] | None:
+            content = source.strip()[:20_000]
+            if len(content) < 40:
+                return None
+            fallback_title = title or "Información institucional"
+            return {
+                "clave": _stable_key(fallback_title, content),
+                "titulo": fallback_title,
+                "contenido": content,
+                "categoria": "Información institucional",
+                "animacion": "Explicar",
+                "accion_avatar": "El lobo adopta una pose tranquila de explicación y acompaña la información con gestos suaves.",
+                "emocion": "neutral",
+            }
+
+        try:
+            if is_pdf and len(source) < 200 and request.archivo_base64:
+                pdf_content = base64.b64decode(request.archivo_base64, validate=True)
+                drafts = suggest_information_from_pdf(pdf_content)
+                analysis_completed = True
+            elif len(source) < 40:
+                analysis_warning = "El documento contiene muy poco texto para proponer fichas."
+            else:
+                drafts = suggest_information(source)
+                analysis_completed = True
+            if analysis_completed and not drafts:
+                fallback = fallback_draft()
+                if fallback:
+                    drafts = [fallback]
+                    analysis_warning = "Se completó un borrador con el texto extraído; revisa el contenido antes de guardarlo."
+                else:
+                    analysis_warning = "No se encontró texto legible en el documento."
+        except (GeminiConfigurationError, GeminiServiceError, ImportValidationError) as error:
+            fallback = fallback_draft()
+            if fallback:
+                drafts = [fallback]
+                analysis_warning = "La IA no respondió; se completó el borrador con el texto extraído. Revisa la información."
+            else:
+                analysis_warning = str(error)
+        return {
+            "borradores": drafts,
+            "fuente_guardada": False,
+            "fuente_ya_existia": False,
+            "fuente_activa": False,
+            "fuente_titulo": title,
+            "aviso_analisis": analysis_warning,
+            "analisis_gemini": analysis_completed,
+            "analisis_visual_gemini": False,
+            "analisis_visual_pendiente": False,
+        }
+    except ImportValidationError as error:
+        raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail=str(error)) from error
+    except (DocumentValidationError, ValueError) as error:
+        raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail=str(error)) from error
 
 
 @router.post("/informacion/importar", response_model=ImportarInformacionResponse)

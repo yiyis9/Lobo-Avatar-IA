@@ -37,13 +37,24 @@ def login(request: LoginRequest, db: Session = Depends(get_db)) -> TokenResponse
     user = db.scalar(select(Usuario).where(Usuario.correo == request.correo))
     if (
         user is None
-        or not user.activo
-        or user.papelera_en is not None
-        or user.estado_solicitud != "aprobada"
         or user.rol not in {"admin", "admin_contenido"}
         or not verify_password(request.contrasena, user.password_hash)
     ):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Correo o contraseña incorrectos.")
+    if user.papelera_en is not None:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="La cuenta no está disponible. Contacta al administrador.")
+    if user.estado_solicitud == "pendiente":
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Tu solicitud de registro está pendiente de aprobación. Podrás iniciar sesión cuando el administrador la apruebe.",
+        )
+    if user.estado_solicitud == "rechazada":
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Tu solicitud de registro fue rechazada. Contacta al administrador si necesitas más información.",
+        )
+    if not user.activo:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="La cuenta está desactivada. Contacta al administrador.")
     token, expires_in = create_access_token(user)
     return TokenResponse(access_token=token, expires_in=expires_in)
 
