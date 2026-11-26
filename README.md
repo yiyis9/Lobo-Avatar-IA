@@ -50,7 +50,7 @@ Copy-Item .env.example .env
 notepad .env
 ```
 
-1. Crea la base y el usuario de servicio en MySQL (permisos `SELECT, INSERT, UPDATE, DELETE`) y ejecuta `lobo_upvt_db.sql` desde la raíz.
+1. Crea el usuario de servicio en MySQL (permisos `SELECT, INSERT, UPDATE, DELETE` sobre `lobo_upvt_db`), ejecuta `lobo_upvt_db.sql` desde la raíz y después aplica en orden las migraciones `002` a `019` de `backend/migrations/`. El SQL base solo crea cuatro tablas; el resto lo crean las migraciones. Si la `009` marca `Duplicate key name` para `ft_preguntas_busqueda` o `ft_informacion_busqueda`, esos índices ya venían en el SQL base y puedes omitir esas dos líneas.
 2. Edita `.env` con las credenciales de MySQL, una `ADMIN_TOKEN_SECRET` aleatoria de al menos 32 caracteres y, si quieres IA, tu `GEMINI_API_KEY`.
 3. Crea el administrador inicial:
    ```powershell
@@ -68,7 +68,7 @@ notepad .env
 | `http://127.0.0.1:8000/docs` | Documentación OpenAPI |
 | `http://127.0.0.1:8000/health` | Estado de la API y de MySQL |
 
-Si la base ya existía, aplica las migraciones de `backend/migrations/` en orden (hasta la `018`) antes de arrancar.
+Si la base ya existía, aplica en orden las migraciones pendientes de `backend/migrations/` (hasta la `019`) antes de arrancar.
 
 ## Variables de entorno
 
